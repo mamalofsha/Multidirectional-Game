@@ -1,0 +1,7 @@
+﻿  glad.c
+  Source.cpp
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 43 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  OpenGL.vcxproj -> J:\Ast\OpenGL\OpenGL\x64\Release\Ast.exe
