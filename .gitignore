@@ -78,3 +78,4 @@ x64/Debug/Ast.pdb
 .vs/Ast/FileContentIndex/78f94e3c-257e-4cdf-8eff-847940ec7992.vsidx
 .vs/Ast/FileContentIndex/67c7de6a-f2bf-4357-8860-8aac19028ad9.vsidx
 .vs/Ast/FileContentIndex/67918b40-4e01-4608-86b6-788d26256435.vsidx
+*.ipch
