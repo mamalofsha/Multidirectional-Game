@@ -1,5 +1,6 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <GLM/glm.hpp>
 #include <cstdlib> 
 #include <random>
 #include <iostream>
@@ -8,13 +9,17 @@
 #include "Shader.h"
 #include <filesystem> 
 #include "GameObject.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 std::vector<GameObject*> AllObjects;
 GameObject* Player;
 GLFWwindow* InitWindow();
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
-void DrawObjects();
+void DrawObjects(std::vector<Shader>& InShaderList);
+void UpdateObjects();
 static int RandomInRange(int InMaxNumber);
 
 using u32 = uint_least32_t;
@@ -97,8 +102,8 @@ int main()
 	// ------------------------------------
 
 
-
-
+	std::vector<Shader> Shaders;
+	DrawObjects(Shaders);
 	// render loop
 	// -----------
 	while (!glfwWindowShouldClose(window))
@@ -114,13 +119,16 @@ int main()
 
 		// bind Texture
 		glBindTexture(GL_TEXTURE_2D, texture);
-
 		// render container
 		ourShader.use();
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		//
-		DrawObjects();
+		std::cout << Player->ActiveInput[0];
+		std::cout << ",";
+		std::cout <<  Player->ActiveInput[1] << std::endl;
+
+		UpdateObjects();
+		Player->ClearInput();
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
 		glfwSwapBuffers(window);
@@ -159,30 +167,31 @@ void processInput(GLFWwindow* window)
 		Player->ConsumeInput({ 0.0f,-1.0f });
 }
 
-void DrawObjects()
+void DrawObjects(std::vector<Shader>& InShaderList)
 {
-
-	Shader TriShader("Shader.vert", "Shader.frag"); // you can name your shader files however you like
+	std::vector<Shader> Shaders;
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
 	for (auto it = AllObjects.begin(); it != AllObjects.end(); ++it)
 	{
-	
+		//Shader TriShader("Shader.vert", "Shader.frag"); // you can name your shader files however you like
+		InShaderList.emplace_back("Shader.vert", "Shader.frag"); // Use emplace_back to construct in-place
+		Shader& TriShader = InShaderList.back(); // Get reference to the newly added shader
 		float vertices[] = {
 			// positions         // colors
-			(*it)->Coordinate[0] + (*it)->Length * std::cos((*it)->Rotation - (3 * PI / 4.0f)), (*it)->Coordinate[1] + (*it)->Length * std::sin((*it)->Rotation - (3 * PI / 4.0f)), 0.0f,  1.0f, 0.0f, 0.0f,  // bottom right
-			(*it)->Coordinate[0] + (*it)->Length * std::cos((*it)->Rotation + (3*PI/4.0f))    , (*it)->Coordinate[1] + (*it)->Length * std::sin((*it)->Rotation + (3 * PI / 4.0f)), 0.0f,  0.0f, 1.0f, 0.0f,  // bottom left
-			(*it)->Coordinate[0] + (*it)->Length * std::cos((*it)->Rotation)                  , (*it)->Coordinate[1] + (*it)->Length * std::sin((*it)->Rotation)                  , 0.0f,  0.0f, 0.0f, 1.0f   // top 
+			(*it)->WorldTransform.Location[0] + (*it)->Length * std::cos((*it)->WorldTransform.Rotation - (3 * PI / 4.0f)), (*it)->WorldTransform.Location[1] + (*it)->Length * std::sin((*it)->WorldTransform.Rotation - (3 * PI / 4.0f)), 0.0f,  1.0f, 0.0f, 0.0f,  // bottom right
+			(*it)->WorldTransform.Location[0] + (*it)->Length * std::cos((*it)->WorldTransform.Rotation + (3*PI/4.0f))    , (*it)->WorldTransform.Location[1] + (*it)->Length * std::sin((*it)->WorldTransform.Rotation + (3 * PI / 4.0f)), 0.0f,  0.0f, 1.0f, 0.0f,  // bottom left
+			(*it)->WorldTransform.Location[0] + (*it)->Length * std::cos((*it)->WorldTransform.Rotation)                  , (*it)->WorldTransform.Location[1] + (*it)->Length * std::sin((*it)->WorldTransform.Rotation)                  , 0.0f,  0.0f, 0.0f, 1.0f   // top 
 		};
 
 
-	unsigned int VBO2, VAO2;
-	glGenVertexArrays(1, &VAO2);
-	glGenBuffers(1, &VBO2);
+	unsigned int VBO, VAO;
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
 	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
-	glBindVertexArray(VAO2);
+	glBindVertexArray(VAO);
 
-	glBindBuffer(GL_ARRAY_BUFFER, VBO2);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 	// position attribute
@@ -191,9 +200,31 @@ void DrawObjects()
 	// color attribute
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
+	glBindVertexArray(VAO);
+	TriShader.VAO = VAO;
 	TriShader.use();
-	glBindVertexArray(VAO2);
+	(*it)->ObjectShader = &TriShader;
 	glDrawArrays(GL_TRIANGLES, 0, 3);
+	}
+}
+
+void UpdateObjects()
+{
+	for (auto it = AllObjects.begin(); it != AllObjects.end(); ++it)
+	{
+		// create transformations
+		glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+		transform = glm::translate(transform, glm::vec3((*it)->WorldTransform.Location[0], (*it)->WorldTransform.Location[1], 0.0f));
+		transform = glm::rotate(transform, (*it)->WorldTransform.Rotation, glm::vec3(0.0f, 0.0f, 1.0f));
+		(*it)->ActiveInput;
+		// get matrix's uniform location and set matrix
+		(*it)->ObjectShader->use();
+		unsigned int transformLoc = glGetUniformLocation((*it)->ObjectShader->ID, "transform");
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
+
+
+		glBindVertexArray((*it)->ObjectShader->VAO);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 	}
 }
 
@@ -221,7 +252,7 @@ GLFWwindow* InitWindow()
 
 	// glfw window creation
 	// --------------------
-	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Ast", NULL, NULL);
 	if (window == NULL)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;

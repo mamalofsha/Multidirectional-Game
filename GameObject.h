@@ -1,15 +1,28 @@
 #pragma once
 #include <vector>
+#include "Shader.h"
 const double PI = 3.14159265358979323846;
+
+struct Transform
+{
+	std::vector<float> Location = {0.f,0.f};
+	float Rotation = 0.f;
+};
 
 class GameObject
 {
+private :
 public:
 	std::vector<float> ForwardDir = { 1.0f, 0.0f };
-	std::vector<float> Coordinate = { 0.0f, 0.0f };
+	Transform WorldTransform;
+//	std::vector<float> Coordinate = { 0.0f, 0.0f };
 	float Length = 0.1f;
-	float Rotation =0.0f;
+	Shader* ObjectShader;
+	std::vector<float> ActiveInput = {0.f,0.f};
+
 	GameObject();
 
+	bool HadInput = false;
 	void ConsumeInput(std::vector<float> InDir);
+	void ClearInput();
 };
