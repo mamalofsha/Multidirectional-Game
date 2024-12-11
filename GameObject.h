@@ -22,7 +22,6 @@ public:
 
 	GameObject();
 
-	bool HadInput = false;
 	void ConsumeInput(std::vector<float> InDir);
-	void ClearInput();
+	std::vector<float> CrossProduct(const std::vector<float>& vec1, const std::vector<float>& vec2);
 };

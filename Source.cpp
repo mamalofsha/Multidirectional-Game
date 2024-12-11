@@ -95,7 +95,7 @@ int main()
 	}
 	stbi_image_free(data);
 	/////////////
-	 Player = new GameObject();
+	Player = new GameObject();
 	AllObjects.push_back(Player);
 	// player triangle
 	 // build and compile our shader program
@@ -123,12 +123,11 @@ int main()
 		ourShader.use();
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		std::cout << Player->ActiveInput[0];
-		std::cout << ",";
-		std::cout <<  Player->ActiveInput[1] << std::endl;
+		//std::cout << Player->ActiveInput[0];
+		//std::cout << ",";
+		//std::cout <<  Player->ActiveInput[1] << std::endl;
 
 		UpdateObjects();
-		Player->ClearInput();
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
 		glfwSwapBuffers(window);
@@ -156,15 +155,22 @@ void processInput(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
+
+	std::vector<float> Input = { 0.f,0.f };
 	/// player input for movement
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		Player->ConsumeInput({ 0.0f,1.0f });
+		Input[1] = 1.f;// Player->ConsumeInput({ 0.0f,1.0f });
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		Player->ConsumeInput({ -1.0f,0.0f });
+		Input[0] = -1.f;// Player->ConsumeInput({ -1.0f,0.0f });
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		Player->ConsumeInput({ 1.0f,0.0f });
+		Input[0] = 1.f;	//Player->ConsumeInput({ 1.0f,0.0f });
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		Player->ConsumeInput({ 0.0f,-1.0f });
+		Input[1] = -1.f;//Player->ConsumeInput({ 0.0f,-1.0f });
+
+	Player->ConsumeInput(Input);
+
+
+
 }
 
 void DrawObjects(std::vector<Shader>& InShaderList)
