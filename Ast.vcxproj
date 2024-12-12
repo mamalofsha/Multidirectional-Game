@@ -150,8 +150,10 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\OpenGL-Lib\glad.c" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="stb_image.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader.frag" />
@@ -162,7 +164,9 @@
   <ItemGroup>
     <ClInclude Include="E:\downloads\stb_image.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Graphics.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

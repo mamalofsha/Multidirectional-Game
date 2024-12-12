@@ -36,6 +36,16 @@ void GameObject::ConsumeInput(std::vector<float> InDir)
 
 }
 
+Transform GameObject::GetTransform()
+{
+	return WorldTransform;
+}
+
+float GameObject::GetLength()
+{
+	return Length;
+}
+
 std::vector<float> GameObject::CrossProduct(const std::vector<float>& vec1, const std::vector<float>& vec2)
 {
 
