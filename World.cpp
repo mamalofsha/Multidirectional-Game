@@ -3,6 +3,7 @@
 #include <glm/fwd.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/ext/matrix_transform.hpp>
+#include "PlayerObject.h"
 
 
 void World::InitBackground()
@@ -12,7 +13,7 @@ void World::InitBackground()
 
 void World::SpawnPlayer()
 {
-	Player = std::make_shared<GameObject>();
+	Player = std::make_shared<PlayerObject>();
 	GameObjects.push_back(Player);
 	Graphics::DrawShape(*Player);
 }

@@ -11,7 +11,7 @@ private:
 	GLFWwindow* Window;
 	//
 	std::vector<std::shared_ptr<GameObject>> GameObjects;
-	std::shared_ptr<GameObject> Player;
+	std::shared_ptr<class PlayerObject> Player;
 	//
 	std::vector<Shader> Shaders;
 	//

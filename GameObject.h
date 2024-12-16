@@ -20,8 +20,6 @@ public:
 	std::unique_ptr<Shader> ObjectShader;
 
 	GameObject();
-	void ConsumeInput(std::vector<float> InDir);
 	Transform GetTransform();
 	float GetLength();
-	std::vector<float> CrossProduct(const std::vector<float>& vec1, const std::vector<float>& vec2);
 };
