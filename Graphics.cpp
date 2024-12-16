@@ -2,7 +2,7 @@
 #include "stb_image.h"
 #include "GameObject.h"
 
-GLFWwindow* Graphics::InitWindow()
+GLFWwindow* Graphics::InitWindow(const unsigned int Width, const unsigned int Height)
 {
 	// glfw: initialize and configure
 // ------------------------------
@@ -17,7 +17,7 @@ GLFWwindow* Graphics::InitWindow()
 
 	// glfw window creation
 	// --------------------
-	GLFWwindow* Window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Ast", NULL, NULL);
+	GLFWwindow* Window = glfwCreateWindow(Width, Height, "Ast", NULL, NULL);
 	if (Window == NULL)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
