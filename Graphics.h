@@ -10,5 +10,6 @@ public:
 	static GLFWwindow* InitWindow(const unsigned int Width, const unsigned int Height);
 	static Shader DrawTexture(const char* InFileName);
 	static void DrawShape(class GameObject& InObject);
+	static void DrawShape2(class GameObject& InObject);
 	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 };

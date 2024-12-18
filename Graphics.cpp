@@ -111,10 +111,10 @@ void Graphics::DrawShape(GameObject& InObject)
 		//Shader TriShader("Shader.vert", "Shader.frag"); // you can name your shader files however you like
 		InObject.ObjectShader = std::make_unique<Shader>("Shader.vert", "Shader.frag");
 		float vertices[] = {
-			// positions         // colors
-			InObject.GetTransform().Location[0] + InObject.GetLength() * std::cos(InObject.GetTransform().Rotation - (3 * PI / 4.0f)), InObject.GetTransform().Location[1] + InObject.GetLength() * std::sin(InObject.GetTransform().Rotation - (3 * PI / 4.0f)), 0.0f,  1.0f, 0.0f, 0.0f,  // bottom right
-			InObject.GetTransform().Location[0] + InObject.GetLength() * std::cos(InObject.GetTransform().Rotation + (3 * PI / 4.0f))    , InObject.GetTransform().Location[1] + InObject.GetLength() * std::sin(InObject.GetTransform().Rotation + (3 * PI / 4.0f)), 0.0f,  0.0f, 1.0f, 0.0f,  // bottom left
-			InObject.GetTransform().Location[0] + InObject.GetLength() * std::cos(InObject.GetTransform().Rotation)                  , InObject.GetTransform().Location[1] + InObject.GetLength() * std::sin(InObject.GetTransform().Rotation)                  , 0.0f,  0.0f, 0.0f, 1.0f   // top 
+			// positions                                                                                                                                                                                                                                                 // colors
+			InObject.GetTransform().Location[0] + InObject.GetLength() * std::cos(InObject.GetTransform().Rotation - (3 * PI / 4.0f))    , InObject.GetTransform().Location[1] + InObject.GetLength() * std::sin(InObject.GetTransform().Rotation - (3 * PI / 4.0f))    , 0.0f,  1.0f, 0.0f, 0.0f,  // bottom right
+			InObject.GetTransform().Location[0] + InObject.GetLength() * std::cos(InObject.GetTransform().Rotation + (3 * PI / 4.0f))    , InObject.GetTransform().Location[1] + InObject.GetLength() * std::sin(InObject.GetTransform().Rotation + (3 * PI / 4.0f))    , 0.0f,  0.0f, 1.0f, 0.0f,  // bottom left
+			InObject.GetTransform().Location[0] + InObject.GetLength() * std::cos(InObject.GetTransform().Rotation)                      , InObject.GetTransform().Location[1] + InObject.GetLength() * std::sin(InObject.GetTransform().Rotation)                      , 0.0f,  0.0f, 0.0f, 1.0f   // top 
 		};
 		unsigned int VBO, VAO;
 		glGenVertexArrays(1, &VAO);
@@ -134,6 +134,41 @@ void Graphics::DrawShape(GameObject& InObject)
 		InObject.ObjectShader->VBO = VBO;
 		InObject.ObjectShader->use();
 		glDrawArrays(GL_TRIANGLES, 0, 3);
+}
+
+void Graphics::DrawShape2(GameObject& InObject)
+{
+	//Shader TriShader("Shader.vert", "Shader.frag"); // you can name your shader files however you like
+	InObject.ObjectShader = std::make_unique<Shader>("Shader.vert", "Shader.frag");
+	bool haz = InObject.GetIsHazard();
+	if (haz)
+	{
+
+	}
+	float vertices[] = {
+		// positions																																																														 // colors
+		InObject.GetTransform().Location[0] + InObject.GetLength() * std::cos(InObject.GetTransform().Rotation - (3 * PI / 4.0f))    , InObject.GetTransform().Location[1] + InObject.GetLength() * std::sin(InObject.GetTransform().Rotation - (3 * PI / 4.0f))    , 0.0f ,  haz ? 1.0f : 0.0f, haz ? 0.0f : 1.0f, 0.0f,  // bottom right
+		InObject.GetTransform().Location[0] + InObject.GetLength() * std::cos(InObject.GetTransform().Rotation + (3 * PI / 4.0f))    , InObject.GetTransform().Location[1] + InObject.GetLength() * std::sin(InObject.GetTransform().Rotation + (3 * PI / 4.0f))    , 0.0f ,  haz ? 1.0f : 0.0f, haz ? 0.0f : 1.0f, 0.0f,  // bottom left
+		InObject.GetTransform().Location[0] + InObject.GetLength() * std::cos(InObject.GetTransform().Rotation)                      , InObject.GetTransform().Location[1] + InObject.GetLength() * std::sin(InObject.GetTransform().Rotation)                      , 0.0f ,  haz ? 1.0f : 0.0f, haz ? 0.0f : 1.0f, 1.0f   // top 
+	};
+	unsigned int VBO, VAO;
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
+	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+	glBindVertexArray(VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	// position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	// color attribute
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+	glBindVertexArray(VAO);
+	InObject.ObjectShader->VAO = VAO;
+	InObject.ObjectShader->VBO = VBO;
+	InObject.ObjectShader->use();
+	glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
 void Graphics::framebuffer_size_callback(GLFWwindow* window, int width, int height)

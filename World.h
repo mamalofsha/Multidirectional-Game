@@ -21,6 +21,8 @@ private:
 	void ProcessInputGL(GLFWwindow* window);
 	void InputUpdate();
 	void RenderUpdate();
+	void CollisionUpdate();
+	void HandleCollision(GameObject& GameObject1, GameObject& GameObject2);
 public:
 	std::weak_ptr<GameObject>  GetPlayer();
 	World(std::vector<std::shared_ptr<GameObject>>& GameObjects);
