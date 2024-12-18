@@ -1,0 +1,17 @@
+<grid>
+    <dimensions>
+        <width>10</width>
+        <height>10</height>
+    </dimensions>
+    <tile>
+        <width>0.2</width>
+        <height>0.1</height>
+    </tile>
+    <tiles>
+        <row>0 0 0 0 0 0 0 0 0 0</row>
+        <row>0 1 1 1 1 1 1 1 1 0</row>
+        <row>0 0 0 0 0 0 0 0 0 0</row>
+		<row>0 1 1 1 1 1 1 1 1 0</row>
+        <row>0 1 1 1 1 1 1 1 1 0</row>
+    </tiles>
+</grid>
