@@ -6,5 +6,5 @@
 class XMLParser
 {
 public:
-	static GridConfig ParseGridDataFromXML(const std::string& filename);
+	static GridConfig ParseGridDataFromXML(const std::string& InFileName);
 };

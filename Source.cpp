@@ -1,11 +1,4 @@
-
 #include "World.h"
-
-
-
-
-
-///
 
 int main() {
 	// init world
@@ -16,13 +9,10 @@ int main() {
 	while (CurrentWorld->IsRunning())
 	{
 		float CurrentFrame = glfwGetTime();
-		DeltaTime = CurrentFrame - DeltaTime;
+		DeltaTime = LastFrame - DeltaTime;
 		LastFrame = CurrentFrame;
 		CurrentWorld->Update(DeltaTime);
 	}
 	delete CurrentWorld;
 	return 0;
 }
-
-
-

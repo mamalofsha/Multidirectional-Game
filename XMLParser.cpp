@@ -3,35 +3,34 @@
 #include <TinyXML/tinyxml2.h>
 #include "Graphics.h"
 
-GridConfig XMLParser::ParseGridDataFromXML(const std::string& filename)
+GridConfig XMLParser::ParseGridDataFromXML(const std::string& InFileName)
 {
-    GridConfig config;
-
+    GridConfig OutConfig;
     // Load XML file
     tinyxml2::XMLDocument doc;
-    if (doc.LoadFile(filename.c_str()) != tinyxml2::XML_SUCCESS) {
-        std::cerr << "Error loading XML file: " << filename << std::endl;
-        return config;
+    if (doc.LoadFile(InFileName.c_str()) != tinyxml2::XML_SUCCESS) {
+        std::cerr << "Error loading XML file: " << InFileName << std::endl;
+        return OutConfig;
     }
 
     // Parse dimensions
     auto* root = doc.FirstChildElement("grid");
     if (!root) {
         std::cerr << "Invalid XML structure: No <grid> element." << std::endl;
-        return config;
+        return OutConfig;
     }
 
     auto* dimensions = root->FirstChildElement("dimensions");
     if (dimensions) {
-        dimensions->FirstChildElement("width")->QueryIntText(&config.width);
-        dimensions->FirstChildElement("height")->QueryIntText(&config.height);
+        dimensions->FirstChildElement("width")->QueryIntText(&OutConfig.width);
+        dimensions->FirstChildElement("height")->QueryIntText(&OutConfig.height);
     }
 
     // Parse tile size
     auto* tile = root->FirstChildElement("tile");
     if (tile) {
-        tile->FirstChildElement("width")->QueryFloatText(&config.tileWidth);
-        tile->FirstChildElement("height")->QueryFloatText(&config.tileHeight);
+        tile->FirstChildElement("width")->QueryFloatText(&OutConfig.tileWidth);
+        tile->FirstChildElement("height")->QueryFloatText(&OutConfig.tileHeight);
     }
 
     // Parse tiles
@@ -45,9 +44,9 @@ GridConfig XMLParser::ParseGridDataFromXML(const std::string& filename)
             while (ss >> tileType) {
                 tileRow.push_back(tileType);
             }
-            config.tiles.push_back(tileRow);
+            OutConfig.tiles.push_back(tileRow);
         }
     }
 
-    return config;
+    return OutConfig;
 }

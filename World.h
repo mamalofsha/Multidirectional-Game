@@ -8,19 +8,13 @@
 #include <functional>
 #include "MouseInteraction.h"
 
-//MouseState mouseState;
-enum class ShaderType { Background, Grid };
-struct ShaderEntry {
-	Shader shader;
-	ShaderType type;
-};
+
 
 class World
 {
 private:
 	MouseState mouseState;
 	GridConfig gridConfig;
-
 	GLFWwindow* Window;
 	//
 	std::vector<std::shared_ptr<GameObject>> GameObjects;
@@ -31,9 +25,10 @@ private:
 	Shader BackGround;
 	//
 	void InitBackground();
-	void onHoverFunction(int gridX, int gridY);
-
-	void onClickFunction(int gridX, int gridY);
+	void InitGrid();
+	static void onHoverFunction(int gridX, int gridY);
+	static void onClickFunction(int gridX, int gridY);
+	static void CursorCallback(GLFWwindow* window, double xpos, double ypos);
 	void SpawnPlayer();
 	void SpawnObjects();
 	void ProcessInputGL(GLFWwindow* window);
@@ -44,13 +39,12 @@ private:
 	void CollisionUpdate();
 	void HandleCollision(GameObject& GameObject1, GameObject& GameObject2);
 public:
-	std::weak_ptr<GameObject>  GetPlayer();
+
 	World(std::vector<std::shared_ptr<GameObject>>& GameObjects);
-	World(const unsigned int Width,const unsigned int Height);
+	World(const unsigned int Width, const unsigned int Height);
 	~World();
+	std::weak_ptr<GameObject>  GetPlayer();
 	void Update(float DeltaSeconds);
 	void PassInput(std::vector<float> InDir);
 	bool IsRunning();
-	// Define callback functions
-
 };

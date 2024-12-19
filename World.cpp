@@ -6,35 +6,67 @@
 #include "PlayerObject.h"
 #include "Math.h"
 
+World::World(std::vector<std::shared_ptr<GameObject>>& GameObjects)
+{
+
+}
+
+World::World(const unsigned int Width, const unsigned int Height)
+{
+	Window = Graphics::InitWindow(Width, Height);
+	SetupMouseCallbacks();
+	InitBackground();
+	InitGrid();
+}
+
+World::~World()
+{
+	for (auto it = Shaders.begin(); it < Shaders.end(); it++)
+	{
+		glDeleteVertexArrays(1, &it->shader.VAO);
+		glDeleteBuffers(1, &it->shader.VBO);
+		glDeleteBuffers(1, &it->shader.EBO);
+	}
+	GameObjects.clear();
+	Player = nullptr;
+	Shaders.clear();
+	glfwTerminate();
+}
 
 void World::InitBackground()
 {
-	Shaders.push_back({ Graphics::DrawTexture("Map1.jpg"), ShaderType::Background });
+	Shaders.push_back({Graphics::DrawTexture("Map1.jpg"), ShaderType::Background });
+}
+
+void World::InitGrid()
+{
 	Shaders.push_back({ Graphics::DrawGrid("grid_config.xml"), ShaderType::Grid });
-}
-
-void World::SpawnPlayer()
-{
-	Player = std::make_shared<PlayerObject>();
-	GameObjects.push_back(Player);
-	Graphics::DrawShape(*Player);
-}
-
-void World::SpawnObjects()
-{
 }
 
 void World::onHoverFunction(int gridX, int gridY)
 {
 	std::cout << "Hovered over tile: (" << gridX << ", " << gridY << ")" << std::endl;
-	mouseState.GridX = gridX;
-	mouseState.GridY = gridY;
+	
+	//mouseState.GridX = gridX;
+	//mouseState.GridY = gridY;
 }
 
 void World::onClickFunction(int gridX, int gridY)
 {
 	std::cout << "Clicked on tile: (" << gridX << ", " << gridY << ")" << std::endl;
 	// Additional logic for click behavior
+}
+
+void World::CursorCallback(GLFWwindow* window, double xpos, double ypos)
+{
+	int windowWidth, windowHeight;
+	glfwGetWindowSize(window, &windowWidth, &windowHeight);
+	//mouseState.x = xpos;
+	//mouseState.y = ypos;
+	MouseInteractionAPI* api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(window));
+	if (api) {
+	//	api->handleMouseMove(xpos, ypos, windowWidth, windowHeight, gridConfig.tileWidth, gridConfig.tileHeight);
+	}
 }
 
 void World::ProcessInputGL(GLFWwindow* window)
@@ -51,7 +83,6 @@ void World::ProcessInputGL(GLFWwindow* window)
 		Input[0] = 1.f;
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 		Input[1] = -1.f;
-	PassInput(Input);
 }
 
 void World::GarbageCollection()
@@ -79,18 +110,10 @@ void World::SetupMouseCallbacks()
 {
 	// Mouse Interaction API setup
 	MouseInteractionAPI mouseAPI;
-	//mouseAPI.setHoverCallback(onHoverFunction); // Use regular function
-	//mouseAPI.setClickCallback(onClickFunction); // Use regular function
-	glfwSetCursorPosCallback(Window, [](GLFWwindow* window, double xpos, double ypos) {
-		int windowWidth, windowHeight;
-		glfwGetWindowSize(window, &windowWidth, &windowHeight);
-		//mouseState.x = xpos;
-		//mouseState.y = ypos;
-		MouseInteractionAPI* api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(window));
-		if (api) {
-			//api->handleMouseMove(xpos, ypos, windowWidth, windowHeight, gridConfig.tileWidth, gridConfig.tileHeight);
-		}
-		});
+	mouseAPI.setHoverCallback(onHoverFunction); // Use regular function
+	//mouseAPI.setClickCallback(onClickFunction); // Use regular functio
+	glfwSetCursorPosCallback(Window, CursorCallback);
+
 	glfwSetMouseButtonCallback(Window, [](GLFWwindow* window, int button, int action, int mods) {
 		if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
 			double xpos, ypos;
@@ -211,37 +234,8 @@ void World::HandleCollision(GameObject& GameObject1, GameObject& GameObject2)
 	}
 }
 
-std::weak_ptr<GameObject> World::GetPlayer()
-{
-	return Player;
-}
 
-World::World(std::vector<std::shared_ptr<GameObject>>& GameObjects)
-{
 
-}
-
-World::World(const unsigned int Width, const unsigned int Height)
-{
-	Window = Graphics::InitWindow(Width, Height);
-	SetupMouseCallbacks();
-	InitBackground();
-	//SpawnPlayer();
-}
-
-World::~World()
-{
-	for (auto it = Shaders.begin(); it < Shaders.end(); it++)
-	{
-		glDeleteVertexArrays(1, &it->shader.VAO);
-		glDeleteBuffers(1, &it->shader.VBO);
-		glDeleteBuffers(1, &it->shader.EBO);
-	}
-	GameObjects.clear();
-	Player = nullptr;
-	Shaders.clear();
-	glfwTerminate();
-}
 
 
 void World::Update(float DeltaSeconds)
@@ -250,13 +244,7 @@ void World::Update(float DeltaSeconds)
 //	InputUpdate();
 	RenderUpdate();
 	glfwPollEvents();
-
 	//CollisionUpdate();
-}
-
-void World::PassInput(std::vector<float> InDir)
-{
-	Player->ConsumeInput(InDir);
 }
 
 bool World::IsRunning()

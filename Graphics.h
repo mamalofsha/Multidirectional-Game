@@ -11,6 +11,13 @@ struct GridConfig {
 	std::vector<std::vector<int>> tiles; // Stores the tile types (0 = empty, 1 = occupied, etc.)
 };
 
+enum class ShaderType { Background, Grid };
+
+struct ShaderEntry {
+	Shader shader;
+	ShaderType type;
+};
+
 class Graphics
 {
 public:
