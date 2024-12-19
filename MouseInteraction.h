@@ -2,6 +2,13 @@
 #include <functional>
 
 
+struct MouseState {
+    double x, y;
+    int GridX, GridY;// Current mouse position
+    bool leftPressed;  // Is the left button pressed?
+    bool rightPressed; // Is the right button pressed?
+};
+
 class MouseInteractionAPI {
 public:
     using MouseEventCallback = std::function<void(int gridX, int gridY)>;

@@ -11,11 +11,7 @@
 #include <functional>
 #include "MouseInteraction.h"
 
-// Grid settings
-const int GRID_WIDTH = 10;
-const int GRID_HEIGHT = 10;
-const float TILE_WIDTH = 0.2f; // Tile width in normalized device coordinates
-const float TILE_HEIGHT = 0.1f; // Tile height in normalized device coordinates
+
 
 // Vertex shader source
 const char* vertexShaderSource = R"(
@@ -41,10 +37,10 @@ uniform vec2 screenSize; // Screen dimensions
 
 void main() {
     vec2 screenCoord = (gl_FragCoord.xy / screenSize) * 2.0 - 1.0;
-    float gridX = (2.0 * screenCoord.x / tileSize.x) + (2.0 * screenCoord.y / tileSize.y);
-    float gridY = (2.0 * screenCoord.y / tileSize.y) - (2.0 * screenCoord.x / tileSize.x);
+    float gridX = (screenCoord.x / tileSize.x) + ( screenCoord.y / tileSize.y);
+    float gridY = ( screenCoord.y / tileSize.y) - ( screenCoord.x / tileSize.x);
 
-    if (int(gridX) < 5  ) {
+    if (int(gridX)==tileCoor.x && int(gridY)==tileCoor.y || (int(gridX)==tileCoor.x-1 && int(gridY)==tileCoor.y-1)) {
         FragColor = vec4(1.0, 0.0, 0.0, 1.0); // Highlight the hovered tile in red
     } else {
         FragColor = vec4(0.8, 0.8, 0.8, 1.0); // Default gray for other tiles
@@ -100,12 +96,6 @@ std::vector<float> createGridVertices(int gridWidth, int gridHeight) {
     return vertices;
 }
 
-struct MouseState {
-    double x, y; 
-    int GridX, GridY;// Current mouse position
-    bool leftPressed;  // Is the left button pressed?
-    bool rightPressed; // Is the right button pressed?
-};
 
 MouseState mouseState;
 GridConfig gridConfig;
@@ -189,7 +179,7 @@ int main() {
 
             MouseInteractionAPI* api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(window));
             if (api) {
-                api->handleMouseClick(xpos, ypos, windowWidth, windowHeight, TILE_WIDTH, TILE_HEIGHT);
+                api->handleMouseClick(xpos, ypos, windowWidth, windowHeight, gridConfig.tileWidth, gridConfig.tileHeight);
             }
         }
         });
