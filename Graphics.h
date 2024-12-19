@@ -1,8 +1,15 @@
 #pragma once
 #include "Shader.h"
 #include <GLFW/glfw3.h>
+#include "vector"
 
 const double PI = 3.14159265358979323846;
+
+struct GridConfig {
+	int width, height;
+	float tileWidth, tileHeight;
+	std::vector<std::vector<int>> tiles; // Stores the tile types (0 = empty, 1 = occupied, etc.)
+};
 
 class Graphics
 {

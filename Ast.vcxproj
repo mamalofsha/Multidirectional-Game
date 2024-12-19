@@ -160,10 +160,12 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="Math.cpp" />
+    <ClCompile Include="MouseInteraction.cpp" />
     <ClCompile Include="PlayerObject.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="World.cpp" />
+    <ClCompile Include="XMLParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Grid.frag" />
@@ -178,9 +180,11 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="Math.h" />
+    <ClInclude Include="MouseInteraction.h" />
     <ClInclude Include="PlayerObject.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="World.h" />
+    <ClInclude Include="XMLParser.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -6,6 +6,10 @@
 #include <cmath>
 #include "TinyXML/tinyxml2.h"
 #include <sstream>
+#include "Graphics.h"
+#include "XMLParser.h"
+#include <functional>
+#include "MouseInteraction.h"
 
 // Grid settings
 const int GRID_WIDTH = 10;
@@ -40,13 +44,14 @@ void main() {
     float gridX = (2.0 * screenCoord.x / tileSize.x) + (2.0 * screenCoord.y / tileSize.y);
     float gridY = (2.0 * screenCoord.y / tileSize.y) - (2.0 * screenCoord.x / tileSize.x);
 
-    if (int(gridX) == tileCoor.x && int(gridY) == tileCoor.y) {
+    if (int(gridX) < 5  ) {
         FragColor = vec4(1.0, 0.0, 0.0, 1.0); // Highlight the hovered tile in red
     } else {
         FragColor = vec4(0.8, 0.8, 0.8, 1.0); // Default gray for other tiles
     }
 }
 )";
+//    if (int(gridX) == tileCoor.x && int(gridY) == tileCoor.y) {
 
 // Function to compile shader
 GLuint compileShader(GLenum type, const char* source) {
@@ -96,117 +101,46 @@ std::vector<float> createGridVertices(int gridWidth, int gridHeight) {
 }
 
 struct MouseState {
-    double x, y;       // Current mouse position
+    double x, y; 
+    int GridX, GridY;// Current mouse position
     bool leftPressed;  // Is the left button pressed?
     bool rightPressed; // Is the right button pressed?
 };
 
 MouseState mouseState;
+GridConfig gridConfig;
 
-std::pair<int, int> screenToGrid(double screenX, double screenY, float tileWidth, float tileHeight, int windowWidth, int windowHeight) {
-    // Step 1: Convert screen coordinates to Normalized Device Coordinates (NDC)
-    float ndcX = (screenX / windowWidth) * 2.0f - 1.0f;
-    float ndcY = 1.0f - (screenY / windowHeight) * 2.0f;
 
-    // Debugging NDC values
-  //  std::cout << "NDC Coordinates: (" << ndcX << ", " << ndcY << ")" << std::endl;
 
-    // Step 2: Reverse isometric transformation to calculate grid indices
-    float approxGridX = (ndcY / tileHeight) + (ndcX / tileWidth) ;
-    float approxGridY = (ndcY / tileHeight) - (ndcX / tileWidth) ;
 
-    // Debugging approximate grid indices before rounding
-   // std::cout << "Approx Grid Coordinates: (" << approxGridX << ", " << approxGridY << ")" << std::endl;
-
-    // Step 3: Round to the nearest integer grid index
-    int gridX = static_cast<int>(round(approxGridX));
-    int gridY = static_cast<int>(round(approxGridY));
-
-    // Debugging final grid indices
-    //std::cout << "Final Grid Coordinates: (" << gridX << ", " << gridY << ")" << std::endl;
-
-    return { gridX, gridY };
+// Define callback functions
+void onHoverFunction(int gridX, int gridY) {
+    std::cout << "Hovered over tile: (" << gridX << ", " << gridY << ")" << std::endl;
+    mouseState.GridX = gridX;
+    mouseState.GridY = gridY;
 }
 
-void mousePositionCallback(GLFWwindow* window, double xpos, double ypos) {
-    mouseState.x = xpos;
-    mouseState.y = ypos;
-
-    int windowWidth, windowHeight;
-    glfwGetWindowSize(window, &windowWidth, &windowHeight);
-    auto [gridX, gridY] = screenToGrid(xpos, ypos, TILE_WIDTH, TILE_HEIGHT, windowWidth, windowHeight);
-
-    std::cout << "Mouse moved to grid: (" << gridX << ", " << gridY << ")" << std::endl;
+void onClickFunction(int gridX, int gridY) {
+    std::cout << "Clicked on tile: (" << gridX << ", " << gridY << ")" << std::endl;
+    // Additional logic for click behavior
 }
 
-void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
-    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
-        mouseState.leftPressed = true;
 
-        int windowWidth, windowHeight;
-        glfwGetWindowSize(window, &windowWidth, &windowHeight);
-        auto [gridX, gridY] = screenToGrid(mouseState.x, mouseState.y, TILE_WIDTH, TILE_HEIGHT, windowWidth, windowHeight);
+///
 
-        std::cout << "Mouse clicked on grid: (" << gridX << ", " << gridY << ")" << std::endl;
-    }
-    else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE) {
-        mouseState.leftPressed = false;
-    }
-}
 
-struct GridConfig {
-    int width, height;
-    float tileWidth, tileHeight;
-    std::vector<std::vector<int>> tiles; // Stores the tile types (0 = empty, 1 = occupied, etc.)
-};
 
-GridConfig readGridFromXML(const std::string& filename) {
-    GridConfig config;
 
-    // Load XML file
-    tinyxml2::XMLDocument doc;
-    if (doc.LoadFile(filename.c_str()) != tinyxml2::XML_SUCCESS) {
-        std::cerr << "Error loading XML file: " << filename << std::endl;
-        return config;
-    }
 
-    // Parse dimensions
-    auto* root = doc.FirstChildElement("grid");
-    if (!root) {
-        std::cerr << "Invalid XML structure: No <grid> element." << std::endl;
-        return config;
-    }
 
-    auto* dimensions = root->FirstChildElement("dimensions");
-    if (dimensions) {
-        dimensions->FirstChildElement("width")->QueryIntText(&config.width);
-        dimensions->FirstChildElement("height")->QueryIntText(&config.height);
-    }
 
-    // Parse tile size
-    auto* tile = root->FirstChildElement("tile");
-    if (tile) {
-        tile->FirstChildElement("width")->QueryFloatText(&config.tileWidth);
-        tile->FirstChildElement("height")->QueryFloatText(&config.tileHeight);
-    }
+///
 
-    // Parse tiles
-    auto* tilesElement = root->FirstChildElement("tiles");
-    if (tilesElement) {
-        for (auto* row = tilesElement->FirstChildElement("row"); row; row = row->NextSiblingElement("row")) {
-            std::vector<int> tileRow;
-            const char* rowText = row->GetText();
-            std::stringstream ss(rowText); // Initialize with rowText
-            int tileType;
-            while (ss >> tileType) {
-                tileRow.push_back(tileType);
-            }
-            config.tiles.push_back(tileRow);
-        }
-    }
 
-    return config;
-}
+
+
+
+
 
 int main() {
     // Initialize GLFW
@@ -215,7 +149,7 @@ int main() {
         return -1;
     }
 
-    GLFWwindow* window = glfwCreateWindow(800, 600, "Isometric Grid with Mouse Interaction", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(800, 800, "Isometric Grid with Mouse Interaction", nullptr, nullptr);
     if (!window) {
         std::cerr << "Failed to create GLFW window\n";
         glfwTerminate();
@@ -229,8 +163,36 @@ int main() {
         return -1;
     }
 
-    glfwSetCursorPosCallback(window, mousePositionCallback);
-    glfwSetMouseButtonCallback(window, mouseButtonCallback);
+
+    // Mouse Interaction API setup
+    MouseInteractionAPI mouseAPI;
+    mouseAPI.setHoverCallback(onHoverFunction); // Use regular function
+    mouseAPI.setClickCallback(onClickFunction); // Use regular function
+    gridConfig = XMLParser::ParseGridDataFromXML("grid_config.xml");
+
+    glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xpos, double ypos) {
+        int windowWidth, windowHeight;
+        glfwGetWindowSize(window, &windowWidth, &windowHeight);
+        mouseState.x = xpos;
+        mouseState.y = ypos;
+        MouseInteractionAPI* api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(window));
+        if (api) {
+            api->handleMouseMove(xpos, ypos, windowWidth, windowHeight, gridConfig.tileWidth, gridConfig.tileHeight);
+        }
+        });
+    glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods) {
+        if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
+            double xpos, ypos;
+            glfwGetCursorPos(window, &xpos, &ypos);
+            int windowWidth, windowHeight;
+            glfwGetWindowSize(window, &windowWidth, &windowHeight);
+
+            MouseInteractionAPI* api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(window));
+            if (api) {
+                api->handleMouseClick(xpos, ypos, windowWidth, windowHeight, TILE_WIDTH, TILE_HEIGHT);
+            }
+        }
+        });
 
     // Compile shaders and link program
     GLuint vertexShader = compileShader(GL_VERTEX_SHADER, vertexShaderSource);
@@ -238,7 +200,6 @@ int main() {
     GLuint shaderProgram = linkProgram(vertexShader, fragmentShader);
 
     // Load grid configuration from XML
-    GridConfig gridConfig = readGridFromXML("grid_config.xml");
 
     // Generate grid vertices based on the XML data
     std::vector<float> gridVertices = createGridVertices(gridConfig.width, gridConfig.height);
@@ -258,18 +219,17 @@ int main() {
     // Set uniform values
     glUseProgram(shaderProgram);
     GLint tileSizeLocation = glGetUniformLocation(shaderProgram, "tileSize");
-    glUniform2f(tileSizeLocation, TILE_WIDTH, TILE_HEIGHT);
+    glUniform2f(tileSizeLocation, gridConfig.tileWidth, gridConfig.tileHeight);
     GLint screenSizeLocation = glGetUniformLocation(shaderProgram, "screenSize");
-    glUniform2f(screenSizeLocation, 800.0f, 600.0f);
+    glUniform2f(screenSizeLocation, 800.0f, 800.0f);
+
+
+    glfwSetWindowUserPointer(window, &mouseAPI);
 
     // Main render loop
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
 
-        int windowWidth, windowHeight;
-        glfwGetWindowSize(window, &windowWidth, &windowHeight);
-
-        auto [hoveredGridX, hoveredGridY] = screenToGrid(mouseState.x, mouseState.y, TILE_WIDTH, TILE_HEIGHT, windowWidth, windowHeight);
 
         glUseProgram(shaderProgram);
         GLint hoveredTileLocation = glGetUniformLocation(shaderProgram, "tileCoor");
@@ -277,7 +237,7 @@ int main() {
             std::cerr << "Error: Uniform 'tileCoor' not found in the shader!" << std::endl;
         }
         else {
-            glUniform2i(hoveredTileLocation, hoveredGridX, hoveredGridY);
+            glUniform2i(hoveredTileLocation, mouseState.GridX, mouseState.GridY);
         }
 
         glBindVertexArray(VAO);
@@ -295,3 +255,6 @@ int main() {
 
     return 0;
 }
+
+
+
