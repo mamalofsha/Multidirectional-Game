@@ -205,11 +205,20 @@ std::vector<float> Graphics::createGridVertices(int gridWidth, int gridHeight)
 {
 	std::vector<float> vertices;
 
+	// Horizontal lines
 	for (int y = 0; y <= gridHeight; ++y) {
-		for (int x = 0; x <= gridWidth; ++x) {
-			vertices.push_back(static_cast<float>(x)); // Grid X
-			vertices.push_back(static_cast<float>(y)); // Grid Y
-		}
+		vertices.push_back(0.0f);             // Start x
+		vertices.push_back(static_cast<float>(y)); // Start y
+		vertices.push_back(static_cast<float>(gridWidth)); // End x
+		vertices.push_back(static_cast<float>(y)); // End y
+	}
+
+	// Vertical lines
+	for (int x = 0; x <= gridWidth; ++x) {
+		vertices.push_back(static_cast<float>(x)); // Start x
+		vertices.push_back(0.0f);             // Start y
+		vertices.push_back(static_cast<float>(x)); // End x
+		vertices.push_back(static_cast<float>(gridHeight)); // End y
 	}
 
 	return vertices;

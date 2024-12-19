@@ -159,7 +159,7 @@ void World::RenderUpdate()
 			it->shader.use();
 			it->shader.setUniform2i("tileCoor", mouseState.GridX, mouseState.GridY);
 			glBindVertexArray(it->shader.VAO);
-			glDrawArrays(GL_POINTS, 0, 200 / 2);
+			glDrawArrays(GL_LINES, 0, 200 / 2);
 			break;
 		}
 	}

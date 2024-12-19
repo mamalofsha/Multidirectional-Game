@@ -29,8 +29,6 @@ private:
 	static void onHoverFunction(int gridX, int gridY);
 	static void onClickFunction(int gridX, int gridY);
 	static void CursorCallback(GLFWwindow* window, double xpos, double ypos);
-	void SpawnPlayer();
-	void SpawnObjects();
 	void ProcessInputGL(GLFWwindow* window);
 	void GarbageCollection();
 	void InputUpdate();
