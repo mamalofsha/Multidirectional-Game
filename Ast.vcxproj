@@ -166,6 +166,8 @@
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Grid.frag" />
+    <None Include="Grid.vert" />
     <None Include="Shader.frag" />
     <None Include="Shader.vert" />
     <None Include="Texture.frag" />

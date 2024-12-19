@@ -112,8 +112,8 @@ std::pair<int, int> screenToGrid(double screenX, double screenY, float tileWidth
   //  std::cout << "NDC Coordinates: (" << ndcX << ", " << ndcY << ")" << std::endl;
 
     // Step 2: Reverse isometric transformation to calculate grid indices
-    float approxGridX = (ndcY / tileHeight) + (ndcX / tileWidth) / 2.0f;
-    float approxGridY = (ndcY / tileHeight) - (ndcX / tileWidth) / 2.0f;
+    float approxGridX = (ndcY / tileHeight) + (ndcX / tileWidth) ;
+    float approxGridY = (ndcY / tileHeight) - (ndcX / tileWidth) ;
 
     // Debugging approximate grid indices before rounding
    // std::cout << "Approx Grid Coordinates: (" << approxGridX << ", " << approxGridY << ")" << std::endl;
@@ -154,6 +154,60 @@ void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
     }
 }
 
+struct GridConfig {
+    int width, height;
+    float tileWidth, tileHeight;
+    std::vector<std::vector<int>> tiles; // Stores the tile types (0 = empty, 1 = occupied, etc.)
+};
+
+GridConfig readGridFromXML(const std::string& filename) {
+    GridConfig config;
+
+    // Load XML file
+    tinyxml2::XMLDocument doc;
+    if (doc.LoadFile(filename.c_str()) != tinyxml2::XML_SUCCESS) {
+        std::cerr << "Error loading XML file: " << filename << std::endl;
+        return config;
+    }
+
+    // Parse dimensions
+    auto* root = doc.FirstChildElement("grid");
+    if (!root) {
+        std::cerr << "Invalid XML structure: No <grid> element." << std::endl;
+        return config;
+    }
+
+    auto* dimensions = root->FirstChildElement("dimensions");
+    if (dimensions) {
+        dimensions->FirstChildElement("width")->QueryIntText(&config.width);
+        dimensions->FirstChildElement("height")->QueryIntText(&config.height);
+    }
+
+    // Parse tile size
+    auto* tile = root->FirstChildElement("tile");
+    if (tile) {
+        tile->FirstChildElement("width")->QueryFloatText(&config.tileWidth);
+        tile->FirstChildElement("height")->QueryFloatText(&config.tileHeight);
+    }
+
+    // Parse tiles
+    auto* tilesElement = root->FirstChildElement("tiles");
+    if (tilesElement) {
+        for (auto* row = tilesElement->FirstChildElement("row"); row; row = row->NextSiblingElement("row")) {
+            std::vector<int> tileRow;
+            const char* rowText = row->GetText();
+            std::stringstream ss(rowText); // Initialize with rowText
+            int tileType;
+            while (ss >> tileType) {
+                tileRow.push_back(tileType);
+            }
+            config.tiles.push_back(tileRow);
+        }
+    }
+
+    return config;
+}
+
 int main() {
     // Initialize GLFW
     if (!glfwInit()) {
@@ -183,8 +237,11 @@ int main() {
     GLuint fragmentShader = compileShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
     GLuint shaderProgram = linkProgram(vertexShader, fragmentShader);
 
-    // Generate grid vertices
-    std::vector<float> gridVertices = createGridVertices(GRID_WIDTH, GRID_HEIGHT);
+    // Load grid configuration from XML
+    GridConfig gridConfig = readGridFromXML("grid_config.xml");
+
+    // Generate grid vertices based on the XML data
+    std::vector<float> gridVertices = createGridVertices(gridConfig.width, gridConfig.height);
 
     // Create vertex buffer and array objects
     GLuint VBO, VAO;
@@ -222,14 +279,6 @@ int main() {
         else {
             glUniform2i(hoveredTileLocation, hoveredGridX, hoveredGridY);
         }
-        float ndcX = (mouseState.x / windowWidth) * 2.0f - 1.0f;
-        float ndcY = 1.0f - (mouseState.y / windowHeight) * 2.0f;
-        int gridX = static_cast<int>(ceil(((2.0 * ndcX / 0.2) + (2.0 * ndcY / 0.1)) / 2));
-        int gridY = static_cast<int>(ceil(((2.0 * ndcY / 0.1) - (2.0 * ndcX / 0.2))/2));
-
-
-        std::cout << gridX << ",";
-        std::cout << gridY << std::endl;
 
         glBindVertexArray(VAO);
         glDrawArrays(GL_POINTS, 0, gridVertices.size() / 2);
