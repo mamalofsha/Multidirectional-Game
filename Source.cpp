@@ -31,9 +31,20 @@ void main() {
 const char* fragmentShaderSource = R"(
 #version 330 core
 out vec4 FragColor;
+uniform ivec2 tileCoor; // Hovered tile coordinate
+uniform vec2 tileSize;  // Size of each tile
+uniform vec2 screenSize; // Screen dimensions
 
 void main() {
-    FragColor = vec4(0.8, 0.8, 0.8, 1.0); // Light gray
+    vec2 screenCoord = (gl_FragCoord.xy / screenSize) * 2.0 - 1.0;
+    float gridX = (2.0 * screenCoord.x / tileSize.x) + (2.0 * screenCoord.y / tileSize.y);
+    float gridY = (2.0 * screenCoord.y / tileSize.y) - (2.0 * screenCoord.x / tileSize.x);
+
+    if (int(gridX) == tileCoor.x && int(gridY) == tileCoor.y) {
+        FragColor = vec4(1.0, 0.0, 0.0, 1.0); // Highlight the hovered tile in red
+    } else {
+        FragColor = vec4(0.8, 0.8, 0.8, 1.0); // Default gray for other tiles
+    }
 }
 )";
 
@@ -84,64 +95,64 @@ std::vector<float> createGridVertices(int gridWidth, int gridHeight) {
     return vertices;
 }
 
-
-
-
-struct GridConfig {
-    int width, height;
-    float tileWidth, tileHeight;
-    std::vector<std::vector<int>> tiles; // Stores the tile types (0 = empty, 1 = occupied, etc.)
+struct MouseState {
+    double x, y;       // Current mouse position
+    bool leftPressed;  // Is the left button pressed?
+    bool rightPressed; // Is the right button pressed?
 };
 
-GridConfig readGridFromXML(const std::string& filename) {
-    GridConfig config;
+MouseState mouseState;
 
-    // Load XML file
-    tinyxml2::XMLDocument doc;
-    if (doc.LoadFile(filename.c_str()) != tinyxml2::XML_SUCCESS) {
-        std::cerr << "Error loading XML file: " << filename << std::endl;
-        return config;
-    }
+std::pair<int, int> screenToGrid(double screenX, double screenY, float tileWidth, float tileHeight, int windowWidth, int windowHeight) {
+    // Step 1: Convert screen coordinates to Normalized Device Coordinates (NDC)
+    float ndcX = (screenX / windowWidth) * 2.0f - 1.0f;
+    float ndcY = 1.0f - (screenY / windowHeight) * 2.0f;
 
-    // Parse dimensions
-    auto* root = doc.FirstChildElement("grid");
-    if (!root) {
-        std::cerr << "Invalid XML structure: No <grid> element." << std::endl;
-        return config;
-    }
+    // Debugging NDC values
+  //  std::cout << "NDC Coordinates: (" << ndcX << ", " << ndcY << ")" << std::endl;
 
-    auto* dimensions = root->FirstChildElement("dimensions");
-    if (dimensions) {
-        dimensions->FirstChildElement("width")->QueryIntText(&config.width);
-        dimensions->FirstChildElement("height")->QueryIntText(&config.height);
-    }
+    // Step 2: Reverse isometric transformation to calculate grid indices
+    float approxGridX = (ndcY / tileHeight) + (ndcX / tileWidth) / 2.0f;
+    float approxGridY = (ndcY / tileHeight) - (ndcX / tileWidth) / 2.0f;
 
-    // Parse tile size
-    auto* tile = root->FirstChildElement("tile");
-    if (tile) {
-        tile->FirstChildElement("width")->QueryFloatText(&config.tileWidth);
-        tile->FirstChildElement("height")->QueryFloatText(&config.tileHeight);
-    }
+    // Debugging approximate grid indices before rounding
+   // std::cout << "Approx Grid Coordinates: (" << approxGridX << ", " << approxGridY << ")" << std::endl;
 
-    // Parse tiles
-    auto* tilesElement = root->FirstChildElement("tiles");
-    if (tilesElement) {
-        for (auto* row = tilesElement->FirstChildElement("row"); row; row = row->NextSiblingElement("row")) {
-            std::vector<int> tileRow;
-            const char* rowText = row->GetText();
-            std::stringstream ss(rowText); // Initialize with rowText
-            int tileType;
-            while (ss >> tileType) {
-                tileRow.push_back(tileType);
-            }
-            config.tiles.push_back(tileRow);
-        }
-    }
+    // Step 3: Round to the nearest integer grid index
+    int gridX = static_cast<int>(round(approxGridX));
+    int gridY = static_cast<int>(round(approxGridY));
 
-    return config;
+    // Debugging final grid indices
+    //std::cout << "Final Grid Coordinates: (" << gridX << ", " << gridY << ")" << std::endl;
+
+    return { gridX, gridY };
 }
 
+void mousePositionCallback(GLFWwindow* window, double xpos, double ypos) {
+    mouseState.x = xpos;
+    mouseState.y = ypos;
 
+    int windowWidth, windowHeight;
+    glfwGetWindowSize(window, &windowWidth, &windowHeight);
+    auto [gridX, gridY] = screenToGrid(xpos, ypos, TILE_WIDTH, TILE_HEIGHT, windowWidth, windowHeight);
+
+    std::cout << "Mouse moved to grid: (" << gridX << ", " << gridY << ")" << std::endl;
+}
+
+void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
+        mouseState.leftPressed = true;
+
+        int windowWidth, windowHeight;
+        glfwGetWindowSize(window, &windowWidth, &windowHeight);
+        auto [gridX, gridY] = screenToGrid(mouseState.x, mouseState.y, TILE_WIDTH, TILE_HEIGHT, windowWidth, windowHeight);
+
+        std::cout << "Mouse clicked on grid: (" << gridX << ", " << gridY << ")" << std::endl;
+    }
+    else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE) {
+        mouseState.leftPressed = false;
+    }
+}
 
 int main() {
     // Initialize GLFW
@@ -150,7 +161,7 @@ int main() {
         return -1;
     }
 
-    GLFWwindow* window = glfwCreateWindow(800, 600, "Isometric Grid with XML", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(800, 600, "Isometric Grid with Mouse Interaction", nullptr, nullptr);
     if (!window) {
         std::cerr << "Failed to create GLFW window\n";
         glfwTerminate();
@@ -164,16 +175,16 @@ int main() {
         return -1;
     }
 
+    glfwSetCursorPosCallback(window, mousePositionCallback);
+    glfwSetMouseButtonCallback(window, mouseButtonCallback);
+
     // Compile shaders and link program
     GLuint vertexShader = compileShader(GL_VERTEX_SHADER, vertexShaderSource);
     GLuint fragmentShader = compileShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
     GLuint shaderProgram = linkProgram(vertexShader, fragmentShader);
 
-    // Load grid configuration from XML
-    GridConfig gridConfig = readGridFromXML("grid_config.xml");
-
-    // Generate grid vertices based on the XML data
-    std::vector<float> gridVertices = createGridVertices(gridConfig.width, gridConfig.height);
+    // Generate grid vertices
+    std::vector<float> gridVertices = createGridVertices(GRID_WIDTH, GRID_HEIGHT);
 
     // Create vertex buffer and array objects
     GLuint VBO, VAO;
@@ -190,16 +201,38 @@ int main() {
     // Set uniform values
     glUseProgram(shaderProgram);
     GLint tileSizeLocation = glGetUniformLocation(shaderProgram, "tileSize");
-    glUniform2f(tileSizeLocation, gridConfig.tileWidth, gridConfig.tileHeight);
+    glUniform2f(tileSizeLocation, TILE_WIDTH, TILE_HEIGHT);
+    GLint screenSizeLocation = glGetUniformLocation(shaderProgram, "screenSize");
+    glUniform2f(screenSizeLocation, 800.0f, 600.0f);
 
     // Main render loop
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // Draw grid
+        int windowWidth, windowHeight;
+        glfwGetWindowSize(window, &windowWidth, &windowHeight);
+
+        auto [hoveredGridX, hoveredGridY] = screenToGrid(mouseState.x, mouseState.y, TILE_WIDTH, TILE_HEIGHT, windowWidth, windowHeight);
+
         glUseProgram(shaderProgram);
+        GLint hoveredTileLocation = glGetUniformLocation(shaderProgram, "tileCoor");
+        if (hoveredTileLocation == -1) {
+            std::cerr << "Error: Uniform 'tileCoor' not found in the shader!" << std::endl;
+        }
+        else {
+            glUniform2i(hoveredTileLocation, hoveredGridX, hoveredGridY);
+        }
+        float ndcX = (mouseState.x / windowWidth) * 2.0f - 1.0f;
+        float ndcY = 1.0f - (mouseState.y / windowHeight) * 2.0f;
+        int gridX = static_cast<int>(ceil(((2.0 * ndcX / 0.2) + (2.0 * ndcY / 0.1)) / 2));
+        int gridY = static_cast<int>(ceil(((2.0 * ndcY / 0.1) - (2.0 * ndcX / 0.2))/2));
+
+
+        std::cout << gridX << ",";
+        std::cout << gridY << std::endl;
+
         glBindVertexArray(VAO);
-        glDrawArrays(GL_POINTS, 0, gridVertices.size() / 2); // Drawing each vertex
+        glDrawArrays(GL_POINTS, 0, gridVertices.size() / 2);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -213,6 +246,3 @@ int main() {
 
     return 0;
 }
-
-
-
