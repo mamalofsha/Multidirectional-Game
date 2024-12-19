@@ -16,6 +16,10 @@ public:
     unsigned int VBO;
     unsigned int EBO;
     unsigned int Texture;
+    Shader() : ID(0) { // Default constructor
+        // Optionally, create a minimal shader program or leave empty
+        std::cout << "Default Shader created" << std::endl;
+    }
     // constructor generates the shader on the fly
     // ------------------------------------------------------------------------
     Shader(const char* vertexPath, const char* fragmentPath)
@@ -94,7 +98,15 @@ public:
     {
         glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
     }
-
+    void setUniform2i(const std::string& name, int x, int y) {
+        GLint location = glGetUniformLocation(ID, name.c_str());
+        if (location != -1) {
+            glUniform2i(location, x, y);
+        }
+        else {
+            std::cerr << "Error: Uniform '" << name << "' not found in shader!" << std::endl;
+        }
+    }
 private:
     // utility function for checking shader compilation/linking errors.
     // ------------------------------------------------------------------------

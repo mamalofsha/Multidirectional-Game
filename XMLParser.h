@@ -2,6 +2,7 @@
 #include <string>
 #include "Graphics.h"
 
+
 class XMLParser
 {
 public:

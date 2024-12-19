@@ -1,6 +1,7 @@
 #include "Graphics.h"
 #include "stb_image.h"
 #include "GameObject.h"
+#include "XMLParser.h"
 
 GLFWwindow* Graphics::InitWindow(const unsigned int Width, const unsigned int Height)
 {
@@ -106,6 +107,35 @@ Shader Graphics::DrawTexture(const char* InFileName)
 	return ourShader;
 }
 
+Shader Graphics::DrawGrid(const std::string& filename)
+{
+	Shader ourShader("Grid.vert", "Grid.frag");
+
+	GridConfig gridConfig = XMLParser::ParseGridDataFromXML("grid_config.xml");
+	std::vector<float> gridVertices = createGridVertices(gridConfig.width, gridConfig.height);
+
+	// Create vertex buffer and array objects
+	GLuint VBO, VAO;
+	glGenBuffers(1, &VBO);
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+	ourShader.VAO = VAO;
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, gridVertices.size() * sizeof(float), gridVertices.data(), GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	ourShader.VBO = VBO;
+
+	// Set uniform values
+	ourShader.use();
+	GLint tileSizeLocation = glGetUniformLocation(ourShader.ID, "tileSize");
+	glUniform2f(tileSizeLocation, gridConfig.tileWidth, gridConfig.tileHeight);
+	GLint screenSizeLocation = glGetUniformLocation(ourShader.ID, "screenSize");
+	glUniform2f(screenSizeLocation, 800.0f, 800.0f);
+	return ourShader;
+}
+
 void Graphics::DrawShape(GameObject& InObject)
 {
 		//Shader TriShader("Shader.vert", "Shader.frag"); // you can name your shader files however you like
@@ -169,6 +199,20 @@ void Graphics::DrawShape2(GameObject& InObject)
 	InObject.ObjectShader->VBO = VBO;
 	InObject.ObjectShader->use();
 	glDrawArrays(GL_TRIANGLES, 0, 3);
+}
+
+std::vector<float> Graphics::createGridVertices(int gridWidth, int gridHeight)
+{
+	std::vector<float> vertices;
+
+	for (int y = 0; y <= gridHeight; ++y) {
+		for (int x = 0; x <= gridWidth; ++x) {
+			vertices.push_back(static_cast<float>(x)); // Grid X
+			vertices.push_back(static_cast<float>(y)); // Grid Y
+		}
+	}
+
+	return vertices;
 }
 
 void Graphics::framebuffer_size_callback(GLFWwindow* window, int width, int height)

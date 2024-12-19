@@ -9,9 +9,9 @@ void main() {
     float gridX = (screenCoord.x / tileSize.x) + ( screenCoord.y / tileSize.y);
     float gridY = ( screenCoord.y / tileSize.y) - ( screenCoord.x / tileSize.x);
 
-    if (int(gridX)==tileCoor.x && int(gridY)==tileCoor.y) {
+    if (int(gridX)==tileCoor.x && int(gridY)==tileCoor.y || (int(gridX)==tileCoor.x-1 && int(gridY)==tileCoor.y-1)) {
         FragColor = vec4(1.0, 0.0, 0.0, 1.0); // Highlight the hovered tile in red
     } else {
-        FragColor = vec4(0.8, 0.8, 0.8, 1.0); // Default gray for other tiles
+        FragColor = vec4(1.0, 0.0, 0.0, 1.0); // Default gray for other tiles
     }
 }

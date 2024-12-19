@@ -1,6 +1,7 @@
 #include "XMLParser.h"
 #include <vector>
 #include <TinyXML/tinyxml2.h>
+#include "Graphics.h"
 
 GridConfig XMLParser::ParseGridDataFromXML(const std::string& filename)
 {
