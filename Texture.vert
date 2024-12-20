@@ -5,12 +5,13 @@ layout (location = 2) in vec2 aTexCoord;
 out vec3 ourColor;
 out vec2 TexCoord;
 uniform vec3 panOffset;
+uniform float zoom;
 
 void main()
 {
 ourColor = aColor;
 TexCoord = aTexCoord;
-gl_Position = vec4(aPos+panOffset, 1.0f);
+gl_Position = vec4((aPos+panOffset)*zoom, 1.0f);
 }
 
 
