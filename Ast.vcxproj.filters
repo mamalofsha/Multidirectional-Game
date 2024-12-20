@@ -68,6 +68,12 @@
     <None Include="Grid.vert">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="UI.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="UI.frag">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h">
@@ -95,6 +101,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MouseInteraction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

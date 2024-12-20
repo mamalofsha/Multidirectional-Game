@@ -7,6 +7,7 @@
 #include "Graphics.h"
 #include <functional>
 #include "MouseInteraction.h"
+#include "Button.h"
 
 struct WindowContext {
 	MouseInteractionAPI* mouseAPI;
@@ -46,6 +47,7 @@ private:
 	void CollisionUpdate();
 	void HandleCollision(GameObject& GameObject1, GameObject& GameObject2);
 public:
+	Button* sd;
 
 	World(std::vector<std::shared_ptr<GameObject>>& GameObjects);
 	World(const std::string& InFileName);
