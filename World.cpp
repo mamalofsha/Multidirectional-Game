@@ -16,9 +16,10 @@ World::World(std::vector<std::shared_ptr<GameObject>>& GameObjects)
 
 World::World(const unsigned int Width, const unsigned int Height)
 {
-	Window = Graphics::InitWindow(Width, Height);
+	StartUpData Temp = XMLParser::LoadLeveL("TestLevel.xml");
+	Window = Graphics::InitWindow(Temp.WindowWidth, Temp.WindowHeight);
 	InitBackground();
-	InitGrid();
+	InitGrid(Temp.GridFileName);
 	SetupMouseCallbacks();
 
 }
@@ -46,9 +47,9 @@ void World::InitBackground()
 	Shaders.push_back({Graphics::DrawTexture("Map1.jpg"), ShaderType::Background });
 }
 
-void World::InitGrid()
+void World::InitGrid(const std::string& InFileName)
 {
-	gridConfig = XMLParser::ParseGridDataFromXML("grid_config.xml");
+	gridConfig = XMLParser::ParseGridDataFromXML(InFileName);
 	Shaders.push_back({ Graphics::DrawGrid(gridConfig), ShaderType::Grid });
 }
 
@@ -108,15 +109,15 @@ void World::ProcessInputGL(GLFWwindow* window)
 	}
 
 	Zoom = std::clamp(Zoom, 1.f, 3.5f);
-	float minPanX = -((800.0f * Zoom) - windowWidth) / 2000.0f;
-	float maxPanX = ((800.0f * Zoom) - windowWidth) / 2000.0f;
+	float minPanX = -((2000.0f * Zoom) - windowWidth) / 2000.0f;
+	float maxPanX = ((2000.0f * Zoom) - windowWidth) / 2000.0f;
 
-	float minPanY = -((800.0f * Zoom) - windowHeight) / 2000.0f;
-	float maxPanY = ((800.0f * Zoom) - windowHeight) / 2000.0f;
+	float minPanY = -((1404.0f * 1) - (windowHeight * Zoom)) / 2000.0f;
+	float maxPanY = ((1404.0f * Zoom) - windowHeight) / 2000.0f;
 	panX = std::clamp(panX, minPanX, maxPanX);
 	panY = std::clamp(panY, minPanY, maxPanY);
-	std::cout << "panx: " << Zoom << std::endl;
-	std::cout << "panx lim: " << minPanX << ": " << maxPanX << std::endl;
+	std::cout << "pany: " << panY << std::endl;
+	std::cout << "panY lim: " << minPanY << ": " << maxPanY << std::endl;
 
 
 
@@ -156,8 +157,11 @@ void World::RenderUpdate()
 	// static stuff , right now only BG
 	for (auto it = Shaders.begin(); it < Shaders.end(); it++)
 	{
+		float scaleX = 2000.0f / 800.0f;
+		float scaleY = 1404.0f / 800.0f;
 		// bind Texture
 		// render container
+		GLuint  transformLoc;
 		switch (it->type)
 		{
 		case ShaderType::Background:
@@ -166,8 +170,16 @@ void World::RenderUpdate()
 			glBindTexture(GL_TEXTURE_2D, it->shader.Texture);
 			// render container
 			it->shader.use();
-			it->shader.setUniform3f("panOffset", panX, panY,0.f);
-			it->shader.setFloat("zoom", Zoom);
+			//it->shader.setUniform3f("panOffset", panX, panY,0.f);
+			// Scale and translate the background
+			glm::mat4 transform = glm::mat4(1.0f);
+
+			transform = glm::scale(transform, glm::vec3(scaleX*Zoom, scaleY*Zoom, 1.0f));
+			transform = glm::translate(transform, glm::vec3(panX, panY, 0.0f));
+
+			  transformLoc = glGetUniformLocation((it)->shader.ID, "transform");
+			glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
+			//it->shader.setFloat("zoom", Zoom);
 			glBindVertexArray(it->shader.VAO);
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
@@ -193,7 +205,7 @@ void World::RenderUpdate()
 		transform = glm::translate(transform, glm::vec3((*it)->GetTransform().Location[0], (*it)->GetTransform().Location[1], 0.0f));
 		transform = glm::rotate(transform, (*it)->GetTransform().Rotation, glm::vec3(0.0f, 0.0f, 1.0f));
 		(*it)->ObjectShader->use();
-		unsigned int transformLoc = glGetUniformLocation((*it)->ObjectShader->ID, "transform");
+		GLuint   transformLoc = glGetUniformLocation((*it)->ObjectShader->ID, "transform");
 		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
 		glBindVertexArray((*it)->ObjectShader->VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 3);

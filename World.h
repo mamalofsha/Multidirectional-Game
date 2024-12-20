@@ -34,7 +34,7 @@ private:
 	Shader BackGround;
 	//
 	void InitBackground();
-	void InitGrid();
+	void InitGrid(const std::string& InFileName);
 	static void onHoverFunction(int gridX, int gridY);
 	static void onClickFunction(int gridX, int gridY);
 	static void CursorCallback(GLFWwindow* window, double xpos, double ypos);

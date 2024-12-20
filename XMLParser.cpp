@@ -57,3 +57,32 @@ GridConfig XMLParser::ParseGridDataFromXML(const std::string& InFileName)
 
     return OutConfig;
 }
+
+StartUpData XMLParser::LoadLeveL(const std::string& InFileName)
+{
+    StartUpData Data;
+    tinyxml2::XMLDocument doc;
+    if (doc.LoadFile(InFileName.c_str()) != tinyxml2::XML_SUCCESS) {
+        std::cerr << "Error loading XML file: " << InFileName << std::endl;
+        return Data;
+    }
+
+    auto* root = doc.FirstChildElement("level");
+    if (!root) {
+        std::cerr << "Invalid XML structure: No <level> element." << std::endl;
+        return Data;
+    }
+
+    auto* dimensions = root->FirstChildElement("dimensions");
+    if (dimensions) {
+        dimensions->FirstChildElement("width")->QueryIntText(&Data.WindowWidth);
+        dimensions->FirstChildElement("height")->QueryIntText(&Data.WindowHeight);
+    }
+
+    auto* GridFile = root->FirstChildElement("gridfile");
+    if (GridFile) {
+        Data.GridFileName= GridFile->FirstChildElement("name")->GetText();
+        std::cout << GridFile->FirstChildElement("name")->GetText();
+    }
+    return Data;
+}
