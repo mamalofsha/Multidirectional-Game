@@ -5,6 +5,8 @@ MouseInteractionAPI::MouseInteractionAPI(GLFWwindow* InWindow, GridConfig InConf
     glfwSetCursorPosCallback(InWindow,CursorCallback);
     glfwSetMouseButtonCallback(InWindow,ClickCallback);
     SetTile(InConfig.tileWidth, InConfig.tileHeight);
+    gridoffsetX = InConfig.StartOffsetX;
+    gridoffsetY = InConfig.StartOffsetY;
     SetHoverCallback(Hovercallback);
     SetClickCallback(ClickCallBack);
     glfwSetWindowUserPointer(InWindow, this);
@@ -59,7 +61,7 @@ void MouseInteractionAPI::ClickCallback(GLFWwindow* window, int button, int acti
 void MouseInteractionAPI::HandleMouseMove(double xpos, double ypos, int windowWidth, int windowHeight)
 {
 
-    auto [gridX, gridY] = ScreenToGrid(xpos, ypos, TileWidth, TileHeight, windowWidth, windowHeight);
+    auto [gridX, gridY] = ScreenToGrid(xpos, ypos, TileWidth, TileHeight, gridoffsetX,gridoffsetY,windowWidth, windowHeight);
     CurrentMouseState.x = xpos;
     CurrentMouseState.y = ypos;
     CurrentMouseState.GridX = gridX;
@@ -71,13 +73,13 @@ void MouseInteractionAPI::HandleMouseMove(double xpos, double ypos, int windowWi
 
 void MouseInteractionAPI::HandleMouseClick(double xpos, double ypos, int windowWidth, int windowHeight)
 {
-    auto [gridX, gridY] = ScreenToGrid(xpos, ypos, TileWidth, TileHeight, windowWidth, windowHeight);
+    auto [gridX, gridY] = ScreenToGrid(xpos, ypos, TileWidth, TileHeight, gridoffsetX,gridoffsetY,windowWidth, windowHeight);
     if (OnClick) {
         OnClick(gridX, gridY); // Trigger click callback
     }
 }
 
-std::pair<int, int> MouseInteractionAPI::ScreenToGrid(double screenX, double screenY, float tileWidth, float tileHeight, int windowWidth, int windowHeight)
+std::pair<int, int> MouseInteractionAPI::ScreenToGrid(double screenX, double screenY, float tileWidth, float tileHeight, float offsetX, float offsetY, int windowWidth, int windowHeight)
 {
     /*   float ndcX = (screenX / windowWidth) * 2.0f - 1.0f;
     float ndcY = 1.0f - (screenY / windowHeight) * 2.0f;
@@ -86,15 +88,16 @@ std::pair<int, int> MouseInteractionAPI::ScreenToGrid(double screenX, double scr
     return { gridX, gridY };
    */
    // Step 1: Convert screen coordinates to Normalized Device Coordinates (NDC)
-    float ndcX = (screenX / windowWidth) * 2.0f - 1.0f;
-    float ndcY = 1.0f - (screenY / windowHeight) * 2.0f;
-
+    float ndcX = ((screenX) / windowWidth) * 2.0f - 1.0f;
+    float ndcY = 1.0f - ((screenY) / windowHeight) * 2.0f;
+    //ndcX 
+    //ndcY -= -1.5 * tileHeight;
     // Debugging NDC values
   //  std::cout << "NDC Coordinates: (" << ndcX << ", " << ndcY << ")" << std::endl;
 
     // Step 2: Reverse isometric transformation to calculate grid indices
-    float approxGridX = (ndcY / tileHeight) + (ndcX / tileWidth);
-    float approxGridY = (ndcY / tileHeight) - (ndcX / tileWidth);
+    float approxGridX = (ndcY / tileHeight) + (ndcX / tileWidth) - (offsetX);
+    float approxGridY = (ndcY / tileHeight) - (ndcX / tileWidth) - (offsetY);
 
     // Debugging approximate grid indices before rounding
    // std::cout << "Approx Grid Coordinates: (" << approxGridX << ", " << approxGridY << ")" << std::endl;

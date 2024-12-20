@@ -66,7 +66,6 @@ void World::onClickFunction(int gridX, int gridY)
 
 void World::CursorCallback(GLFWwindow* window, double xpos, double ypos)
 {
-
 	int windowWidth, windowHeight;
 	glfwGetWindowSize(window, &windowWidth, &windowHeight);
 	MouseInteractionAPI* api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(window));

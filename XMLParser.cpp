@@ -33,6 +33,13 @@ GridConfig XMLParser::ParseGridDataFromXML(const std::string& InFileName)
         tile->FirstChildElement("height")->QueryFloatText(&OutConfig.tileHeight);
     }
 
+    // Parse Offset
+    auto* offset = root->FirstChildElement("offset");
+    if (offset) {
+        offset->FirstChildElement("x")->QueryFloatText(&OutConfig.StartOffsetX);
+        offset->FirstChildElement("y")->QueryFloatText(&OutConfig.StartOffsetY);
+    }
+
     // Parse tiles
     auto* tilesElement = root->FirstChildElement("tiles");
     if (tilesElement) {

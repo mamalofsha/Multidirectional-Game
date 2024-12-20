@@ -111,7 +111,7 @@ Shader Graphics::DrawGrid(const GridConfig InGridConfig)
 {
 	Shader ourShader("Grid.vert", "Grid.frag");
 
-	std::vector<float> gridVertices = createGridVertices(InGridConfig.width, InGridConfig.height);
+	std::vector<float> gridVertices = createGridVertices(InGridConfig.width, InGridConfig.height,InGridConfig.StartOffsetX,InGridConfig.StartOffsetY);
 
 	// Create vertex buffer and array objects
 	GLuint VBO, VAO;
@@ -141,8 +141,8 @@ void Graphics::DrawShape(GameObject& InObject)
 		InObject.ObjectShader = std::make_unique<Shader>("Shader.vert", "Shader.frag");
 		float vertices[] = {
 			// positions                                                                                                                                                                                                                                                 // colors
-			InObject.GetTransform().Location[0] + InObject.GetLength() * std::cos(InObject.GetTransform().Rotation - (3 * PI / 4.0f))    , InObject.GetTransform().Location[1] + InObject.GetLength() * std::sin(InObject.GetTransform().Rotation - (3 * PI / 4.0f))    , 0.0f,  1.0f, 0.0f, 0.0f,  // bottom right
-			InObject.GetTransform().Location[0] + InObject.GetLength() * std::cos(InObject.GetTransform().Rotation + (3 * PI / 4.0f))    , InObject.GetTransform().Location[1] + InObject.GetLength() * std::sin(InObject.GetTransform().Rotation + (3 * PI / 4.0f))    , 0.0f,  0.0f, 1.0f, 0.0f,  // bottom left
+			InObject.GetTransform().Location[0] + InObject.GetLength() * std::cos(InObject.GetTransform().Rotation - (3 * PI / -1.0f))    , InObject.GetTransform().Location[1] + InObject.GetLength() * std::sin(InObject.GetTransform().Rotation - (3 * PI / -1.0f))    , 0.0f,  1.0f, 0.0f, 0.0f,  // bottom right
+			InObject.GetTransform().Location[0] + InObject.GetLength() * std::cos(InObject.GetTransform().Rotation + (3 * PI / -1.0f))    , InObject.GetTransform().Location[1] + InObject.GetLength() * std::sin(InObject.GetTransform().Rotation + (3 * PI / -1.0f))    , 0.0f,  0.0f, 1.0f, 0.0f,  // bottom left
 			InObject.GetTransform().Location[0] + InObject.GetLength() * std::cos(InObject.GetTransform().Rotation)                      , InObject.GetTransform().Location[1] + InObject.GetLength() * std::sin(InObject.GetTransform().Rotation)                      , 0.0f,  0.0f, 0.0f, 1.0f   // top 
 		};
 		unsigned int VBO, VAO;
@@ -176,8 +176,8 @@ void Graphics::DrawShape2(GameObject& InObject)
 	}
 	float vertices[] = {
 		// positions																																																														 // colors
-		InObject.GetTransform().Location[0] + InObject.GetLength() * std::cos(InObject.GetTransform().Rotation - (3 * PI / 4.0f))    , InObject.GetTransform().Location[1] + InObject.GetLength() * std::sin(InObject.GetTransform().Rotation - (3 * PI / 4.0f))    , 0.0f ,  haz ? 1.0f : 0.0f, haz ? 0.0f : 1.0f, 0.0f,  // bottom right
-		InObject.GetTransform().Location[0] + InObject.GetLength() * std::cos(InObject.GetTransform().Rotation + (3 * PI / 4.0f))    , InObject.GetTransform().Location[1] + InObject.GetLength() * std::sin(InObject.GetTransform().Rotation + (3 * PI / 4.0f))    , 0.0f ,  haz ? 1.0f : 0.0f, haz ? 0.0f : 1.0f, 0.0f,  // bottom left
+		InObject.GetTransform().Location[0] + InObject.GetLength() * std::cos(InObject.GetTransform().Rotation - (3 * PI / -1.0f))    , InObject.GetTransform().Location[1] + InObject.GetLength() * std::sin(InObject.GetTransform().Rotation - (3 * PI / -1.0f))    , 0.0f ,  haz ? 1.0f : 0.0f, haz ? 0.0f : 1.0f, 0.0f,  // bottom right
+		InObject.GetTransform().Location[0] + InObject.GetLength() * std::cos(InObject.GetTransform().Rotation + (3 * PI / -1.0f))    , InObject.GetTransform().Location[1] + InObject.GetLength() * std::sin(InObject.GetTransform().Rotation + (3 * PI / -1.0f))    , 0.0f ,  haz ? 1.0f : 0.0f, haz ? 0.0f : 1.0f, 0.0f,  // bottom left
 		InObject.GetTransform().Location[0] + InObject.GetLength() * std::cos(InObject.GetTransform().Rotation)                      , InObject.GetTransform().Location[1] + InObject.GetLength() * std::sin(InObject.GetTransform().Rotation)                      , 0.0f ,  haz ? 1.0f : 0.0f, haz ? 0.0f : 1.0f, 1.0f   // top 
 	};
 	unsigned int VBO, VAO;
@@ -200,24 +200,24 @@ void Graphics::DrawShape2(GameObject& InObject)
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
-std::vector<float> Graphics::createGridVertices(int gridWidth, int gridHeight)
+std::vector<float> Graphics::createGridVertices(float gridWidth, float gridHeight, float OffsetX, float OffsetY)
 {
 	std::vector<float> vertices;
 
 	// Horizontal lines
 	for (int y = 0; y <= gridHeight; ++y) {
-		vertices.push_back(0.0f);             // Start x
-		vertices.push_back(static_cast<float>(y)); // Start y
-		vertices.push_back(static_cast<float>(gridWidth)); // End x
-		vertices.push_back(static_cast<float>(y)); // End y
+		vertices.push_back(0.0f + OffsetX);             // Start x
+		vertices.push_back(static_cast<float>(y)+ OffsetY); // Start y
+		vertices.push_back(static_cast<float>(gridWidth)+ OffsetX); // End x
+		vertices.push_back(static_cast<float>(y)+ OffsetY); // End y
 	}
 
 	// Vertical lines
 	for (int x = 0; x <= gridWidth; ++x) {
-		vertices.push_back(static_cast<float>(x)); // Start x
-		vertices.push_back(0.0f);             // Start y
-		vertices.push_back(static_cast<float>(x)); // End x
-		vertices.push_back(static_cast<float>(gridHeight)); // End y
+		vertices.push_back(static_cast<float>(x)+ OffsetX); // Start x
+		vertices.push_back(0.0f + OffsetY);             // Start y
+		vertices.push_back(static_cast<float>(x) + OffsetX); // End x
+		vertices.push_back(static_cast<float>(gridHeight) + OffsetY); // End y
 	}
 
 	return vertices;

@@ -15,7 +15,8 @@ private:
     MouseState CurrentMouseState;
     float TileWidth;
     float TileHeight;
-
+    float gridoffsetX;
+    float gridoffsetY;
 public:
     using MouseEventCallback = std::function<void(int gridX, int gridY)>;
     
@@ -35,5 +36,5 @@ private:
     MouseEventCallback OnClick = nullptr;
 
     // Convert screen coordinates to grid coordinates
-    std::pair<int, int> ScreenToGrid(double screenX, double screenY, float tileWidth, float tileHeight, int windowWidth, int windowHeight);
+    std::pair<int, int> ScreenToGrid(double screenX, double screenY, float tileWidth, float tileHeight, float offsetX, float offsetY,int windowWidth, int windowHeight);
 };
