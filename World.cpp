@@ -6,6 +6,7 @@
 #include "PlayerObject.h"
 #include "Math.h"
 #include "XMLParser.h"
+#include <algorithm>
 
 
 World::World(std::vector<std::shared_ptr<GameObject>>& GameObjects)
@@ -79,10 +80,14 @@ void World::ProcessInputGL(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
-	float panSpeed = 0.05f; // Speed of panning
+	int windowWidth, windowHeight;
+	glfwGetWindowSize(window, &windowWidth, &windowHeight);
+	float panSpeed = 0.01f; // Speed of panning
+
 
 	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
 		panX -= panSpeed;
+
 	}
 	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
 		panX += panSpeed;
@@ -94,11 +99,27 @@ void World::ProcessInputGL(GLFWwindow* window)
 		panY -= panSpeed;
 	}
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-		Zoom +=  panSpeed;
+		if(Zoom < 3.5f)
+		Zoom +=  0.05f;
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-		Zoom -= panSpeed;
+		Zoom -= 0.05f;
+
 	}
+
+	Zoom = std::clamp(Zoom, 1.f, 3.5f);
+	float minPanX = -((800.0f * Zoom) - windowWidth) / 2000.0f;
+	float maxPanX = ((800.0f * Zoom) - windowWidth) / 2000.0f;
+
+	float minPanY = -((800.0f * Zoom) - windowHeight) / 2000.0f;
+	float maxPanY = ((800.0f * Zoom) - windowHeight) / 2000.0f;
+	panX = std::clamp(panX, minPanX, maxPanX);
+	panY = std::clamp(panY, minPanY, maxPanY);
+	std::cout << "panx: " << Zoom << std::endl;
+	std::cout << "panx lim: " << minPanX << ": " << maxPanX << std::endl;
+
+
+
 }
 
 void World::GarbageCollection()
