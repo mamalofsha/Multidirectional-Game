@@ -23,7 +23,7 @@ class Graphics
 public:
 	static GLFWwindow* InitWindow(const unsigned int Width, const unsigned int Height);
 	static Shader DrawTexture(const char* InFileName);
-	static Shader DrawGrid(const std::string& filename);
+	static Shader DrawGrid(const GridConfig InGridConfig);
 	static void DrawShape(class GameObject& InObject);
 	static void DrawShape2(class GameObject& InObject);
 	static std::vector<float> createGridVertices(int gridWidth, int gridHeight);

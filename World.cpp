@@ -5,6 +5,8 @@
 #include <glm/ext/matrix_transform.hpp>
 #include "PlayerObject.h"
 #include "Math.h"
+#include "XMLParser.h"
+
 
 World::World(std::vector<std::shared_ptr<GameObject>>& GameObjects)
 {
@@ -14,9 +16,10 @@ World::World(std::vector<std::shared_ptr<GameObject>>& GameObjects)
 World::World(const unsigned int Width, const unsigned int Height)
 {
 	Window = Graphics::InitWindow(Width, Height);
-	SetupMouseCallbacks();
 	InitBackground();
 	InitGrid();
+	SetupMouseCallbacks();
+
 }
 
 World::~World()
@@ -26,6 +29,10 @@ World::~World()
 		glDeleteVertexArrays(1, &it->shader.VAO);
 		glDeleteBuffers(1, &it->shader.VBO);
 		glDeleteBuffers(1, &it->shader.EBO);
+	}
+	MouseInteractionAPI* api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(Window));
+	if (api) {
+		delete api; // Free the dynamically allocated memory
 	}
 	GameObjects.clear();
 	Player = nullptr;
@@ -40,13 +47,13 @@ void World::InitBackground()
 
 void World::InitGrid()
 {
-	Shaders.push_back({ Graphics::DrawGrid("grid_config.xml"), ShaderType::Grid });
+	gridConfig = XMLParser::ParseGridDataFromXML("grid_config.xml");
+	Shaders.push_back({ Graphics::DrawGrid(gridConfig), ShaderType::Grid });
 }
 
 void World::onHoverFunction(int gridX, int gridY)
 {
-	std::cout << "Hovered over tile: (" << gridX << ", " << gridY << ")" << std::endl;
-	
+	std::cout << "Hovereddead over tile: (" << gridX << ", " << gridY << ")" << std::endl;
 	//mouseState.GridX = gridX;
 	//mouseState.GridY = gridY;
 }
@@ -59,13 +66,13 @@ void World::onClickFunction(int gridX, int gridY)
 
 void World::CursorCallback(GLFWwindow* window, double xpos, double ypos)
 {
+
 	int windowWidth, windowHeight;
 	glfwGetWindowSize(window, &windowWidth, &windowHeight);
-	//mouseState.x = xpos;
-	//mouseState.y = ypos;
 	MouseInteractionAPI* api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(window));
 	if (api) {
-	//	api->handleMouseMove(xpos, ypos, windowWidth, windowHeight, gridConfig.tileWidth, gridConfig.tileHeight);
+		// Use the API
+		api->HandleMouseMove(xpos, ypos, windowWidth, windowHeight);
 	}
 }
 
@@ -109,27 +116,11 @@ void World::InputUpdate()
 void World::SetupMouseCallbacks()
 {
 	// Mouse Interaction API setup
-	MouseInteractionAPI mouseAPI;
-	mouseAPI.setHoverCallback(onHoverFunction); // Use regular function
-	//mouseAPI.setClickCallback(onClickFunction); // Use regular functio
-	glfwSetCursorPosCallback(Window, CursorCallback);
-
-	glfwSetMouseButtonCallback(Window, [](GLFWwindow* window, int button, int action, int mods) {
-		if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
-			double xpos, ypos;
-			glfwGetCursorPos(window, &xpos, &ypos);
-			int windowWidth, windowHeight;
-			glfwGetWindowSize(window, &windowWidth, &windowHeight);
-
-			MouseInteractionAPI* api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(window));
-			if (api) {
-				//	api->handleMouseClick(xpos, ypos, windowWidth, windowHeight, gridConfig.tileWidth, gridConfig.tileHeight);
-			}
-		}
-		});
-
-	glfwSetWindowUserPointer(Window, &mouseAPI);
-
+	MouseInteractionAPI* mouseAPI = new MouseInteractionAPI(gridConfig,onHoverFunction,onClickFunction);
+	glfwSetCursorPosCallback(Window, MouseInteractionAPI::CursorCallback);
+	glfwSetMouseButtonCallback(Window, MouseInteractionAPI::ClickCallback);
+	// Set the user pointer
+	glfwSetWindowUserPointer(Window, mouseAPI);
 }
 
 void World::RenderUpdate()
@@ -245,6 +236,7 @@ void World::Update(float DeltaSeconds)
 	RenderUpdate();
 	glfwPollEvents();
 	//CollisionUpdate();
+
 }
 
 bool World::IsRunning()

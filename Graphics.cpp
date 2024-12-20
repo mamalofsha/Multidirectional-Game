@@ -107,12 +107,11 @@ Shader Graphics::DrawTexture(const char* InFileName)
 	return ourShader;
 }
 
-Shader Graphics::DrawGrid(const std::string& filename)
+Shader Graphics::DrawGrid(const GridConfig InGridConfig)
 {
 	Shader ourShader("Grid.vert", "Grid.frag");
 
-	GridConfig gridConfig = XMLParser::ParseGridDataFromXML("grid_config.xml");
-	std::vector<float> gridVertices = createGridVertices(gridConfig.width, gridConfig.height);
+	std::vector<float> gridVertices = createGridVertices(InGridConfig.width, InGridConfig.height);
 
 	// Create vertex buffer and array objects
 	GLuint VBO, VAO;
@@ -130,7 +129,7 @@ Shader Graphics::DrawGrid(const std::string& filename)
 	// Set uniform values
 	ourShader.use();
 	GLint tileSizeLocation = glGetUniformLocation(ourShader.ID, "tileSize");
-	glUniform2f(tileSizeLocation, gridConfig.tileWidth, gridConfig.tileHeight);
+	glUniform2f(tileSizeLocation, InGridConfig.tileWidth, InGridConfig.tileHeight);
 	GLint screenSizeLocation = glGetUniformLocation(ourShader.ID, "screenSize");
 	glUniform2f(screenSizeLocation, 800.0f, 800.0f);
 	return ourShader;

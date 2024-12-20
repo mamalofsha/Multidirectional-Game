@@ -8,7 +8,12 @@
 #include <functional>
 #include "MouseInteraction.h"
 
-
+struct WindowContext {
+	MouseInteractionAPI* mouseAPI;
+	float tileWidth;
+	float tileHeight;
+	// Add other APIs or data as needed
+};
 
 class World
 {
@@ -41,8 +46,6 @@ public:
 	World(std::vector<std::shared_ptr<GameObject>>& GameObjects);
 	World(const unsigned int Width, const unsigned int Height);
 	~World();
-	std::weak_ptr<GameObject>  GetPlayer();
 	void Update(float DeltaSeconds);
-	void PassInput(std::vector<float> InDir);
 	bool IsRunning();
 };

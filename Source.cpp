@@ -9,8 +9,8 @@ int main() {
 	while (CurrentWorld->IsRunning())
 	{
 		float CurrentFrame = glfwGetTime();
-		DeltaTime = LastFrame - DeltaTime;
-		LastFrame = CurrentFrame;
+		DeltaTime = CurrentFrame - LastFrame;
+		LastFrame = glfwGetTime();
 		CurrentWorld->Update(DeltaTime);
 	}
 	delete CurrentWorld;
