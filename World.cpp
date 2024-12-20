@@ -110,7 +110,7 @@ void World::ProcessInputGL(GLFWwindow* window)
 
 	}
 
-	Zoom = std::clamp(Zoom,1.0f, 2.5f);
+	Zoom = std::clamp(Zoom,1.0f, 3.5f);
 	// Calculate visible bounds based on zoom
 	float halfVisibleWidth = (windowWidth / Zoom) / 2.0f;
 	float halfVisibleHeight = (windowHeight / Zoom) / 2.0f;
@@ -126,7 +126,8 @@ void World::ProcessInputGL(GLFWwindow* window)
 	float minPanY = (- bgHalfHeight + halfVisibleHeight)/1000.0f;
 	float maxPanY = (bgHalfHeight - halfVisibleHeight)/1000.0f;
 	panX = std::clamp(panX, minPanX, maxPanX);
-	panY = std::clamp(panY, minPanY,maxPanY);
+	// 2000/ 14004 = 1.42f
+	panY = std::clamp(panY, minPanY*1.42f,maxPanY*1.42f);
 	std::cout << "zoom: " << Zoom << std::endl;
 	std::cout << "pan: " << panY << std::endl;
 	std::cout << "panY lim: " << minPanY << ": " << maxPanY << std::endl;
