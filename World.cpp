@@ -16,18 +16,21 @@ World::World(std::vector<std::shared_ptr<GameObject>>& GameObjects)
 
 World::World(const std::string& InFileName)
 {
+
 	StartUpData Temp = XMLParser::LoadLeveL(InFileName);
 	Window = Graphics::InitWindow(Temp.LevelWidth * Temp.WindowScale, Temp.LevelHeight * Temp.WindowScale);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	InitBackground();
 	InitGrid(Temp.GridFileName);
 	SetupMouseCallbacks();
 	Shader ourShader("UI.vert", "UI.frag");
-	std::shared_ptr<Button> sd = std::make_shared<Button>(0.0f, 0.0f, 0.1f, 0.1f, []() {
+	std::shared_ptr<Button> sd = std::make_shared<Button>(0.80f, -0.82f, .3f, .3f, []() {
 		std::cout << "Shop button clicked! Opening Shop UI..." << std::endl;
 		// Toggle shop UI visibility or trigger shop opening logic
 		//toggleShopUI();
 		});
-	Graphics::DrawButton(*sd);
+	Graphics::DrawButton(*sd,"shop.png");
 	uis.push_back(sd);
 }
 
@@ -62,27 +65,24 @@ void World::InitGrid(const std::string& InFileName)
 	Shaders.push_back({ Graphics::DrawGrid(gridConfig,windowWidth,windowHeight), ShaderType::Grid });
 }
 
-void World::onHoverFunction(int gridX, int gridY)
+void World::onHoverFunction(int gridX, int gridY, float screenX, float screenY)
 {
+
 	std::cout << "Hovereddead over tile: (" << gridX << ", " << gridY << ")" << std::endl;
+	for (auto& button : uis)
+	{
+		button->updateHoverState(screenX, screenY);
+	}
 	//mouseState.GridX = gridX;
 	//mouseState.GridY = gridY;
 }
 
-void World::onClickFunction(int gridX, int gridY)
+void World::onClickFunction(int gridX, int gridY, float screenX, float screenY)
 {
-	//std::cout << "Clicked on tile: (" << gridX << ", " << gridY << ")" << std::endl;
-	// Additional logic for click behavior
-}
-
-void World::CursorCallback(GLFWwindow* window, double xpos, double ypos)
-{
-	int windowWidth, windowHeight;
-	glfwGetWindowSize(window, &windowWidth, &windowHeight);
-	MouseInteractionAPI* api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(window));
-	if (api) {
-		// Use the API
-		api->HandleMouseMove(xpos, ypos, windowWidth, windowHeight);
+	for (auto& button : uis)
+	{
+		if(button->isHovered)
+		button->cllicked();
 	}
 }
 
@@ -164,7 +164,13 @@ void World::InputUpdate()
 void World::SetupMouseCallbacks()
 {
 	// Mouse Interaction API setup
-	MouseInteractionAPI* mouseAPI = new MouseInteractionAPI(Window,gridConfig,onHoverFunction,onClickFunction);
+	MouseInteractionAPI* mouseAPI = new MouseInteractionAPI(Window,gridConfig);
+	mouseAPI->SetHoverCallback([this](int gridX, int gridY, float screenX, float screenY) {
+		this->onHoverFunction(gridX, gridY, screenX, screenY);
+		});
+	mouseAPI->SetClickCallback([this](int gridX, int gridY, float screenX, float screenY) {
+		this->onClickFunction(gridX, gridY, screenX, screenY);
+		});
 	// Set the user pointer
 }
 

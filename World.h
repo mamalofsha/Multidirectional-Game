@@ -36,9 +36,6 @@ private:
 	//
 	void InitBackground();
 	void InitGrid(const std::string& InFileName);
-	static void onHoverFunction(int gridX, int gridY);
-	static void onClickFunction(int gridX, int gridY);
-	static void CursorCallback(GLFWwindow* window, double xpos, double ypos);
 	void ProcessInputGL(GLFWwindow* window);
 	void GarbageCollection();
 	void InputUpdate();
@@ -47,6 +44,9 @@ private:
 	void CollisionUpdate();
 	void HandleCollision(GameObject& GameObject1, GameObject& GameObject2);
 public:
+	void onHoverFunction(int gridX, int gridY, float screenX, float screenY);
+	void onClickFunction(int gridX, int gridY, float screenX, float screenY);
+
 	std::vector<std::shared_ptr<Button>> uis;
 	World(std::vector<std::shared_ptr<GameObject>>& GameObjects);
 	World(const std::string& InFileName);

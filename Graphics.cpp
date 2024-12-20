@@ -166,17 +166,18 @@ void Graphics::DrawShape(GameObject& InObject)
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
-void Graphics::DrawButton(Button& InObject)
+void Graphics::DrawButton(Button& InObject, const char* textureFilePath)
 {
 	InObject.ObjectShader = std::make_unique<Shader>("UI.vert", "UI.frag");
-	unsigned int VBO, VAO;
+	unsigned int VBO, VAO, EBO;
 
+	// Define vertex data for the button (with texture coordinates)
 	float vertices[] = {
-		// Positions    // Colors (default blue)
-		InObject.x, InObject.y, 0.0f, 0.0f, 1.0f, // Top-left
-		InObject.x + InObject.width, InObject.y, 0.0f, 0.0f, 1.0f, // Top-right
-		InObject.x + InObject.width, InObject.y - InObject.height, 0.0f, 0.0f, 1.0f, // Bottom-right
-		InObject.x, InObject.y - InObject.height, 0.0f, 0.0f, 1.0f // Bottom-left
+		// Positions                       // Texture Coords
+		InObject.x - (InObject.width / 2.0f), InObject.y + (InObject.height / 2.0f), 0.0f, 1.0f, // Top-left
+		InObject.x + (InObject.width / 2.0f), InObject.y + (InObject.height / 2.0f), 1.0f, 1.0f, // Top-right
+		InObject.x + (InObject.width / 2.0f), InObject.y - (InObject.height / 2.0f), 1.0f, 0.0f, // Bottom-right
+		InObject.x - (InObject.width / 2.0f), InObject.y - (InObject.height / 2.0f), 0.0f, 0.0f  // Bottom-left
 	};
 
 	unsigned int indices[] = {
@@ -193,24 +194,57 @@ void Graphics::DrawButton(Button& InObject)
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	unsigned int EBO;
 	glGenBuffers(1, &EBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	// Position attribute
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	// Color attribute
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(2 * sizeof(float)));
+	// Texture attribute
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+
+	// Assign VAO and VBO to the button's shader
 	InObject.ObjectShader->VAO = VAO;
 	InObject.ObjectShader->VBO = VBO;
+
+	// Load the texture
+	unsigned int textureID;
+	glGenTextures(1, &textureID);
+	glBindTexture(GL_TEXTURE_2D, textureID);
+
+	// Load texture data
+	int width, height, nrChannels;
+	stbi_set_flip_vertically_on_load(true); // Flip image vertically
+	unsigned char* data = stbi_load(textureFilePath, &width, &height, &nrChannels, 0);
+	if (data) {
+		GLenum format = (nrChannels == 4) ? GL_RGBA : GL_RGB; // Detect alpha channel
+		glBindTexture(GL_TEXTURE_2D, textureID);
+		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+
+		// Set texture parameters
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		InObject.ObjectShader->Texture = textureID; // Assign the texture ID to the button
+	}
+	else {
+		std::cerr << "Failed to load texture: " << textureFilePath << std::endl;
+	}
+	stbi_image_free(data);
+
+	// Use the shader and set uniforms
 	InObject.ObjectShader->use();
+	glUniform1i(glGetUniformLocation(InObject.ObjectShader->ID, "texture1"), 0); // Texture unit 0
+
 }
 
 void Graphics::DrawShape2(GameObject& InObject)

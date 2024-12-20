@@ -1,7 +1,16 @@
 #version 330 core
-in vec3 vertexColor; // Input from vertex shader
-out vec4 FragColor;  // Output fragment color
+in vec2 TexCoord;           // Texture coordinates from vertex shader
+out vec4 FragColor;         // Output fragment color
+
+uniform sampler2D texture1; // Texture sampler
+uniform bool isHovered;     // Hover state
 
 void main() {
-    FragColor = vec4(vertexColor, 1.0); // RGBA color
+    vec4 baseColor = texture(texture1, TexCoord); // Sample the texture
+    if (isHovered) {
+        // Apply a light tint when hovered
+        FragColor = baseColor *vec4(1.3, 1.3, 1.3,1.0); // Slightly brighter
+    } else {
+        FragColor = baseColor;
+    }
 }

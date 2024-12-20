@@ -1,14 +1,13 @@
 #include "MouseInteraction.h"
+#include "World.h"
 
-MouseInteractionAPI::MouseInteractionAPI(GLFWwindow* InWindow, GridConfig InConfig, MouseEventCallback Hovercallback,MouseEventCallback ClickCallBack)
+MouseInteractionAPI::MouseInteractionAPI(GLFWwindow* InWindow, GridConfig InConfig)
 {
     glfwSetCursorPosCallback(InWindow,CursorCallback);
     glfwSetMouseButtonCallback(InWindow,ClickCallback);
     SetTile(InConfig.tileWidth, InConfig.tileHeight);
     gridoffsetX = InConfig.StartOffsetX;
     gridoffsetY = InConfig.StartOffsetY;
-    SetHoverCallback(Hovercallback);
-    SetClickCallback(ClickCallBack);
     glfwSetWindowUserPointer(InWindow, this);
 }
 
@@ -62,12 +61,13 @@ void MouseInteractionAPI::HandleMouseMove(double xpos, double ypos, int windowWi
 {
 
     auto [gridX, gridY] = ScreenToGrid(xpos, ypos, TileWidth, TileHeight, gridoffsetX,gridoffsetY,Zoom,PanX,PanY,windowWidth, windowHeight);
+    auto [x, y] = screenToNDC(xpos, ypos, windowWidth, windowHeight);
     CurrentMouseState.x = xpos;
     CurrentMouseState.y = ypos;
     CurrentMouseState.GridX = gridX;
     CurrentMouseState.GridY = gridY;
     if (OnHover) {
-        OnHover(gridX, gridY); // Trigger hover callback
+        OnHover(gridX, gridY,x,y); // Trigger hover callback
     }
 }
 
@@ -75,7 +75,7 @@ void MouseInteractionAPI::HandleMouseClick(double xpos, double ypos, int windowW
 {
     auto [gridX, gridY] = ScreenToGrid(xpos, ypos, TileWidth, TileHeight, gridoffsetX,gridoffsetY,PanX,PanY,Zoom,windowWidth, windowHeight);
     if (OnClick) {
-        OnClick(gridX, gridY); // Trigger click callback
+        OnClick(gridX, gridY,xpos,ypos); // Trigger click callback
     }
 }
 

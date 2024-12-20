@@ -4,32 +4,42 @@
 
 class Button {
 public:
-    std::unique_ptr<Shader> ObjectShader;
-    float x, y, width, height;
-    bool isHovered = false;
-    std::function<void()> onClick;
+	std::unique_ptr<Shader> ObjectShader;
+	float x, y, width, height;
+	bool isHovered = false;
+	std::function<void()> onClick;
 
 
-    Button(float x, float y, float width, float height, std::function<void()> onClick)
-        : x(x), y(y), width(width), height(height), onClick(onClick) {
-    }
+	Button(float x, float y, float width, float height, std::function<void()> onClick)
+		: x(x), y(y), width(width), height(height), onClick(onClick) {
+	}
 
+	void updateHoverState(double mouseX, double mouseY) {
+		isHovered = isInside(mouseX, mouseY); // Check if the mouse is within the button bounds
+	}
 
-    void draw() {
-        ObjectShader->use();
-        glBindVertexArray(ObjectShader->VAO);
+	void cllicked() {
+		std::cout << "Wwo";
+	}
 
-        // Change color if hovered
-        if (isHovered) {
-            int vertexColorLocation = glGetUniformLocation(ObjectShader->ID, "hoverColor");
-            glUniform3f(vertexColorLocation, 0.7f, 0.7f, 0.9f); // Light blue
-        }
+	void draw() {
+		ObjectShader->use();
+			ObjectShader->setBool("isHovered", isHovered);
 
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-        glBindVertexArray(0);
-    }
+		glBindTexture(GL_TEXTURE_2D, ObjectShader->Texture);
+		glBindVertexArray(ObjectShader->VAO);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glBindVertexArray(0);
 
-    bool isInside(float mouseX, float mouseY) {
-        return mouseX >= x && mouseX <= x + width && mouseY <= y && mouseY >= y - height;
-    }
+	}
+
+	bool isInside(float mouseX, float mouseY) {
+		float halfWidth = width / 2.0f;
+		float halfHeight = height / 2.0f;
+		std::cout << x - halfWidth << "," << x + halfWidth << std::endl;
+		std::cout << mouseX << ".xz,zx." << mouseY << std::endl;
+
+		return mouseX >= x - halfWidth && mouseX <= x + halfWidth &&
+			mouseY <= y + halfHeight && mouseY >= y - halfHeight;
+	}
 };

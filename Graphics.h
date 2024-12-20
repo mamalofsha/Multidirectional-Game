@@ -26,7 +26,7 @@ public:
 	static Shader DrawTexture(const char* InFileName);
 	static Shader DrawGrid(const GridConfig InGridConfig,int WindowsWidth , int WindowsHeight);
 	static void DrawShape(class GameObject& InObject);
-	static void DrawButton(class Button& InObject);
+	static void DrawButton(class Button& InObject, const char* textureFilePath);
 	static void DrawShape2(class GameObject& InObject);
 	static std::vector<float> createGridVertices(float gridWidth, float gridHeight, float OffsetX, float OffsetY);
 
