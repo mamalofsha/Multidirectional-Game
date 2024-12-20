@@ -47,8 +47,7 @@ private:
 	void CollisionUpdate();
 	void HandleCollision(GameObject& GameObject1, GameObject& GameObject2);
 public:
-	Button* sd;
-
+	std::vector<std::shared_ptr<Button>> uis;
 	World(std::vector<std::shared_ptr<GameObject>>& GameObjects);
 	World(const std::string& InFileName);
 	~World();

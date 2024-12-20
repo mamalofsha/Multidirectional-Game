@@ -22,12 +22,13 @@ World::World(const std::string& InFileName)
 	InitGrid(Temp.GridFileName);
 	SetupMouseCallbacks();
 	Shader ourShader("UI.vert", "UI.frag");
-
-	sd = new Button(0.0f, 0.0f, 0.f, 0.f, []() {
+	std::shared_ptr<Button> sd = std::make_shared<Button>(0.0f, 0.0f, 0.1f, 0.1f, []() {
 		std::cout << "Shop button clicked! Opening Shop UI..." << std::endl;
 		// Toggle shop UI visibility or trigger shop opening logic
 		//toggleShopUI();
-		}, ourShader.ID);
+		});
+	Graphics::DrawButton(*sd);
+	uis.push_back(sd);
 }
 
 World::~World()
@@ -173,15 +174,12 @@ void World::RenderUpdate()
 	glClearColor(0.2f, 0.3f, 0.76f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	sd->draw();
 
 	int windowWidth, windowHeight;
 	glfwGetWindowSize(Window, &windowWidth, &windowHeight);
 	// static stuff , right now only BG
 	for (auto it = Shaders.begin(); it < Shaders.end(); it++)
 	{
-		break;
-
 		float scaleX = 2000.0f / windowWidth;
 		float scaleY = 1404.0f / windowHeight;
 		glm::mat4 transform = glm::mat4(1.0f);
@@ -231,7 +229,6 @@ void World::RenderUpdate()
 	// position update
 	for (auto it = GameObjects.begin(); it != GameObjects.end(); ++it)
 	{
-		break;
 		// create transformations
 		glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
 		transform = glm::translate(transform, glm::vec3((*it)->GetTransform().Location[0], (*it)->GetTransform().Location[1], 0.0f));
@@ -241,6 +238,10 @@ void World::RenderUpdate()
 		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
 		glBindVertexArray((*it)->ObjectShader->VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
+	}
+	for (auto it = uis.begin(); it != uis.end(); ++it)
+	{
+		(*it)->draw();
 	}
 	glfwSwapBuffers(Window);
 
