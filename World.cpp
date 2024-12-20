@@ -139,6 +139,8 @@ void World::RenderUpdate()
 			glBindTexture(GL_TEXTURE_2D, it->shader.Texture);
 			// render container
 			it->shader.use();
+			it->shader.setUniform3f("panOffset", panX, panY,0.f);
+
 			glBindVertexArray(it->shader.VAO);
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
@@ -146,7 +148,7 @@ void World::RenderUpdate()
 		case ShaderType::Grid:
 			it->shader.use();
 			it->shader.setUniform2i("tileCoor", mouseState.GridX, mouseState.GridY);
-			it->shader.setUniform2i("panOffset", panX, panY);
+			it->shader.setUniform2f("panOffset", panX, panY);
 
 			glBindVertexArray(it->shader.VAO);
 			//// todoooo donmt forgetteettete it shoudl be grid vertices size

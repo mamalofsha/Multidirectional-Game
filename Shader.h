@@ -109,6 +109,24 @@ public:
             std::cerr << "Error: Uniform '" << name << "' not found in shader!" << std::endl;
         }
     }
+    void setUniform2f(const std::string& name, float x, float y) {
+        GLint location = glGetUniformLocation(ID, name.c_str());
+        if (location != -1) {
+            glUniform2f(location, x, y);
+        }
+        else {
+            std::cerr << "Error: Uniform '" << name << "' not found in shader!" << std::endl;
+        }
+    }
+    void setUniform3f(const std::string& name, float x, float y,float z) {
+        GLint location = glGetUniformLocation(ID, name.c_str());
+        if (location != -1) {
+            glUniform3f(location, x, y,z);
+        }
+        else {
+            std::cerr << "Error: Uniform '" << name << "' not found in shader!" << std::endl;
+        }
+    }
 private:
     // utility function for checking shader compilation/linking errors.
     // ------------------------------------------------------------------------
