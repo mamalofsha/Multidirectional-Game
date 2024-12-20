@@ -46,7 +46,6 @@ private:
 public:
 	void onHoverFunction(int gridX, int gridY, float screenX, float screenY);
 	void onClickFunction(int gridX, int gridY, float screenX, float screenY);
-
 	std::vector<std::shared_ptr<Button>> uis;
 	World(std::vector<std::shared_ptr<GameObject>>& GameObjects);
 	World(const std::string& InFileName);

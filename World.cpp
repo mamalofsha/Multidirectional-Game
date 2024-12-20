@@ -24,11 +24,26 @@ World::World(const std::string& InFileName)
 	InitBackground();
 	InitGrid(Temp.GridFileName);
 	SetupMouseCallbacks();
-	Shader ourShader("UI.vert", "UI.frag");
-	std::shared_ptr<Button> sd = std::make_shared<Button>(0.80f, -0.82f, .3f, .3f, []() {
+
+	std::shared_ptr<Button> sdd = std::make_shared<Button>(0.0f, -0.2f, .3f, .3f, []() {
 		std::cout << "Shop button clicked! Opening Shop UI..." << std::endl;
 		// Toggle shop UI visibility or trigger shop opening logic
 		//toggleShopUI();
+
+		});
+	Graphics::DrawButton(*sdd, "shop.png");
+	uis.push_back(sdd);
+	std::weak_ptr<Button> weakSdd = sdd; // Create a weak pointer
+
+	std::shared_ptr<Button> sd = std::make_shared<Button>(0.80f, -0.82f, .3f, .3f, [weakSdd]() {
+		std::cout << "Shop button clicked! Opening Shop UI..." << std::endl;
+		if (auto sharedSdd = weakSdd.lock()) { // Check if the weak pointer is still valid
+			std::cout << "Toggling Shop Button visibility!" << std::endl;
+			sharedSdd->isHidden = !sharedSdd->isHidden;
+		}
+		else {
+			std::cerr << "Shop button is no longer valid!" << std::endl;
+		}
 		});
 	Graphics::DrawButton(*sd,"shop.png");
 	uis.push_back(sd);
@@ -81,10 +96,13 @@ void World::onClickFunction(int gridX, int gridY, float screenX, float screenY)
 {
 	for (auto& button : uis)
 	{
-		if(button->isHovered)
-		button->cllicked();
+		if (button->isHovered) {
+			button->cllicked();
+			button->onClick();
+		}
 	}
 }
+
 
 void World::ProcessInputGL(GLFWwindow* window)
 {

@@ -8,7 +8,7 @@ public:
 	float x, y, width, height;
 	bool isHovered = false;
 	std::function<void()> onClick;
-
+	bool isHidden = false;
 
 	Button(float x, float y, float width, float height, std::function<void()> onClick)
 		: x(x), y(y), width(width), height(height), onClick(onClick) {
@@ -25,6 +25,7 @@ public:
 	void draw() {
 		ObjectShader->use();
 			ObjectShader->setBool("isHovered", isHovered);
+			ObjectShader->setBool("isHidden", isHidden);
 
 		glBindTexture(GL_TEXTURE_2D, ObjectShader->Texture);
 		glBindVertexArray(ObjectShader->VAO);
