@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "J:\\Ast\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\MouseInteraction.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:MouseInteraction.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\World.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:World.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\MouseInteraction.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:MouseInteraction.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\MouseInteraction.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:MouseInteraction.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\World.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -57,7 +57,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 12,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -84,26 +84,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "MouseInteraction.cpp",
               "DocumentMoniker": "J:\\Ast\\MouseInteraction.cpp",
               "RelativeDocumentMoniker": "MouseInteraction.cpp",
               "ToolTip": "J:\\Ast\\MouseInteraction.cpp",
               "RelativeToolTip": "MouseInteraction.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAABfAAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAAIAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-12-19T23:45:01.344Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "MouseInteraction.h",
               "DocumentMoniker": "J:\\Ast\\MouseInteraction.h",
               "RelativeDocumentMoniker": "MouseInteraction.h",
               "ToolTip": "J:\\Ast\\MouseInteraction.h",
               "RelativeToolTip": "MouseInteraction.h",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAIwBUAAAAQAAAAAAAAAA==",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAtwBUAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2024-12-19T23:43:03.373Z",
               "EditorCaption": ""
@@ -188,13 +188,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "World.cpp",
               "DocumentMoniker": "J:\\Ast\\World.cpp",
               "RelativeDocumentMoniker": "World.cpp",
               "ToolTip": "J:\\Ast\\World.cpp",
               "RelativeToolTip": "World.cpp",
-              "ViewState": "AgIAACsAAAAAAAAAAAAtwDwAAAAbAAAAAAAAAA==",
+              "ViewState": "AgIAAGQAAAAAAAAAAAAtwHYAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-12-19T23:16:30.833Z",
               "EditorCaption": ""

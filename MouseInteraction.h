@@ -19,7 +19,7 @@ private:
 public:
     using MouseEventCallback = std::function<void(int gridX, int gridY)>;
     
-    MouseInteractionAPI(GridConfig InConfig, MouseEventCallback Hovercallback, MouseEventCallback ClickCallBack);
+    MouseInteractionAPI(GLFWwindow* InWindow,GridConfig InConfig, MouseEventCallback Hovercallback, MouseEventCallback ClickCallBack);
     ~MouseInteractionAPI();
     void SetMouseState(MouseState InState);
     MouseState GetMouseState();

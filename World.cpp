@@ -116,11 +116,8 @@ void World::InputUpdate()
 void World::SetupMouseCallbacks()
 {
 	// Mouse Interaction API setup
-	MouseInteractionAPI* mouseAPI = new MouseInteractionAPI(gridConfig,onHoverFunction,onClickFunction);
-	glfwSetCursorPosCallback(Window, MouseInteractionAPI::CursorCallback);
-	glfwSetMouseButtonCallback(Window, MouseInteractionAPI::ClickCallback);
+	MouseInteractionAPI* mouseAPI = new MouseInteractionAPI(Window,gridConfig,onHoverFunction,onClickFunction);
 	// Set the user pointer
-	glfwSetWindowUserPointer(Window, mouseAPI);
 }
 
 void World::RenderUpdate()

@@ -1,10 +1,13 @@
 #include "MouseInteraction.h"
 
-MouseInteractionAPI::MouseInteractionAPI(GridConfig InConfig, MouseEventCallback Hovercallback,MouseEventCallback ClickCallBack)
+MouseInteractionAPI::MouseInteractionAPI(GLFWwindow* InWindow, GridConfig InConfig, MouseEventCallback Hovercallback,MouseEventCallback ClickCallBack)
 {
+    glfwSetCursorPosCallback(InWindow,CursorCallback);
+    glfwSetMouseButtonCallback(InWindow,ClickCallback);
     SetTile(InConfig.tileWidth, InConfig.tileHeight);
     SetHoverCallback(Hovercallback);
     SetClickCallback(ClickCallBack);
+    glfwSetWindowUserPointer(InWindow, this);
 }
 
 MouseInteractionAPI::~MouseInteractionAPI()
