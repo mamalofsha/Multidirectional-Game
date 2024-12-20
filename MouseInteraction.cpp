@@ -61,7 +61,7 @@ void MouseInteractionAPI::ClickCallback(GLFWwindow* window, int button, int acti
 void MouseInteractionAPI::HandleMouseMove(double xpos, double ypos, int windowWidth, int windowHeight)
 {
 
-    auto [gridX, gridY] = ScreenToGrid(xpos, ypos, TileWidth, TileHeight, gridoffsetX,gridoffsetY,windowWidth, windowHeight);
+    auto [gridX, gridY] = ScreenToGrid(xpos, ypos, TileWidth, TileHeight, gridoffsetX,gridoffsetY,Zoom,PanX,PanY,windowWidth, windowHeight);
     CurrentMouseState.x = xpos;
     CurrentMouseState.y = ypos;
     CurrentMouseState.GridX = gridX;
@@ -73,13 +73,20 @@ void MouseInteractionAPI::HandleMouseMove(double xpos, double ypos, int windowWi
 
 void MouseInteractionAPI::HandleMouseClick(double xpos, double ypos, int windowWidth, int windowHeight)
 {
-    auto [gridX, gridY] = ScreenToGrid(xpos, ypos, TileWidth, TileHeight, gridoffsetX,gridoffsetY,windowWidth, windowHeight);
+    auto [gridX, gridY] = ScreenToGrid(xpos, ypos, TileWidth, TileHeight, gridoffsetX,gridoffsetY,PanX,PanY,Zoom,windowWidth, windowHeight);
     if (OnClick) {
         OnClick(gridX, gridY); // Trigger click callback
     }
 }
 
-std::pair<int, int> MouseInteractionAPI::ScreenToGrid(double screenX, double screenY, float tileWidth, float tileHeight, float offsetX, float offsetY, int windowWidth, int windowHeight)
+void MouseInteractionAPI::SetPanZoom(float Panx, float pany, float zoom)
+{
+    Zoom = zoom;
+    PanX = Panx;
+    PanY = pany;
+}
+
+std::pair<int, int> MouseInteractionAPI::ScreenToGrid(double screenX, double screenY, float tileWidth, float tileHeight, float offsetX, float offsetY, float zoom, float panX, float panY, int windowWidth, int windowHeight)
 {
     /*   float ndcX = (screenX / windowWidth) * 2.0f - 1.0f;
     float ndcY = 1.0f - (screenY / windowHeight) * 2.0f;
@@ -88,8 +95,10 @@ std::pair<int, int> MouseInteractionAPI::ScreenToGrid(double screenX, double scr
     return { gridX, gridY };
    */
    // Step 1: Convert screen coordinates to Normalized Device Coordinates (NDC)
-    float ndcX = ((screenX) / windowWidth) * 2.0f - 1.0f;
-    float ndcY = 1.0f - ((screenY) / windowHeight) * 2.0f;
+    float ndcX = (((screenX) / windowWidth) * 2.0f - 1.0f)/ zoom;
+    float ndcY = (1.0f - ((screenY) / windowHeight) * 2.0f)/ zoom;
+    ndcX -= panX; // Apply horizontal pan offset
+    ndcY -= panY;
     //ndcX 
     //ndcY -= -1.5 * tileHeight;
     // Debugging NDC values

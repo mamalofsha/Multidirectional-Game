@@ -14,6 +14,9 @@ class MouseInteractionAPI {
 private:
     MouseState CurrentMouseState;
     float TileWidth;
+    float Zoom;
+    float PanX;
+    float PanY;
     float TileHeight;
     float gridoffsetX;
     float gridoffsetY;
@@ -31,10 +34,12 @@ public:
     void SetClickCallback(MouseEventCallback callback) { OnClick = callback; }
     void HandleMouseMove(double xpos, double ypos, int windowWidth, int windowHeight);
     void HandleMouseClick(double xpos, double ypos, int windowWidth, int windowHeight);
+    void SetPanZoom(float Panx, float pany,float zoom);
+
 private:
     MouseEventCallback OnHover = nullptr;
     MouseEventCallback OnClick = nullptr;
 
     // Convert screen coordinates to grid coordinates
-    std::pair<int, int> ScreenToGrid(double screenX, double screenY, float tileWidth, float tileHeight, float offsetX, float offsetY,int windowWidth, int windowHeight);
+    std::pair<int, int> ScreenToGrid(double screenX, double screenY, float tileWidth, float tileHeight, float offsetX, float offsetY,float zoom , float panX, float panY ,int windowWidth, int windowHeight);
 };

@@ -57,7 +57,7 @@ void World::InitGrid(const std::string& InFileName)
 
 void World::onHoverFunction(int gridX, int gridY)
 {
-	//std::cout << "Hovereddead over tile: (" << gridX << ", " << gridY << ")" << std::endl;
+	std::cout << "Hovereddead over tile: (" << gridX << ", " << gridY << ")" << std::endl;
 	//mouseState.GridX = gridX;
 	//mouseState.GridY = gridY;
 }
@@ -128,9 +128,13 @@ void World::ProcessInputGL(GLFWwindow* window)
 	panX = std::clamp(panX, minPanX, maxPanX);
 	// 2000/ 14004 = 1.42f
 	panY = std::clamp(panY, minPanY*1.42f,maxPanY*1.42f);
-	std::cout << "zoom: " << Zoom << std::endl;
-	std::cout << "pan: " << panY << std::endl;
-	std::cout << "panY lim: " << minPanY << ": " << maxPanY << std::endl;
+	MouseInteractionAPI* api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(window));
+	if (api) {
+		api->SetPanZoom(panX, panY, Zoom);
+	}
+	//std::cout << "zoom: " << Zoom << std::endl;
+	//std::cout << "pan: " << panX << std::endl;
+	//std::cout << "panY lim: " << minPanY << ": " << maxPanY << std::endl;
 }
 
 void World::GarbageCollection()
@@ -172,7 +176,7 @@ void World::RenderUpdate()
 		float scaleX = 2000.0f / windowWidth;
 		float scaleY = 1404.0f / windowHeight;
 		glm::mat4 transform = glm::mat4(1.0f);
-		std::cout << "scale: " << scaleX << std::endl;
+		//std::cout << "scale: " << scaleX << std::endl;
 
 		// bind Texture
 		// render container
