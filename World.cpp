@@ -79,16 +79,20 @@ void World::ProcessInputGL(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
-	std::vector<float> Input = { 0.f,0.f };
-	/// player input for movement
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		Input[1] = 1.f;
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		Input[0] = -1.f;
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		Input[0] = 1.f;
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		Input[1] = -1.f;
+	float panSpeed = 0.05f; // Speed of panning
+
+	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
+		panX -= panSpeed;
+	}
+	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+		panX += panSpeed;
+	}
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+		panY += panSpeed;
+	}
+	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+		panY -= panSpeed;
+	}
 }
 
 void World::GarbageCollection()
@@ -106,10 +110,7 @@ void World::GarbageCollection()
 
 void World::InputUpdate()
 {
-	if (Player)
-	{
-		ProcessInputGL(Window);
-	}
+	ProcessInputGL(Window);
 }
 
 void World::SetupMouseCallbacks()
@@ -145,7 +146,10 @@ void World::RenderUpdate()
 		case ShaderType::Grid:
 			it->shader.use();
 			it->shader.setUniform2i("tileCoor", mouseState.GridX, mouseState.GridY);
+			it->shader.setUniform2i("panOffset", panX, panY);
+
 			glBindVertexArray(it->shader.VAO);
+			//// todoooo donmt forgetteettete it shoudl be grid vertices size
 			glDrawArrays(GL_LINES, 0, 200 / 2);
 			break;
 		}
@@ -228,7 +232,7 @@ void World::HandleCollision(GameObject& GameObject1, GameObject& GameObject2)
 void World::Update(float DeltaSeconds)
 {
 	GarbageCollection();
-//	InputUpdate();
+	InputUpdate();
 	RenderUpdate();
 	glfwPollEvents();
 	//CollisionUpdate();

@@ -21,6 +21,10 @@ private:
 	MouseState mouseState;
 	GridConfig gridConfig;
 	GLFWwindow* Window;
+	// Add panning variables
+	float panX = 0.0f;
+	float panY = 0.0f;
+
 	//
 	std::vector<std::shared_ptr<GameObject>> GameObjects;
 	std::shared_ptr<class PlayerObject> Player;
