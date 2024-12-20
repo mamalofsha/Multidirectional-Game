@@ -1,7 +1,7 @@
 <level>
     <dimensions>
-        <width>1024</width>
-        <height>1024</height>
+        <width>2000</width>
+        <height>1104</height>
     </dimensions>
     <gridfile>
         <name>grid_config.xml</name>

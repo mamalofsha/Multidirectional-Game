@@ -48,7 +48,7 @@ private:
 public:
 
 	World(std::vector<std::shared_ptr<GameObject>>& GameObjects);
-	World(const unsigned int Width, const unsigned int Height);
+	World(const std::string& InFileName);
 	~World();
 	void Update(float DeltaSeconds);
 	bool IsRunning();

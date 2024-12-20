@@ -107,7 +107,7 @@ Shader Graphics::DrawTexture(const char* InFileName)
 	return ourShader;
 }
 
-Shader Graphics::DrawGrid(const GridConfig InGridConfig)
+Shader Graphics::DrawGrid(const GridConfig InGridConfig, int WindowsWidth, int WindowsHeight)
 {
 	Shader ourShader("Grid.vert", "Grid.frag");
 
@@ -131,7 +131,7 @@ Shader Graphics::DrawGrid(const GridConfig InGridConfig)
 	GLint tileSizeLocation = glGetUniformLocation(ourShader.ID, "tileSize");
 	glUniform2f(tileSizeLocation, InGridConfig.tileWidth, InGridConfig.tileHeight);
 	GLint screenSizeLocation = glGetUniformLocation(ourShader.ID, "screenSize");
-	glUniform2f(screenSizeLocation, 800.0f, 800.0f);
+	glUniform2f(screenSizeLocation, WindowsWidth, WindowsHeight);
 	return ourShader;
 }
 

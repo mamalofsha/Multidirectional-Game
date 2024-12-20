@@ -2,7 +2,7 @@
 
 int main() {
 	// init world
-	World* CurrentWorld = new World(800.f, 800.f);
+	World* CurrentWorld = new World("TestLevel.xml");
 	// render loop
 	float DeltaTime = 0.0f;
 	float LastFrame = 0.0f;

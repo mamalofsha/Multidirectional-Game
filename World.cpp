@@ -14,9 +14,9 @@ World::World(std::vector<std::shared_ptr<GameObject>>& GameObjects)
 
 }
 
-World::World(const unsigned int Width, const unsigned int Height)
+World::World(const std::string& InFileName)
 {
-	StartUpData Temp = XMLParser::LoadLeveL("TestLevel.xml");
+	StartUpData Temp = XMLParser::LoadLeveL(InFileName);
 	Window = Graphics::InitWindow(Temp.WindowWidth, Temp.WindowHeight);
 	InitBackground();
 	InitGrid(Temp.GridFileName);
@@ -49,20 +49,22 @@ void World::InitBackground()
 
 void World::InitGrid(const std::string& InFileName)
 {
+	int windowWidth, windowHeight;
+	glfwGetWindowSize(Window, &windowWidth, &windowHeight);
 	gridConfig = XMLParser::ParseGridDataFromXML(InFileName);
-	Shaders.push_back({ Graphics::DrawGrid(gridConfig), ShaderType::Grid });
+	Shaders.push_back({ Graphics::DrawGrid(gridConfig,windowWidth,windowHeight), ShaderType::Grid });
 }
 
 void World::onHoverFunction(int gridX, int gridY)
 {
-	std::cout << "Hovereddead over tile: (" << gridX << ", " << gridY << ")" << std::endl;
+	//std::cout << "Hovereddead over tile: (" << gridX << ", " << gridY << ")" << std::endl;
 	//mouseState.GridX = gridX;
 	//mouseState.GridY = gridY;
 }
 
 void World::onClickFunction(int gridX, int gridY)
 {
-	std::cout << "Clicked on tile: (" << gridX << ", " << gridY << ")" << std::endl;
+	//std::cout << "Clicked on tile: (" << gridX << ", " << gridY << ")" << std::endl;
 	// Additional logic for click behavior
 }
 
@@ -108,19 +110,26 @@ void World::ProcessInputGL(GLFWwindow* window)
 
 	}
 
-	Zoom = std::clamp(Zoom, 1.f, 3.5f);
-	float minPanX = -((2000.0f * Zoom) - windowWidth) / 2000.0f;
-	float maxPanX = ((2000.0f * Zoom) - windowWidth) / 2000.0f;
+	Zoom = std::clamp(Zoom,1.0f, 2.5f);
+	// Calculate visible bounds based on zoom
+	float halfVisibleWidth = (windowWidth / Zoom) / 2.0f;
+	float halfVisibleHeight = (windowHeight / Zoom) / 2.0f;
 
-	float minPanY = -((1404.0f * 1) - (windowHeight * Zoom)) / 2000.0f;
-	float maxPanY = ((1404.0f * Zoom) - windowHeight) / 2000.0f;
+	// Background dimensions (2000x1404 assumed)
+	float bgHalfWidth = 2000.0f / 2.0f;
+	float bgHalfHeight = 1404.0f / 2.0f;
+
+	// Calculate panning bounds
+	float minPanX = (- bgHalfWidth + halfVisibleWidth)/1000.0f;
+	float maxPanX = (bgHalfWidth - halfVisibleWidth) / 1000.0f;
+
+	float minPanY = (- bgHalfHeight + halfVisibleHeight)/1000.0f;
+	float maxPanY = (bgHalfHeight - halfVisibleHeight)/1000.0f;
 	panX = std::clamp(panX, minPanX, maxPanX);
-	panY = std::clamp(panY, minPanY, maxPanY);
-	std::cout << "pany: " << panY << std::endl;
+	panY = std::clamp(panY, minPanY,maxPanY);
+	std::cout << "zoom: " << Zoom << std::endl;
+	std::cout << "pan: " << panY << std::endl;
 	std::cout << "panY lim: " << minPanY << ": " << maxPanY << std::endl;
-
-
-
 }
 
 void World::GarbageCollection()
@@ -154,11 +163,16 @@ void World::RenderUpdate()
 	glClearColor(0.2f, 0.3f, 0.76f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
+	int windowWidth, windowHeight;
+	glfwGetWindowSize(Window, &windowWidth, &windowHeight);
 	// static stuff , right now only BG
 	for (auto it = Shaders.begin(); it < Shaders.end(); it++)
 	{
-		float scaleX = 2000.0f / 800.0f;
-		float scaleY = 1404.0f / 800.0f;
+		float scaleX = 2000.0f / windowWidth;
+		float scaleY = 1404.0f / windowHeight;
+		glm::mat4 transform = glm::mat4(1.0f);
+		std::cout << "scale: " << scaleX << std::endl;
+
 		// bind Texture
 		// render container
 		GLuint  transformLoc;
@@ -172,7 +186,6 @@ void World::RenderUpdate()
 			it->shader.use();
 			//it->shader.setUniform3f("panOffset", panX, panY,0.f);
 			// Scale and translate the background
-			glm::mat4 transform = glm::mat4(1.0f);
 
 			transform = glm::scale(transform, glm::vec3(scaleX*Zoom, scaleY*Zoom, 1.0f));
 			transform = glm::translate(transform, glm::vec3(panX, panY, 0.0f));
@@ -187,8 +200,12 @@ void World::RenderUpdate()
 		case ShaderType::Grid:
 			it->shader.use();
 			it->shader.setUniform2i("tileCoor", mouseState.GridX, mouseState.GridY);
-			it->shader.setUniform2f("panOffset", panX, panY);
-			it->shader.setFloat("zoom", Zoom);
+
+			transform = glm::scale(transform, glm::vec3(scaleX * Zoom, scaleY * Zoom, 1.0f));
+			transform = glm::translate(transform, glm::vec3(panX, panY, 0.0f));
+
+			transformLoc = glGetUniformLocation((it)->shader.ID, "transform");
+			glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
 
 			glBindVertexArray(it->shader.VAO);
 			//// todoooo donmt forgetteettete it shoudl be grid vertices size

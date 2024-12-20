@@ -66,7 +66,6 @@ StartUpData XMLParser::LoadLeveL(const std::string& InFileName)
         std::cerr << "Error loading XML file: " << InFileName << std::endl;
         return Data;
     }
-
     auto* root = doc.FirstChildElement("level");
     if (!root) {
         std::cerr << "Invalid XML structure: No <level> element." << std::endl;
