@@ -95,8 +95,20 @@ std::pair<int, int> MouseInteractionAPI::ScreenToGrid(double screenX, double scr
     return { gridX, gridY };
    */
    // Step 1: Convert screen coordinates to Normalized Device Coordinates (NDC)
-    float ndcX = (((screenX) / windowWidth) * 2.0f - 1.0f)/ zoom;
-    float ndcY = (1.0f - ((screenY) / windowHeight) * 2.0f)/ zoom;
+    float windowAspectRatio = static_cast<float>(windowWidth) / static_cast<float>(windowHeight);
+    float bgAspectRatio = 2000.0f / 1404.0f;
+
+    // Adjust background scaling to fit window aspect ratio
+    float scaleX = 2000.0f/ static_cast<float>(windowWidth), scaleY = 1404.0f/static_cast<float>(windowHeight);
+    if (windowAspectRatio > bgAspectRatio) {
+    //    scaleX = windowAspectRatio / bgAspectRatio;
+    }
+    else {
+   //     scaleY = bgAspectRatio / windowAspectRatio;
+    }
+
+    float ndcX = ((((screenX) / windowWidth) * 2.0f - 1.0f)/ (zoom* scaleX));
+    float ndcY = ((1.0f - ((screenY) / windowHeight) * 2.0f)/ (zoom* scaleY));
     ndcX -= panX; // Apply horizontal pan offset
     ndcY -= panY;
     //ndcX 

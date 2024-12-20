@@ -4,8 +4,9 @@
 
 struct StartUpData
 {
-	int WindowWidth;
-	int WindowHeight;
+	int LevelWidth;
+	int LevelHeight;
+	float WindowScale;
 	std::string GridFileName;
 };
 

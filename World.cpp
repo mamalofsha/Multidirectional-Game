@@ -17,7 +17,7 @@ World::World(std::vector<std::shared_ptr<GameObject>>& GameObjects)
 World::World(const std::string& InFileName)
 {
 	StartUpData Temp = XMLParser::LoadLeveL(InFileName);
-	Window = Graphics::InitWindow(Temp.WindowWidth, Temp.WindowHeight);
+	Window = Graphics::InitWindow(Temp.LevelWidth * Temp.WindowScale, Temp.LevelHeight * Temp.WindowScale);
 	InitBackground();
 	InitGrid(Temp.GridFileName);
 	SetupMouseCallbacks();
@@ -107,10 +107,9 @@ void World::ProcessInputGL(GLFWwindow* window)
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
 		Zoom -= 0.05f;
-
 	}
 
-	Zoom = std::clamp(Zoom,1.0f, 3.5f);
+	Zoom = std::clamp(Zoom, windowWidth/2000.0f, (windowWidth / 2000.0f)* 3.5f);
 	// Calculate visible bounds based on zoom
 	float halfVisibleWidth = (windowWidth / Zoom) / 2.0f;
 	float halfVisibleHeight = (windowHeight / Zoom) / 2.0f;

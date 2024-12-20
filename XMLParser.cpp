@@ -74,14 +74,24 @@ StartUpData XMLParser::LoadLeveL(const std::string& InFileName)
 
     auto* dimensions = root->FirstChildElement("dimensions");
     if (dimensions) {
-        dimensions->FirstChildElement("width")->QueryIntText(&Data.WindowWidth);
-        dimensions->FirstChildElement("height")->QueryIntText(&Data.WindowHeight);
+        dimensions->FirstChildElement("width")->QueryIntText(&Data.LevelWidth);
+        dimensions->FirstChildElement("height")->QueryIntText(&Data.LevelHeight);
     }
 
-    auto* GridFile = root->FirstChildElement("gridfile");
+    auto* GridFile = root->FirstChildElement("gridfilename");
     if (GridFile) {
-        Data.GridFileName= GridFile->FirstChildElement("name")->GetText();
-        std::cout << GridFile->FirstChildElement("name")->GetText();
+        Data.GridFileName= GridFile->GetText();
+    }
+
+    auto* WindowScale = root->FirstChildElement("WindowScale");
+    if (WindowScale) {
+        float scaleValue = 0.0f;
+        if (WindowScale->QueryFloatText(&scaleValue) == tinyxml2::XML_SUCCESS) {
+            Data.WindowScale = scaleValue; // Assign only on success
+        }
+        else {
+            std::cerr << "Error: Failed to parse WindowScale as a float.\n";
+        }
     }
     return Data;
 }
