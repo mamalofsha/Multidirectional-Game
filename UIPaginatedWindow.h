@@ -25,6 +25,11 @@ public:
 		Hudptr = InHud;
 	}
 
+	std::vector<std::shared_ptr<UIButton>> getCatButtons()
+	{
+		return tabs[ActiveTab];
+	}
+
 	void draw() override {
 		if (isHidden) return;
 
@@ -62,7 +67,28 @@ public:
 		{
 			if (Child)
 			{
+				if (isHidden)
+				{
+					Child->isHovered = false;
+					continue;
+				}
 				Child->updateHoverState(x, y);
+			}
+		}
+		int startIndex = currentPage * rows * columns;
+
+		int endIndex = startIndex + (rows * columns);
+		for (const auto& [tabName, buttons] : tabs) {
+			//std::cout << "Tab: " << tabName << std::endl;
+			if (tabName != ActiveTab) continue;
+			for (int i = startIndex; i < endIndex; ++i) {
+				if (i >= buttons.size())break;
+				if (isHidden)
+				{
+					buttons[i]->isHovered = false;
+					continue;
+				}
+				buttons[i]->updateHoverState(x, y);
 			}
 		}
 	}
@@ -99,7 +125,8 @@ public:
 				int y = std::floor((uiElements.size() / columns) % rows);
 
 				int yhalf = y / columns;
-				std::shared_ptr<UIButton> button = std::make_shared<UIButton>(-0.3f+(x*0.6f), 0.4f+(y * -0.4f), 0.2f, 0.1f, [&]() {
+				std::shared_ptr<UIButton> button = std::make_shared<UIButton>(-0.3f+(x*0.6f), 0.4f+(y * -0.4f), 0.2f, 0.1f, [&, button]() {
+
 					}, item.Name, Hudptr);
 				uiElements.push_back(button);
 				Graphics::DrawUIElement(*button, item.ImageFile.c_str());
@@ -118,6 +145,7 @@ public:
 
 				int yhalf = y / columns;
 				std::shared_ptr<UIButton> button = std::make_shared<UIButton>(-0.3f + (x * 0.6f), 0.4f + (y * -0.4f), 0.2f, 0.1f, [&]() {
+					std::cout << button->x;
 					}, item.Name, Hudptr);
 				uiElements.push_back(button);
 				Graphics::DrawUIElement(*button, item.ImageFile.c_str());

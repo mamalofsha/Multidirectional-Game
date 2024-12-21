@@ -108,6 +108,14 @@ void HUD::onClickFunction(int gridX, int gridY, float screenX, float screenY)
 					}
 				
 			}
+			for (auto& el : Window->getCatButtons())
+			{
+				if (el->isHovered) {
+					el->cllicked();
+					el->onClick();
+				}
+
+			}
 		}
 	}
 }
