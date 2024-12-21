@@ -2,15 +2,6 @@
 #include <algorithm>
 #include <cstdlib>
 
-GameObject::GameObject()
-{
-}
-
-GameObject::GameObject(Transform SpawnTransform, bool InHaz)
-{
-	WorldTransform = SpawnTransform;
-	IsHazard = InHaz;
-}
 
 Transform GameObject::GetTransform()
 {

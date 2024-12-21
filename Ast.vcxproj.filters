@@ -51,6 +51,9 @@
     <ClCompile Include="HUD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Texture.vert">
@@ -81,6 +84,12 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="Text.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="TempItem.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="TempItem.frag">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
@@ -125,6 +134,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="HUD.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TexturedObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

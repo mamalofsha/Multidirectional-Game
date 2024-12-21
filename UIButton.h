@@ -22,7 +22,7 @@ public:
 	}
 
 	void cllicked() {
-		std::cout << "Wwo";
+		std::cout << Text;
 	}
 
 	void draw() {
@@ -37,6 +37,6 @@ public:
 		if (Text.empty()|| !Hudptr)return;
 		float screenX = (x + 1.0f) * 0.5f * Hudptr->WindowWidth;
 		float screenY = (1.0f - y) * 0.5f * Hudptr->WindowHeight; // Inversion for Y
-		Graphics::RenderText(Hudptr->font, Text, screenX-100.0f, Hudptr->WindowHeight- screenY, 1.0f, glm::vec3(0.5, 0.8f, 0.2f), Hudptr->Characters);
+		Graphics::RenderText(Hudptr->font, Text, screenX-100.0f, Hudptr->WindowHeight- screenY, 1.0f, glm::vec3(0.0, 0.0f, 0.0f), Hudptr->Characters);
 	}
 };

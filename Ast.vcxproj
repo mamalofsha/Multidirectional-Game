@@ -163,6 +163,7 @@
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="MouseInteraction.cpp" />
     <ClCompile Include="PlayerObject.cpp" />
+    <ClCompile Include="Object.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="World.cpp" />
@@ -173,6 +174,8 @@
     <None Include="Grid.vert" />
     <None Include="Shader.frag" />
     <None Include="Shader.vert" />
+    <None Include="TempItem.frag" />
+    <None Include="TempItem.vert" />
     <None Include="Text.frag" />
     <None Include="Text.vert" />
     <None Include="Texture.frag" />
@@ -182,6 +185,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HUD.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="TexturedObject.h" />
     <ClInclude Include="UIButton.h" />
     <ClInclude Include="E:\downloads\stb_image.h" />
     <ClInclude Include="GameObject.h" />

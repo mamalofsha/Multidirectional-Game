@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "Shader.h"
+#include"Object.h"
 
 struct Transform
 {
@@ -8,7 +9,7 @@ struct Transform
 	float Rotation = 0.f;
 };
 
-class GameObject
+class GameObject : public Object
 {
 protected :
 	std::vector<float> ForwardDir = { 1.0f, 0.0f };
@@ -18,11 +19,10 @@ protected :
 	bool IsHazard = false;
 
 public:
-	std::unique_ptr<Shader> ObjectShader;
 	bool MarkedForDelete = false;
 
-	GameObject();
-	GameObject(Transform SpawnTransform,bool InHaz);
+	//GameObject();
+	//GameObject(Transform SpawnTransform,bool InHaz);
 	Transform GetTransform();
 	void SetTransform(Transform InTransform);
 	float GetLength();
