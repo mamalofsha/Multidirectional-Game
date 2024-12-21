@@ -103,7 +103,16 @@
     <ClInclude Include="MouseInteraction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h">
+    <ClInclude Include="UIButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UIPaginatedWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UIElement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UIWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

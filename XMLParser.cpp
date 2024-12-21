@@ -1,6 +1,5 @@
 #include "XMLParser.h"
 #include <vector>
-#include <TinyXML/tinyxml2.h>
 #include "Graphics.h"
 
 GridConfig XMLParser::ParseGridDataFromXML(const std::string& InFileName)
@@ -95,3 +94,115 @@ StartUpData XMLParser::LoadLeveL(const std::string& InFileName)
     }
     return Data;
 }
+
+std::vector<WorkshopData> XMLParser::LoadWorkShops(const std::string& InFileName, const std::string& InCategoryName)
+{
+    std::vector<WorkshopData> OutData;
+    tinyxml2::XMLDocument doc;
+    if (doc.LoadFile(InFileName.c_str()) != tinyxml2::XML_SUCCESS) {
+        std::cerr << "Error loading XML file: " << InFileName << std::endl;
+        return OutData;
+    }
+    auto* root = doc.FirstChildElement("items");
+    if (!root) {
+        std::cerr << "Invalid XML structure: No <level> element." << std::endl;
+        return OutData;
+    }
+    // Locate the specified category (e.g., "workshops")
+    auto* category = root->FirstChildElement(InCategoryName.c_str());
+    if (!category) {
+        std::cerr << "Category " << InCategoryName << " not found in XML." << std::endl;
+        return OutData;
+    }
+
+    // Iterate through the items in the category
+    for (auto* item = category->FirstChildElement(); item; item = item->NextSiblingElement()) {
+        WorkshopData data;
+
+        // Parse name
+        auto* nameElement = item->FirstChildElement("name");
+        if (nameElement && nameElement->GetText()) {
+            data.Name = nameElement->GetText();
+        }
+
+        // Parse image file
+        auto* imageElement = item->FirstChildElement("image");
+        if (imageElement && imageElement->GetText()) {
+            data.ImageFile = imageElement->GetText();
+        }
+
+        // Parse gold cost
+        auto* goldCostElement = item->FirstChildElement("goldcost");
+        if (goldCostElement) {
+            goldCostElement->QueryFloatText(&data.goldCost);
+        }
+
+        // Parse gold generation rate
+        auto* goldGenElement = item->FirstChildElement("goldgenrate");
+        if (goldGenElement) {
+            goldGenElement->QueryFloatText(&data.goldGenrate);
+        }
+
+        // Add the parsed data to the output vector
+        OutData.push_back(data);
+    }
+
+    return OutData;
+}
+
+std::vector<Decoration> XMLParser::LoadDecorations(const std::string& InFileName, const std::string& InCategoryName)
+{
+    std::vector<Decoration> OutData;
+    tinyxml2::XMLDocument doc;
+    if (doc.LoadFile(InFileName.c_str()) != tinyxml2::XML_SUCCESS) {
+        std::cerr << "Error loading XML file: " << InFileName << std::endl;
+        return OutData;
+    }
+    auto* root = doc.FirstChildElement("items");
+    if (!root) {
+        std::cerr << "Invalid XML structure: No <level> element." << std::endl;
+        return OutData;
+    }
+    // Locate the specified category (e.g., "workshops")
+    auto* category = root->FirstChildElement(InCategoryName.c_str());
+    if (!category) {
+        std::cerr << "Category " << InCategoryName << " not found in XML." << std::endl;
+        return OutData;
+    }
+
+    // Iterate through the items in the category
+    for (auto* item = category->FirstChildElement(); item; item = item->NextSiblingElement()) {
+        Decoration data;
+
+        // Parse name
+        auto* nameElement = item->FirstChildElement("name");
+        if (nameElement && nameElement->GetText()) {
+            data.Name = nameElement->GetText();
+        }
+
+        // Parse image file
+        auto* imageElement = item->FirstChildElement("image");
+        if (imageElement && imageElement->GetText()) {
+            data.ImageFile = imageElement->GetText();
+        }
+
+        // Parse gold cost
+        auto* goldCostElement = item->FirstChildElement("goldcost");
+        if (goldCostElement) {
+            goldCostElement->QueryFloatText(&data.goldCost);
+        }
+
+        // Parse gold generation rate
+        auto* happyElement = item->FirstChildElement("happiness");
+        if (happyElement) {
+            happyElement->QueryFloatText(&data.happiness);
+        }
+
+        // Add the parsed data to the output vector
+        OutData.push_back(data);
+    }
+
+    return OutData;
+}
+
+

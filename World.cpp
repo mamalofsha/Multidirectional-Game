@@ -8,7 +8,8 @@
 #include "XMLParser.h"
 #include <algorithm>
 #include "UIPaginatedWindow.h"
-
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 World::World(std::vector<std::shared_ptr<GameObject>>& GameObjects)
 {
@@ -27,7 +28,7 @@ World::World(const std::string& InFileName)
 	SetupMouseCallbacks();
 
 
-	std::shared_ptr<UIPaginatedWindow> shopWindow = std::make_shared<UIPaginatedWindow>(0.0f, 0.0f, 1.5f, 1.5f);
+	std::shared_ptr<UIPaginatedWindow> shopWindow = std::make_shared<UIPaginatedWindow>(0.0f, 0.0f, 1.5f, 1.5f,"ShopItems.xml");
 	Graphics::DrawUIElement(*shopWindow, "grass.png");
 
 	std::shared_ptr<UIButton> nextButton = std::make_shared<UIButton>(0.6f, -0.7f, 0.2f, 0.1f, [&]() {
@@ -40,7 +41,8 @@ World::World(const std::string& InFileName)
 		shopWindow->previousPage();
 		});
 	Graphics::DrawUIElement(*prevButton, "shop.png");
-
+	shopWindow->addTab<WorkshopData>("Work Shops", "workshops");
+	shopWindow->addTab<Decoration>("Decorations", "decorations");
 	shopWindow->pageControls.push_back(nextButton);
 	shopWindow->pageControls.push_back(prevButton);
 	shopWindow->SetHidden(true);
