@@ -16,9 +16,12 @@ struct WindowContext {
 	// Add other APIs or data as needed
 };
 
+
 class World
 {
 private:
+	std::map<GLchar, Character> Characters;
+
 	MouseState mouseState;
 	GridConfig gridConfig;
 	GLFWwindow* Window;
@@ -33,6 +36,7 @@ private:
 	std::vector<ShaderEntry> Shaders;
 	Shader GridShader;
 	Shader BackGround;
+	Shader font;
 	//
 	void InitBackground();
 	void InitGrid(const std::string& InFileName);

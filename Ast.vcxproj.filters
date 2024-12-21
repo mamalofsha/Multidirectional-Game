@@ -74,6 +74,12 @@
     <None Include="UI.frag">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="Text.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Text.frag">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h">

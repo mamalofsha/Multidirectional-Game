@@ -172,6 +172,8 @@
     <None Include="Grid.vert" />
     <None Include="Shader.frag" />
     <None Include="Shader.vert" />
+    <None Include="Text.frag" />
+    <None Include="Text.vert" />
     <None Include="Texture.frag" />
     <None Include="Texture.vert" />
     <None Include="UI.frag" />

@@ -18,13 +18,12 @@ World::World(std::vector<std::shared_ptr<GameObject>>& GameObjects)
 
 World::World(const std::string& InFileName)
 {
-
 	StartUpData Temp = XMLParser::LoadLeveL(InFileName);
 	Window = Graphics::InitWindow(Temp.LevelWidth * Temp.WindowScale, Temp.LevelHeight * Temp.WindowScale);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	font = Graphics::InitTextRender(Characters);
 	InitBackground();
 	InitGrid(Temp.GridFileName);
+
 	SetupMouseCallbacks();
 
 
@@ -294,6 +293,7 @@ void World::RenderUpdate()
 	{
 		(*it)->draw();
 	}
+	Graphics::RenderText(font, "This is sample teeeext", 25.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f), Characters);
 	glfwSwapBuffers(Window);
 
 }
