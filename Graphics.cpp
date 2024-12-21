@@ -147,7 +147,7 @@ Shader Graphics::DrawGrid(const GridConfig InGridConfig, int WindowsWidth, int W
 	return ourShader;
 }
 
-Shader Graphics::InitTextRender(std::map<GLchar, Character>& InMap)
+Shader Graphics::InitTextRender(std::map<GLchar, Character>& InMap,float inWindowWidth,float inWindowHeight)
 {
 	// OpenGL state
 	// ------------
@@ -159,7 +159,7 @@ Shader Graphics::InitTextRender(std::map<GLchar, Character>& InMap)
 	// compile and setup the shader
 	// ----------------------------
 	Shader shader("Text.vert", "Text.frag");
-	glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(800.0f), 0.0f, static_cast<float>(800.0f));
+	glm::mat4 projection = glm::ortho(0.0f, inWindowWidth, 0.0f, inWindowHeight);
 	shader.use();
 	glUniformMatrix4fv(glGetUniformLocation(shader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 

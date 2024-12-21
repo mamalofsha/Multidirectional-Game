@@ -11,21 +11,8 @@ struct StartUpData
 	std::string GridFileName;
 };
 
-struct ShopItemData
-{
-	std::string Name;
-	std::string ImageFile;
-	float goldCost;
-};
-
-struct WorkshopData : public ShopItemData
-{
-	float goldGenrate;
-};
-struct Decoration :public ShopItemData
-{
-	float happiness;
-};
+struct WorkshopData;
+struct Decoration;
 
 class XMLParser
 {

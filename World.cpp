@@ -20,48 +20,14 @@ World::World(const std::string& InFileName)
 {
 	StartUpData Temp = XMLParser::LoadLeveL(InFileName);
 	Window = Graphics::InitWindow(Temp.LevelWidth * Temp.WindowScale, Temp.LevelHeight * Temp.WindowScale);
-	font = Graphics::InitTextRender(Characters);
 	InitBackground();
+	InitHUD();
 	InitGrid(Temp.GridFileName);
 
 	SetupMouseCallbacks();
 
 
-	std::shared_ptr<UIPaginatedWindow> shopWindow = std::make_shared<UIPaginatedWindow>(0.0f, 0.0f, 1.5f, 1.5f,"ShopItems.xml");
-	Graphics::DrawUIElement(*shopWindow, "grass.png");
 
-	std::shared_ptr<UIButton> nextButton = std::make_shared<UIButton>(0.6f, -0.7f, 0.2f, 0.1f, [&]() {
-		shopWindow->nextPage();
-
-		});
-	Graphics::DrawUIElement(*nextButton, "shop.png");
-
-	std::shared_ptr<UIButton> prevButton = std::make_shared<UIButton>(-0.6f, -0.7f, 0.2f, 0.1f, [&]() {
-		shopWindow->previousPage();
-		});
-	Graphics::DrawUIElement(*prevButton, "shop.png");
-	shopWindow->addTab<WorkshopData>("Work Shops", "workshops");
-	shopWindow->addTab<Decoration>("Decorations", "decorations");
-	shopWindow->pageControls.push_back(nextButton);
-	shopWindow->pageControls.push_back(prevButton);
-	shopWindow->SetHidden(true);
-
-
-	std::weak_ptr<UIElement> weakSdd = shopWindow; // Create a weak pointer
-
-	std::shared_ptr<UIButton> sd = std::make_shared<UIButton>(0.80f, -0.82f, .3f, .3f, [weakSdd]() {
-		std::cout << "Shop button clicked! Opening Shop UI..." << std::endl;
-		if (auto sharedSdd = weakSdd.lock()) { // Check if the weak pointer is still valid
-			std::cout << "Toggling Shop Button visibility!" << std::endl;
-			sharedSdd->SetHidden(!sharedSdd->isHidden);
-		}
-		else {
-			std::cerr << "Shop button is no longer valid!" << std::endl;
-		}
-		});
-	Graphics::DrawUIElement(*sd,"shop.png");
-	uis.push_back(sd);
-	uis.push_back(shopWindow);
 
 }
 
@@ -88,6 +54,14 @@ void World::InitBackground()
 	Shaders.push_back({Graphics::DrawTexture("Map1.jpg"), ShaderType::Background });
 }
 
+void World::InitHUD()
+{
+	int windowWidth, windowHeight;
+	glfwGetWindowSize(Window, &windowWidth, &windowHeight);
+	GameHUD = std::make_unique<HUD>(windowWidth,windowHeight);
+
+}
+
 void World::InitGrid(const std::string& InFileName)
 {
 	int windowWidth, windowHeight;
@@ -96,38 +70,6 @@ void World::InitGrid(const std::string& InFileName)
 	Shaders.push_back({ Graphics::DrawGrid(gridConfig,windowWidth,windowHeight), ShaderType::Grid });
 }
 
-void World::onHoverFunction(int gridX, int gridY, float screenX, float screenY)
-{
-
-	std::cout << "Hovereddead over tile: (" << gridX << ", " << gridY << ")" << std::endl;
-	for (auto& element : uis)
-	{
-		if (auto button = std::dynamic_pointer_cast<UIButton>(element)) {
-			// Successfully cast, so the object is a Button
-			button->updateHoverState(screenX, screenY);
-		}
-		if (auto Window = std::dynamic_pointer_cast<UIPaginatedWindow>(element)) {
-			// Successfully cast, so the object is a Button
-			Window->UpdateChildrenButtons(screenX, screenY);
-		}
-	}
-	//mouseState.GridX = gridX;
-	//mouseState.GridY = gridY;
-}
-
-void World::onClickFunction(int gridX, int gridY, float screenX, float screenY)
-{
-	for (auto& elements : uis)
-	{
-		if (auto button = std::dynamic_pointer_cast<UIButton>(elements)) {
-			if (button->isHovered) {
-				button->cllicked();
-				button->onClick();
-			}
-		}
-
-	}
-}
 
 
 void World::ProcessInputGL(GLFWwindow* window)
@@ -209,11 +151,11 @@ void World::SetupMouseCallbacks()
 {
 	// Mouse Interaction API setup
 	MouseInteractionAPI* mouseAPI = new MouseInteractionAPI(Window,gridConfig);
-	mouseAPI->SetHoverCallback([this](int gridX, int gridY, float screenX, float screenY) {
-		this->onHoverFunction(gridX, gridY, screenX, screenY);
-		});
 	mouseAPI->SetClickCallback([this](int gridX, int gridY, float screenX, float screenY) {
-		this->onClickFunction(gridX, gridY, screenX, screenY);
+		this->GameHUD->onClickFunction(gridX, gridY, screenX, screenY);
+		});
+	mouseAPI->SetHoverCallback([this](int gridX, int gridY, float screenX, float screenY) {
+		this->GameHUD->onHoverFunction(gridX, gridY, screenX, screenY);
 		});
 	// Set the user pointer
 }
@@ -289,11 +231,7 @@ void World::RenderUpdate()
 		glBindVertexArray((*it)->ObjectShader->VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 	}
-	for (auto it = uis.begin(); it != uis.end(); ++it)
-	{
-		(*it)->draw();
-	}
-	Graphics::RenderText(font, "This is sample teeeext", 25.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f), Characters);
+	GameHUD->Update();
 	glfwSwapBuffers(Window);
 
 }
@@ -371,3 +309,5 @@ bool World::IsRunning()
 }
 
 
+///////// todo
+// one shader cna be used with multiple purposes and different places , -> 1 shader for texture can draw multiple textures , shoyld 

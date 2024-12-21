@@ -8,6 +8,7 @@
 #include <functional>
 #include "MouseInteraction.h"
 #include "UIButton.h"
+#include "HUD.h"
 
 struct WindowContext {
 	MouseInteractionAPI* mouseAPI;
@@ -20,7 +21,6 @@ struct WindowContext {
 class World
 {
 private:
-	std::map<GLchar, Character> Characters;
 
 	MouseState mouseState;
 	GridConfig gridConfig;
@@ -36,9 +36,9 @@ private:
 	std::vector<ShaderEntry> Shaders;
 	Shader GridShader;
 	Shader BackGround;
-	Shader font;
 	//
 	void InitBackground();
+	void InitHUD();
 	void InitGrid(const std::string& InFileName);
 	void ProcessInputGL(GLFWwindow* window);
 	void GarbageCollection();
@@ -48,9 +48,9 @@ private:
 	void CollisionUpdate();
 	void HandleCollision(GameObject& GameObject1, GameObject& GameObject2);
 public:
-	void onHoverFunction(int gridX, int gridY, float screenX, float screenY);
-	void onClickFunction(int gridX, int gridY, float screenX, float screenY);
-	std::vector<std::shared_ptr<UIElement>> uis;
+	std::unique_ptr<HUD> GameHUD;
+
+
 	World(std::vector<std::shared_ptr<GameObject>>& GameObjects);
 	World(const std::string& InFileName);
 	~World();

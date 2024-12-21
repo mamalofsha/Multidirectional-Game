@@ -159,6 +159,7 @@
     <ClCompile Include="..\..\..\OpenGL-Lib\glad.c" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Graphics.cpp" />
+    <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="MouseInteraction.cpp" />
     <ClCompile Include="PlayerObject.cpp" />
@@ -180,6 +181,7 @@
     <None Include="UI.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="HUD.h" />
     <ClInclude Include="UIButton.h" />
     <ClInclude Include="E:\downloads\stb_image.h" />
     <ClInclude Include="GameObject.h" />

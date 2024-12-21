@@ -35,7 +35,7 @@ public:
 	static GLFWwindow* InitWindow(const unsigned int Width, const unsigned int Height);
 	static Shader DrawTexture(const char* InFileName);
 	static Shader DrawGrid(const GridConfig InGridConfig,int WindowsWidth , int WindowsHeight);
-	static Shader InitTextRender(std::map<GLchar, Character>& InMap);
+	static Shader InitTextRender(std::map<GLchar, Character>& InMap, float inWindowWidth, float inWindowHeight);
 	static void DrawShape(class GameObject& InObject);
 	static void DrawUIElement(class UIElement& InObject, const char* textureFilePath);
 	static void DrawShape2(class GameObject& InObject);
