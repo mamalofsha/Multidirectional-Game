@@ -1,0 +1,18 @@
+<items>
+    <workshops>
+		<item1>
+			<name>Drug Store</name>
+			<image>drugstore.png</image>
+			<goldcost>1404</goldcost>
+			<goldgenrate>1404</goldgenrate>
+		</item1>
+    </workshops>
+	<decorations>
+		<item1>
+			<name>Bridge</name>
+			<image>bridge.png</image>
+			<goldcost>1404</goldcost>
+			<happiness>1404</happiness>
+		</item1>
+    </decorations>
+</items>

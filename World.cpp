@@ -41,8 +41,8 @@ World::World(const std::string& InFileName)
 		});
 	Graphics::DrawUIElement(*prevButton, "shop.png");
 
-	shopWindow->addChild(nextButton);
-	shopWindow->addChild(prevButton);
+	shopWindow->pageControls.push_back(nextButton);
+	shopWindow->pageControls.push_back(prevButton);
 	shopWindow->SetHidden(true);
 
 
@@ -99,11 +99,15 @@ void World::onHoverFunction(int gridX, int gridY, float screenX, float screenY)
 {
 
 	std::cout << "Hovereddead over tile: (" << gridX << ", " << gridY << ")" << std::endl;
-	for (auto& elements : uis)
+	for (auto& element : uis)
 	{
-		if (auto button = std::dynamic_pointer_cast<UIButton>(elements)) {
+		if (auto button = std::dynamic_pointer_cast<UIButton>(element)) {
 			// Successfully cast, so the object is a Button
 			button->updateHoverState(screenX, screenY);
+		}
+		if (auto Window = std::dynamic_pointer_cast<UIPaginatedWindow>(element)) {
+			// Successfully cast, so the object is a Button
+			Window->UpdateChildrenButtons(screenX, screenY);
 		}
 	}
 	//mouseState.GridX = gridX;

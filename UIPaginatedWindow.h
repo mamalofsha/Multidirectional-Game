@@ -1,10 +1,12 @@
 #pragma once
 #include "UIWindow.h"
+#include "UIButton.h"
 
 class UIPaginatedWindow : public UIWindow {
 public:
     int currentPage = 0;
     int itemsPerPage = 5;
+    std::vector<std::shared_ptr<UIButton>> pageControls; // Controls for navigation (next/previous page)
 
     UIPaginatedWindow(float x, float y, float width, float height)
         : UIWindow(x, y, width, height) {
@@ -27,6 +29,25 @@ public:
         for (int i = startIndex; i < endIndex; ++i) {
             children[i]->draw();
         }
+        for (auto it = pageControls.begin(); it != pageControls.end(); ++it) {
+            (*it)->draw();// Access the UIButton via the dereferenced iterator
+        }
+
+    }
+
+    void UpdateChildrenButtons(float x, float y)
+    {
+        for (auto& Child : pageControls)
+        {
+            auto button = std::dynamic_pointer_cast<UIButton>(Child);
+            if (button)
+            {
+                button->updateHoverState(x, y);
+            }
+        }
+    }
+    void addButton(std::shared_ptr<UIButton> child) {
+        pageControls.push_back(child);
     }
 
     void nextPage() {
