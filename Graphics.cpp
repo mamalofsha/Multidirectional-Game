@@ -119,6 +119,11 @@ Shader Graphics::DrawTexture(const char* InFileName)
 	return ourShader;
 }
 
+Shader Graphics::GenerateTextureData(const std::vector<float>& IntexturedVertices, const std::vector<float>& IngridVertices)
+{
+	return Shader();
+}
+
 Shader Graphics::DrawGrid(const GridConfig InGridConfig, int WindowsWidth, int WindowsHeight)
 {
 	Shader ourShader("Grid.vert", "Grid.frag");

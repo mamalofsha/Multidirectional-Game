@@ -30,9 +30,11 @@ private:
 	float panY = 0.0f;
 	float Zoom = 0.25f;
 	//
-	std::vector<std::shared_ptr<GameObject>> GameObjects;
+	std::vector<std::shared_ptr<Object>> GameObjects;
+	std::map<unsigned int, std::vector<std::shared_ptr<Object>>> objectRenderMap;
 	std::shared_ptr<class PlayerObject> Player;
 	//
+	std::vector<std::shared_ptr<Shader>> NewShaders;
 	std::vector<ShaderEntry> Shaders;
 	Shader GridShader;
 	Shader BackGround;
@@ -45,12 +47,13 @@ private:
 	void InputUpdate();
 	void SetupMouseCallbacks();
 	void RenderUpdate();
-	void CollisionUpdate();
-	void HandleCollision(GameObject& GameObject1, GameObject& GameObject2);
 public:
 	std::unique_ptr<HUD> GameHUD;
-
-
+	float GetZoom() { return Zoom; };
+	float GetPanX() { return panX; };
+	float GetPanY() { return panY; };
+	MouseState GetMouserState() { return mouseState; };
+	std::vector<int> GetWindowSize();
 	World(std::vector<std::shared_ptr<GameObject>>& GameObjects);
 	World(const std::string& InFileName);
 	~World();

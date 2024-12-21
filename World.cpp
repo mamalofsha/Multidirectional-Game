@@ -9,7 +9,19 @@
 #include <algorithm>
 #include "UIPaginatedWindow.h"
 #include <ft2build.h>
+#include "TexturedObject.h"
+#include "GridObject.h"
 #include FT_FREETYPE_H
+
+std::vector<int> World::GetWindowSize()
+{
+	std::vector<int> Output;
+	int windowWidth, windowHeight;
+	glfwGetWindowSize(Window, &windowWidth, &windowHeight);
+	Output.push_back(windowWidth);
+	Output.push_back(windowHeight);
+	return Output;
+}
 
 World::World(std::vector<std::shared_ptr<GameObject>>& GameObjects)
 {
@@ -23,12 +35,7 @@ World::World(const std::string& InFileName)
 	InitBackground();
 	InitHUD();
 	InitGrid(Temp.GridFileName);
-
 	SetupMouseCallbacks();
-
-
-
-
 }
 
 World::~World()
@@ -51,7 +58,22 @@ World::~World()
 
 void World::InitBackground()
 {
-	Shaders.push_back({Graphics::DrawTexture("Map1.jpg"), ShaderType::Background });
+	std::shared_ptr<Shader> shader = std::make_shared<Shader>("Texture.vert", "Texture.frag");
+	NewShaders.push_back(shader);
+	std::vector<float> vertices = {
+		// positions          // colors           // texture coords
+		 1.0f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+		 1.0f, -1.0f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+		-1.0f, -1.0f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+		-1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
+	};
+	std::vector<unsigned int> indices = {
+		0, 1, 3, // first triangle
+		1, 2, 3  // second triangle
+	};
+	std::shared_ptr<TexturedObject> texturedObject = std::make_shared<TexturedObject>(shader, vertices, indices, "Map1.jpg",this);
+	GameObjects.push_back(texturedObject);
+	objectRenderMap[shader->ID].push_back(texturedObject);
 }
 
 void World::InitHUD()
@@ -59,18 +81,16 @@ void World::InitHUD()
 	int windowWidth, windowHeight;
 	glfwGetWindowSize(Window, &windowWidth, &windowHeight);
 	GameHUD = std::make_unique<HUD>(windowWidth,windowHeight);
-
 }
 
 void World::InitGrid(const std::string& InFileName)
 {
-	int windowWidth, windowHeight;
-	glfwGetWindowSize(Window, &windowWidth, &windowHeight);
+	std::shared_ptr<Shader> shader = std::make_shared<Shader>("Grid.vert", "Grid.frag");
+	NewShaders.push_back(shader);
 	gridConfig = XMLParser::ParseGridDataFromXML(InFileName);
-	Shaders.push_back({ Graphics::DrawGrid(gridConfig,windowWidth,windowHeight), ShaderType::Grid });
+	std::shared_ptr<GridObject> gridObject = std::make_shared<GridObject>(shader, gridConfig, this);
+	objectRenderMap[shader->ID].push_back(gridObject);
 }
-
-
 
 void World::ProcessInputGL(GLFWwindow* window)
 {
@@ -165,129 +185,30 @@ void World::RenderUpdate()
 	//
 	glClearColor(0.2f, 0.3f, 0.76f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
-
-
-	int windowWidth, windowHeight;
-	glfwGetWindowSize(Window, &windowWidth, &windowHeight);
-	// static stuff , right now only BG
-	for (auto it = Shaders.begin(); it < Shaders.end(); it++)
+	for (auto it = NewShaders.begin(); it < NewShaders.end(); it++)
 	{
-		float scaleX = 2000.0f / windowWidth;
-		float scaleY = 1404.0f / windowHeight;
-		glm::mat4 transform = glm::mat4(1.0f);
-		//std::cout << "scale: " << scaleX << std::endl;
+		(*it)->use();
+		unsigned int shaderID = (*it)->ID;
 
-		// bind Texture
-		// render container
-		GLuint  transformLoc;
-		switch (it->type)
-		{
-		case ShaderType::Background:
-
-			// bind Texture
-			glBindTexture(GL_TEXTURE_2D, it->shader.Texture);
-			// render container
-			it->shader.use();
-			//it->shader.setUniform3f("panOffset", panX, panY,0.f);
-			// Scale and translate the background
-
-			transform = glm::scale(transform, glm::vec3(scaleX*Zoom, scaleY*Zoom, 1.0f));
-			transform = glm::translate(transform, glm::vec3(panX, panY, 0.0f));
-
-			  transformLoc = glGetUniformLocation((it)->shader.ID, "transform");
-			glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
-			//it->shader.setFloat("zoom", Zoom);
-			glBindVertexArray(it->shader.VAO);
-			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-			break;
-		case ShaderType::Grid:
-			it->shader.use();
-			it->shader.setUniform2i("tileCoor", mouseState.GridX, mouseState.GridY);
-
-			transform = glm::scale(transform, glm::vec3(scaleX * Zoom, scaleY * Zoom, 1.0f));
-			transform = glm::translate(transform, glm::vec3(panX, panY, 0.0f));
-
-			transformLoc = glGetUniformLocation((it)->shader.ID, "transform");
-			glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
-
-			glBindVertexArray(it->shader.VAO);
-			//// todoooo donmt forgetteettete it shoudl be grid vertices size
-			glDrawArrays(GL_LINES, 0, 200 / 2);
-			break;
+		// Lookup objects in the map
+		auto mapIt = objectRenderMap.find(shaderID);
+		if (mapIt != objectRenderMap.end()) {
+			// Iterate through all objects associated with this shader
+			for (const auto& object : mapIt->second) {
+				object->draw(); // Draw the object
+			}
 		}
-	}
-
-	// position update
-	for (auto it = GameObjects.begin(); it != GameObjects.end(); ++it)
-	{
-		// create transformations
-		glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-		transform = glm::translate(transform, glm::vec3((*it)->GetTransform().Location[0], (*it)->GetTransform().Location[1], 0.0f));
-		transform = glm::rotate(transform, (*it)->GetTransform().Rotation, glm::vec3(0.0f, 0.0f, 1.0f));
-		(*it)->ObjectShader->use();
-		GLuint   transformLoc = glGetUniformLocation((*it)->ObjectShader->ID, "transform");
-		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
-		glBindVertexArray((*it)->ObjectShader->VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		else {
+			std::cerr << "No objects found for shader ID: " << shaderID << std::endl;
+		}
 	}
 	GameHUD->Update();
 	glfwSwapBuffers(Window);
-
 }
 
-void World::CollisionUpdate()
-{
 
-	for (auto it = GameObjects.begin(); it != GameObjects.end(); ++it)
-	{
-		if (!Player || Player->MarkedForDelete)
-		{
-			break;
-		}
-		if (*it == Player)continue;
-		std::vector<float> Raw;
-		for (size_t i = 0; i < Player->GetTransform().Location.size(); i++)
-		{
-			Raw.push_back((*it)->GetTransform().Location[i] - Player->GetTransform().Location[i]);
-		}
-		if (Math::VectorSize(Raw) < Player->GetLength() * 1.5f)
-		{
-			bool collisionX = Player->GetTransform().Location[0] + Player->GetLength() >= (*it)->GetTransform().Location[0] &&
-				(*it)->GetTransform().Location[0] + (*it)->GetLength() >= Player->GetTransform().Location[0];
-			// collision y-axis?
-			bool collisionY = Player->GetTransform().Location[1] + Player->GetLength() >= (*it)->GetTransform().Location[1] &&
-				(*it)->GetTransform().Location[1] + (*it)->GetLength() >= Player->GetTransform().Location[1];
-			// collision only if on both axes
-			if (collisionX && collisionY)
-			{
-				if ((*it)->GetIsHazard())
-				{
-					std::cout << "Collision with hazard!" << std::endl;
-					Player->MarkedForDelete = true;
-					Player = nullptr;
-				}
-				else
-				{
-					std::cout << "Collision with item" << std::endl;
-					(*it)->MarkedForDelete = true;
-				}
-			}
-		}
-	}
-}
 
-void World::HandleCollision(GameObject& GameObject1, GameObject& GameObject2)
-{
-	if (GameObject2.GetIsHazard())
-	{
-		Player = nullptr;
-	}
-	else
-	{
-		delete& GameObject2;
-	}
-}
+
 
 
 

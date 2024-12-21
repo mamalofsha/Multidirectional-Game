@@ -19,7 +19,6 @@ protected :
 	bool IsHazard = false;
 
 public:
-	bool MarkedForDelete = false;
 
 	//GameObject();
 	//GameObject(Transform SpawnTransform,bool InHaz);

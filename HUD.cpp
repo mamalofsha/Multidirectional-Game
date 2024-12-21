@@ -72,7 +72,8 @@ void HUD::Update()
 
 void HUD::onHoverFunction(int gridX, int gridY, float screenX, float screenY)
 {
-	//std::cout << "Hovereddead over tile: (" << gridX << ", " << gridY << ")" << std::endl;
+	std::cout << "Hovereddead over tile: (" << gridX << ", " << gridY << ")" << std::endl;
+	if (UIElements.empty()) return;
 	for (auto& element : UIElements)
 	{
 		if (auto button = std::dynamic_pointer_cast<UIButton>(element)) {
