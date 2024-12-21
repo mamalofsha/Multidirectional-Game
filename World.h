@@ -7,7 +7,7 @@
 #include "Graphics.h"
 #include <functional>
 #include "MouseInteraction.h"
-#include "Button.h"
+#include "UIButton.h"
 
 struct WindowContext {
 	MouseInteractionAPI* mouseAPI;
@@ -46,7 +46,7 @@ private:
 public:
 	void onHoverFunction(int gridX, int gridY, float screenX, float screenY);
 	void onClickFunction(int gridX, int gridY, float screenX, float screenY);
-	std::vector<std::shared_ptr<Button>> uis;
+	std::vector<std::shared_ptr<UIElement>> uis;
 	World(std::vector<std::shared_ptr<GameObject>>& GameObjects);
 	World(const std::string& InFileName);
 	~World();

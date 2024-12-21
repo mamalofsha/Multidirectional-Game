@@ -2,7 +2,7 @@
 #include "stb_image.h"
 #include "GameObject.h"
 #include "XMLParser.h"
-#include "Button.h"
+#include "UIButton.h"
 
 GLFWwindow* Graphics::InitWindow(const unsigned int Width, const unsigned int Height)
 {
@@ -166,7 +166,7 @@ void Graphics::DrawShape(GameObject& InObject)
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
-void Graphics::DrawButton(Button& InObject, const char* textureFilePath)
+void Graphics::DrawUIElement(UIElement& InObject, const char* textureFilePath)
 {
 	InObject.ObjectShader = std::make_unique<Shader>("UI.vert", "UI.frag");
 	unsigned int VBO, VAO, EBO;

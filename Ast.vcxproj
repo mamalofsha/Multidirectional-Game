@@ -178,14 +178,17 @@
     <None Include="UI.vert" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Button.h" />
+    <ClInclude Include="UIButton.h" />
     <ClInclude Include="E:\downloads\stb_image.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="MouseInteraction.h" />
+    <ClInclude Include="UIPaginatedWindow.h" />
     <ClInclude Include="PlayerObject.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="UIElement.h" />
+    <ClInclude Include="UIWindow.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="XMLParser.h" />
   </ItemGroup>

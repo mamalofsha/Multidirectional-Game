@@ -7,6 +7,7 @@
 #include "Math.h"
 #include "XMLParser.h"
 #include <algorithm>
+#include "UIPaginatedWindow.h"
 
 
 World::World(std::vector<std::shared_ptr<GameObject>>& GameObjects)
@@ -25,28 +26,42 @@ World::World(const std::string& InFileName)
 	InitGrid(Temp.GridFileName);
 	SetupMouseCallbacks();
 
-	std::shared_ptr<Button> sdd = std::make_shared<Button>(0.0f, -0.2f, .3f, .3f, []() {
-		std::cout << "Shop button clicked! Opening Shop UI..." << std::endl;
-		// Toggle shop UI visibility or trigger shop opening logic
-		//toggleShopUI();
+
+	std::shared_ptr<UIPaginatedWindow> shopWindow = std::make_shared<UIPaginatedWindow>(0.0f, 0.0f, 1.5f, 1.5f);
+	Graphics::DrawUIElement(*shopWindow, "grass.png");
+
+	std::shared_ptr<UIButton> nextButton = std::make_shared<UIButton>(0.6f, -0.7f, 0.2f, 0.1f, [&]() {
+		shopWindow->nextPage();
 
 		});
-	Graphics::DrawButton(*sdd, "shop.png");
-	uis.push_back(sdd);
-	std::weak_ptr<Button> weakSdd = sdd; // Create a weak pointer
+	Graphics::DrawUIElement(*nextButton, "shop.png");
 
-	std::shared_ptr<Button> sd = std::make_shared<Button>(0.80f, -0.82f, .3f, .3f, [weakSdd]() {
+	std::shared_ptr<UIButton> prevButton = std::make_shared<UIButton>(-0.6f, -0.7f, 0.2f, 0.1f, [&]() {
+		shopWindow->previousPage();
+		});
+	Graphics::DrawUIElement(*prevButton, "shop.png");
+
+	shopWindow->addChild(nextButton);
+	shopWindow->addChild(prevButton);
+	shopWindow->SetHidden(true);
+
+
+	std::weak_ptr<UIElement> weakSdd = shopWindow; // Create a weak pointer
+
+	std::shared_ptr<UIButton> sd = std::make_shared<UIButton>(0.80f, -0.82f, .3f, .3f, [weakSdd]() {
 		std::cout << "Shop button clicked! Opening Shop UI..." << std::endl;
 		if (auto sharedSdd = weakSdd.lock()) { // Check if the weak pointer is still valid
 			std::cout << "Toggling Shop Button visibility!" << std::endl;
-			sharedSdd->isHidden = !sharedSdd->isHidden;
+			sharedSdd->SetHidden(!sharedSdd->isHidden);
 		}
 		else {
 			std::cerr << "Shop button is no longer valid!" << std::endl;
 		}
 		});
-	Graphics::DrawButton(*sd,"shop.png");
+	Graphics::DrawUIElement(*sd,"shop.png");
 	uis.push_back(sd);
+	uis.push_back(shopWindow);
+
 }
 
 World::~World()
@@ -84,9 +99,12 @@ void World::onHoverFunction(int gridX, int gridY, float screenX, float screenY)
 {
 
 	std::cout << "Hovereddead over tile: (" << gridX << ", " << gridY << ")" << std::endl;
-	for (auto& button : uis)
+	for (auto& elements : uis)
 	{
-		button->updateHoverState(screenX, screenY);
+		if (auto button = std::dynamic_pointer_cast<UIButton>(elements)) {
+			// Successfully cast, so the object is a Button
+			button->updateHoverState(screenX, screenY);
+		}
 	}
 	//mouseState.GridX = gridX;
 	//mouseState.GridY = gridY;
@@ -94,12 +112,15 @@ void World::onHoverFunction(int gridX, int gridY, float screenX, float screenY)
 
 void World::onClickFunction(int gridX, int gridY, float screenX, float screenY)
 {
-	for (auto& button : uis)
+	for (auto& elements : uis)
 	{
-		if (button->isHovered) {
-			button->cllicked();
-			button->onClick();
+		if (auto button = std::dynamic_pointer_cast<UIButton>(elements)) {
+			if (button->isHovered) {
+				button->cllicked();
+				button->onClick();
+			}
 		}
+
 	}
 }
 
