@@ -327,20 +327,37 @@ void Graphics::InitDrawObject(GameObject& InObject)
 	}
 	stbi_image_free(data);
 }
-std::pair<int, int> Graphics::GridToWorldPosition(int gridX, int gridY, float tileWidth, float tileHeight, float offsetX, float offsetY, float panX,float panY,float zoom ,float windowWidth,float windowHeight)
+std::pair<int, int> Graphics::GridToWorldPosition(int gridX, int gridY, float tileWidth, float tileHeight, float offsetX, float offsetY, float panX,float panY,float itemscale,float zoom ,float windowWidth,float windowHeight)
 {
-	// Step 1: Calculate isometric screen coordinates without transformations
-	float isoScreenX = (gridX - gridY) * (tileWidth / 2.0f)  ;
-	float isoScreenY = (gridX + gridY) * (tileHeight / 2.0f) ;
+	// Step 1: Calculate isometric coordinates for the center of the tile
+	float isoScreenX = (gridX  - gridY + offsetX) * (tileWidth / 2.0f);
+	float isoScreenY = (gridX  + gridY + offsetY+ offsetX) * (tileHeight / 2.0f);
 
-	// Step 2: Apply inverse panning and zooming
-	float adjustedScreenX = (isoScreenX + panX) * (zoom * (2000.0f / static_cast<float>(windowWidth)));
-	float adjustedScreenY = (isoScreenY + panY) * (zoom * (1404.0f / static_cast<float>(windowHeight)));
 
-	// Step 3: Convert to screen space
+
+	float isoScreenXX = (gridX - gridY + 1 + offsetX) * (tileWidth / 2.0f);
+	float adjustedScreenXX = (isoScreenXX + panX) * (zoom * (2000.0f / windowWidth));
+	float screenXX = (adjustedScreenXX + 1.0f) / 2.0f * windowWidth;
+	float isoScreenYY = (gridX + gridY + 1 + offsetY + offsetX) * (tileHeight / 2.0f);
+	float adjustedScreenYY = (isoScreenYY + panY) * (zoom * (1404.0f / windowHeight));
+	float screenYY = (1.0f - adjustedScreenYY) / 2.0f * windowHeight;
+	// Optional: Offset to center tiles (if needed)
+	//isoScreenX -= itemscale*(tileWidth / 2.0f);
+	//isoScreenY -= itemscale*(tileHeight);
+
+	// Step 2: Apply panning and zoom adjustments
+	float adjustedScreenX = (isoScreenX + panX) * (zoom * (2000.0f / windowWidth));
+	float adjustedScreenY = (isoScreenY + panY) * (zoom * (1404.0f / windowHeight));
+
+	// Step 3: Convert to actual screen space coordinates
 	float screenX = (adjustedScreenX + 1.0f) / 2.0f * windowWidth;
 	float screenY = (1.0f - adjustedScreenY) / 2.0f * windowHeight;
+	float offsetYn = (screenY - screenYY);
+	float offsetXn = (screenX- screenXX) ;
 
+	std::cout << screenY - screenYY << "??" << std::endl;
+	//screenX -=90.f/8.f;
+	screenY += offsetYn;
 	return { screenX, screenY };
 }
 /*

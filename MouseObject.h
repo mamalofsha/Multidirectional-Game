@@ -20,8 +20,26 @@ public:
 		if (isHidden)return;
 		ObjectShader->use();
 
-		MouseInteractionAPI* api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(WorldPtr->GetWindow()));
+		float ndcX = 0.0f;
+		float ndcY = 0.0f;
+		float screenX = 0.0f;
+		float screenY = 0.0f;
 
+		MouseInteractionAPI* api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(WorldPtr->GetWindow()));
+		if (api->GetMouseState().GridX >= 1 && api->GetMouseState().GridX <= WorldPtr->GetGridConfig().width &&
+			api->GetMouseState().GridY >= 1 && api->GetMouseState().GridY <= WorldPtr->GetGridConfig().height)
+		{
+			std::tie(screenX, screenY) = Graphics::GridToWorldPosition(api->GetMouseState().GridX, api->GetMouseState().GridY,
+				WorldPtr->GetGridConfig().tileWidth, WorldPtr->GetGridConfig().tileHeight,
+				WorldPtr->GetGridConfig().StartOffsetX, WorldPtr->GetGridConfig().StartOffsetY, WorldPtr->GetPanX(), WorldPtr->GetPanY(), size, WorldPtr->GetZoom(), WorldPtr->GetWindowSize()[0], WorldPtr->GetWindowSize()[1]);
+			std::tie(ndcX, ndcY) = api->screenToNDC(screenX, screenY, WorldPtr->GetWindowSize()[0], WorldPtr->GetWindowSize()[1]);
+
+		}
+		else
+		{
+			std::tie(ndcX, ndcY) = api->screenToNDC(api->GetMouseState().x, api->GetMouseState().y, WorldPtr->GetWindowSize()[0], WorldPtr->GetWindowSize()[1]);
+
+		}
 		// Convert mouse position to NDC
 	   // auto [ndcX, ndcY] = api->screenToNDC(api->GetMouseState().x, api->GetMouseState().y, WorldPtr->GetWindowSize()[0], WorldPtr->GetWindowSize()[1]);
 		// Use shader program
@@ -29,17 +47,14 @@ public:
 	//		WorldPtr->GetGridConfig().tileWidth, WorldPtr->GetGridConfig().tileHeight,
 	//		WorldPtr->GetGridConfig().StartOffsetX, WorldPtr->GetGridConfig().StartOffsetY, WorldPtr->GetPanX(), WorldPtr->GetPanY(), WorldPtr->GetZoom(), WorldPtr->GetWindowSize()[0], WorldPtr->GetWindowSize()[1]);
 	
-		auto [screenX, screenY] = Graphics::GridToWorldPosition(api->GetMouseState().GridX, api->GetMouseState().GridY,
-			WorldPtr->GetGridConfig().tileWidth, WorldPtr->GetGridConfig().tileHeight,
-			WorldPtr->GetGridConfig().StartOffsetX, WorldPtr->GetGridConfig().StartOffsetY, WorldPtr->GetPanX(), WorldPtr->GetPanY(), WorldPtr->GetZoom(), WorldPtr->GetWindowSize()[0], WorldPtr->GetWindowSize()[1]);
-		auto [ndcX, ndcY] = api->screenToNDC(screenX, screenY, WorldPtr->GetWindowSize()[0], WorldPtr->GetWindowSize()[1]);
+
 		
 		//system("cls");
 		std::cout << "scx:" << screenX << " ndx: " << ndcX << " x "<<api->GetMouseState().x<< std::endl;
 		 std::cout << "scy:" << screenY << " ndy: " << ndcY <<" y " << api->GetMouseState().y << std::endl;
 
 
-		ObjectShader->setFloat("size", size);
+		//ObjectShader->setFloat("size", size);
 
 		std::vector<int> WindowSize = WorldPtr->GetWindowSize();
 		float scaleX = 2000.0f / WindowSize[0];
@@ -47,7 +62,7 @@ public:
 		glm::mat4 transform = glm::mat4(1.0f);
 		GLuint  transformLoc;
 		transform = glm::translate(transform, glm::vec3(ndcX, ndcY, 0.0f));
-		transform = glm::scale(transform, glm::vec3(scaleX * WorldPtr->GetZoom(), scaleY * WorldPtr->GetZoom(), 1.0f));
+		transform = glm::scale(transform, glm::vec3(scaleX * WorldPtr->GetZoom()*size, scaleY * WorldPtr->GetZoom() * size, 1.0f));
 
 		transformLoc = glGetUniformLocation(ObjectShader->ID, "transform");
 		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));

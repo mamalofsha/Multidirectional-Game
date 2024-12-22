@@ -32,7 +32,7 @@ HUD::HUD(float inWindowWidth, float inWindowHeight,World* InWorld)
 	};
 	VertexAttribute OutVertexData = { 4,{2,2} };
 	mous = std::make_shared<MouseObject>(shader, vertices, indices, "bridge.png", OutVertexData, Worldptr);
-	mous->setSize(0.18f);
+	mous->setSize(0.15f);
 
 	/// callmuse
 	shopWindow = std::make_shared<UIPaginatedWindow>(UIE,0.0f, 0.0f, 1.5f, 1.5f, "ShopItems.xml","grass.png", this);
@@ -98,7 +98,7 @@ shopWindow->draw();
 
 void HUD::onHoverFunction(int gridX, int gridY, float screenX, float screenY)
 {
-	//std::cout << "Hovereddead over tile: (" << gridX << ", " << gridY << ")" << std::endl;
+	std::cout << "Hovereddead over tile: (" << gridX << ", " << gridY << ")" << std::endl;
 	if (UIElements.empty()) return;
 	for (auto& element : UIElements)
 	{

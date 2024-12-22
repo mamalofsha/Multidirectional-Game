@@ -4,11 +4,11 @@
         <height>5</height>
     </dimensions>
     <tile>
-        <width>0.2</width>
-        <height>0.1</height>
+        <width>0.22</width>
+        <height>0.11</height>
     </tile>
 	<offset>
-        <x>-1.1</x>
+        <x>-1.2</x>
         <y>0</y>
     </offset>
     <tiles>

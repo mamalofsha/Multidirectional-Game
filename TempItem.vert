@@ -7,7 +7,7 @@ uniform float size;
 uniform mat4 transform;
 
 void main() {
-    vec2 position = aPos*size;
+    vec2 position = aPos;//*size;
     gl_Position =transform*vec4(position, 0.0, 1.0);
     TexCoord = aTexCoord;
 }
