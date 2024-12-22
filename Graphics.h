@@ -40,11 +40,13 @@ public:
 	static Shader DrawTexture(const char* InFileName);
 	static Shader GenerateTextureData(const std::vector<float>& IntexturedVertices,const std::vector<float>& IngridVertices);
 	static Shader DrawGrid(const GridConfig InGridConfig,int WindowsWidth , int WindowsHeight);
-	static Shader InitTextRender(std::map<GLchar, Character>& InMap, float inWindowWidth, float inWindowHeight);
+	static Shader InitTextRender(std::map<GLchar, Character>& InMap, float inWindowWidth, float inWindowHeight,unsigned int& VAO, unsigned int& VBO);
 	static void DrawShape(class GameObject& InObject);
-	static void DrawUIElement(class UIElement& InObject, const char* textureFilePath);
+	//static void DrawUIElement(class UIElement& InObject, const char* textureFilePath);
+	static void DrawUIElement(std::weak_ptr<Shader> ShaderProgram,class UIElement& InObject, const char* textureFilePath);
+
 	static void DrawShape2(class GameObject& InObject);
 	static std::vector<float> createGridVertices(float gridWidth, float gridHeight, float OffsetX, float OffsetY);
-	static void RenderText(Shader& shader, std::string text, float x, float y, float scale, glm::vec3 color, std::map<GLchar, Character>& InMap);
+	static void RenderText(Shader& shader,const unsigned int VAO, const unsigned int VBO,std::string text, float x, float y, float scale, glm::vec3 color, std::map<GLchar, Character>& InMap);
 	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 };

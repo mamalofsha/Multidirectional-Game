@@ -7,8 +7,8 @@ class UIWindow : public UIElement {
 public:
     std::vector<std::shared_ptr<UIElement>> children;
 
-    UIWindow(float x, float y, float width, float height)
-        : UIElement(x, y, width, height) {
+    UIWindow(std::shared_ptr<Shader> shaderProgram, float x, float y, float width, float height)
+        : UIElement(shaderProgram,x, y, width, height) {
     }
 
     void draw() override {

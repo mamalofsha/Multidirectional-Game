@@ -7,33 +7,34 @@ HUD::HUD(float inWindowWidth, float inWindowHeight)
 {
 	WindowWidth = inWindowWidth;
 	WindowHeight = inWindowHeight;
-	font = Graphics::InitTextRender(Characters, inWindowWidth,inWindowHeight);
-	shopWindow = std::make_shared<UIPaginatedWindow>(0.0f, 0.0f, 1.5f, 1.5f, "ShopItems.xml",this);
-	Graphics::DrawUIElement(*shopWindow, "grass.png");
-
-	std::shared_ptr<UIButton> nextButton = std::make_shared<UIButton>(0.6f, -0.7f, 0.2f, 0.1f, [&]() {
+	font = Graphics::InitTextRender(Characters, inWindowWidth,inWindowHeight,fontVAO,fontVBO);
+	UIE = std::make_shared<Shader>("UI.vert", "UI.frag");
+	
+	/// callmuse
+	shopWindow = std::make_shared<UIPaginatedWindow>(UIE,0.0f, 0.0f, 1.5f, 1.5f, "ShopItems.xml",this);
+	//Graphics::DrawUIElement(UIE ,*shopWindow, "grass.png");
+	
+	std::shared_ptr<UIButton> nextButton = std::make_shared<UIButton>(UIE,0.6f, -0.7f, 0.2f, 0.1f, [&]() {
 		shopWindow->nextPage();
 
-		});
-	Graphics::DrawUIElement(*nextButton, "shop.png");
+		},"", "shop.png", this);
+	//Graphics::DrawUIElement(UIE, *nextButton, "shop.png");
 
-	std::shared_ptr<UIButton> prevButton = std::make_shared<UIButton>(-0.6f, -0.7f, 0.2f, 0.1f, [&]() {
+	std::shared_ptr<UIButton> prevButton = std::make_shared<UIButton>(UIE ,-0.6f, -0.7f, 0.2f, 0.1f, [&]() {
 		shopWindow->previousPage();
-		});
-	Graphics::DrawUIElement(*prevButton, "shop.png");
+		}, "", "shop.png", this);
+	//Graphics::DrawUIElement(UIE, *prevButton, "shop.png");
 
-	std::shared_ptr<UIButton> cat1 = std::make_shared<UIButton>(-0.6f, 0.7f, 0.2f, 0.1f, [&]() {
+	std::shared_ptr<UIButton> cat1 = std::make_shared<UIButton>(UIE ,-0.6f, 0.7f, 0.2f, 0.1f, [&]() {
 		if (shopWindow->ActiveTab == "Work Shops") return;
 		shopWindow->currentPage = 0;
 		shopWindow->ActiveTab = "Work Shops";
-		},"workshops",this);
-	Graphics::DrawUIElement(*cat1, "buttonBG.png");
-	std::shared_ptr<UIButton> cat2 = std::make_shared<UIButton>(-0.f, 0.7f, 0.2f, 0.1f, [&]() {
+		},"wowo", "buttonBG.png", this);
+	std::shared_ptr<UIButton> cat2 = std::make_shared<UIButton>(UIE ,-0.f, 0.7f, 0.2f, 0.1f, [&]() {
 		if (shopWindow->ActiveTab == "Decorations") return;
 		shopWindow->currentPage = 0;
 		shopWindow->ActiveTab = "Decorations";
-		}, "dec", this);
-	Graphics::DrawUIElement(*cat2, "buttonBG.png");
+		},"Dec", "buttonBG.png", this);
 	shopWindow->addTab<WorkshopData>("Work Shops", "workshops");
 	shopWindow->addTab<Decoration>("Decorations", "decorations");
 	shopWindow->pageControls.push_back(nextButton);
@@ -42,32 +43,32 @@ HUD::HUD(float inWindowWidth, float inWindowHeight)
 	shopWindow->pageControls.push_back(cat2);
 
 	shopWindow->SetHidden(true);
-
+	
 
 	std::weak_ptr<UIElement> weakSdd = shopWindow; // Create a weak pointer
 
-	std::shared_ptr<UIButton> sd = std::make_shared<UIButton>(0.80f, -0.82f, .3f, .3f, [weakSdd]() {
+	std::shared_ptr<UIButton> sd = std::make_shared<UIButton>(UIE,0.80f, -0.82f, .3f, .3f, [weakSdd]() {
 		std::cout << "Shop button clicked! Opening Shop UI..." << std::endl;
 		if (auto sharedSdd = weakSdd.lock()) { // Check if the weak pointer is still valid
 			std::cout << "Toggling Shop Button visibility!" << std::endl;
 			sharedSdd->SetHidden(!sharedSdd->isHidden);
 		}
 		else {
-			std::cerr << "Shop button is no longer valid!" << std::endl;
+			//std::cerr << "Shop button is no longer valid!" << std::endl;
 		}
-		});
-	Graphics::DrawUIElement(*sd, "shop.png");
+		}, "", "shop.png", this);
 	UIElements.push_back(sd);
 	UIElements.push_back(shopWindow);
 }
 
 void HUD::Update()
 {
+	UIE->use();
 	for (auto& Element : UIElements )
 	{
 		Element->draw();
 	}
-	shopWindow->draw();
+shopWindow->draw();
 }
 
 void HUD::onHoverFunction(int gridX, int gridY, float screenX, float screenY)

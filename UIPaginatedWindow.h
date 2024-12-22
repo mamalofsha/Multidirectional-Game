@@ -20,10 +20,11 @@ public:
 	std::string xmlName;
 	std::string ActiveTab = "Decorations";
 	HUD* Hudptr;
-	UIPaginatedWindow(float x, float y, float width, float height, std::string inXML, HUD* InHud)
-		: UIWindow(x, y, width, height) {
+	UIPaginatedWindow(std::shared_ptr<Shader> shaderProgram,float x, float y, float width, float height, std::string inXML, HUD* InHud)
+		: UIWindow(shaderProgram,x, y, width, height) {
 		xmlName = inXML;
 		Hudptr = InHud;
+		Graphics::DrawUIElement(shaderProgram, *this, "grass.png");
 	}
 
 	std::vector<std::shared_ptr<UIButton>> getCatButtons()
@@ -38,8 +39,8 @@ public:
 		ObjectShader->use();
 		ObjectShader->setBool("isHidden", isHidden);
 
-		glBindTexture(GL_TEXTURE_2D, ObjectShader->Texture);
-		glBindVertexArray(ObjectShader->VAO);
+		glBindTexture(GL_TEXTURE_2D, Texture);
+		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 		int startIndex = currentPage * rows * columns;
@@ -126,11 +127,10 @@ public:
 				int y = std::floor((uiElements.size() / columns) % rows);
 
 				int yhalf = y / columns;
-				std::shared_ptr<UIButton> button = std::make_shared<UIButton>(-0.3f+(x*0.6f), 0.4f+(y * -0.4f), 0.2f, 0.1f, [&, item]() {
+				std::shared_ptr<UIButton> button = std::make_shared<UIButton>(Hudptr->UIE,-0.3f+(x*0.6f), 0.4f+(y * -0.4f), 0.2f, 0.1f, [&, item]() {
 					std::cout << "Spawned item: " << item.Name << " and attached to the mouse." << std::endl;
-					}, item.Name, Hudptr);
+					}, item.Name, item.ImageFile, Hudptr);
 				uiElements.push_back(button);
-				Graphics::DrawUIElement(*button, item.ImageFile.c_str());
 
 			}
 
@@ -145,11 +145,10 @@ public:
 				int y = std::floor((uiElements.size() / columns) % rows);
 
 				int yhalf = y / columns;
-				std::shared_ptr<UIButton> button = std::make_shared<UIButton>(-0.3f + (x * 0.6f), 0.4f + (y * -0.4f), 0.2f, 0.1f, [&]() {
+				std::shared_ptr<UIButton> button = std::make_shared<UIButton>(Hudptr->UIE, -0.3f + (x * 0.6f), 0.4f + (y * -0.4f), 0.2f, 0.1f, [&]() {
 					this->SetHidden(true);
-					}, item.Name, Hudptr);
+					},item.Name , item.ImageFile, Hudptr);
 				uiElements.push_back(button);
-				Graphics::DrawUIElement(*button, item.ImageFile.c_str());
 			}
 			// uiElement = std::make_shared<UIElement>(item.name, "Decoration");
 		   //  uiElement->setCost(item.cost);

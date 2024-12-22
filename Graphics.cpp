@@ -6,7 +6,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-
+#include "UIElement.h"
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
@@ -111,10 +111,10 @@ Shader Graphics::DrawTexture(const char* InFileName)
 	stbi_image_free(data);
 
 	// Assign VAO and Texture to shader
-	ourShader.VAO = VAO;
-	ourShader.VBO = VBO;
-	ourShader.EBO = EBO;
-	ourShader.Texture = texture;
+	//ourShader.VAO = VAO;
+	//ourShader.VBO = VBO;
+	//ourShader.EBO = EBO;
+	//ourShader.Texture = texture;
 
 	return ourShader;
 }
@@ -135,13 +135,13 @@ Shader Graphics::DrawGrid(const GridConfig InGridConfig, int WindowsWidth, int W
 	glGenBuffers(1, &VBO);
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
-	ourShader.VAO = VAO;
+	//ourShader.VAO = VAO;
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, gridVertices.size() * sizeof(float), gridVertices.data(), GL_STATIC_DRAW);
 
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-	ourShader.VBO = VBO;
+	//ourShader.VBO = VBO;
 
 	// Set uniform values
 	ourShader.use();
@@ -152,14 +152,13 @@ Shader Graphics::DrawGrid(const GridConfig InGridConfig, int WindowsWidth, int W
 	return ourShader;
 }
 
-Shader Graphics::InitTextRender(std::map<GLchar, Character>& InMap,float inWindowWidth,float inWindowHeight)
+Shader Graphics::InitTextRender(std::map<GLchar, Character>& InMap,float inWindowWidth,float inWindowHeight,unsigned int& VAO, unsigned int& VBO)
 {
 	// OpenGL state
 	// ------------
 	//glEnable(GL_CULL_FACE);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	unsigned int VAO, VBO;
 
 	// compile and setup the shader
 	// ----------------------------
@@ -250,8 +249,8 @@ Shader Graphics::InitTextRender(std::map<GLchar, Character>& InMap,float inWindo
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
-	shader.VAO = VAO;
-	shader.VBO = VBO;
+	//shader.VAO = VAO;
+	//shader.VBO = VBO;
 	return shader;
 }
 
@@ -279,16 +278,14 @@ void Graphics::DrawShape(GameObject& InObject)
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 		glEnableVertexAttribArray(1);
 		glBindVertexArray(VAO);
-		InObject.ObjectShader->VAO = VAO;
-		InObject.ObjectShader->VBO = VBO;
+		//InObject.ObjectShader->VAO = VAO;
+		//InObject.ObjectShader->VBO = VBO;
 		InObject.ObjectShader->use();
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
-void Graphics::DrawUIElement(UIElement& InObject, const char* textureFilePath)
+void Graphics::DrawUIElement(std::weak_ptr<Shader> ShaderProgram, UIElement& InObject, const char* textureFilePath)
 {
-	InObject.ObjectShader = std::make_unique<Shader>("UI.vert", "UI.frag");
-	unsigned int VBO, VAO, EBO;
 
 	// Define vertex data for the button (with texture coordinates)
 	float vertices[] = {
@@ -305,16 +302,16 @@ void Graphics::DrawUIElement(UIElement& InObject, const char* textureFilePath)
 	};
 
 	// Generate VAO and VBO
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
+	glGenVertexArrays(1, &InObject.VAO);
+	glGenBuffers(1, &InObject.VBO);
 
-	glBindVertexArray(VAO);
+	glBindVertexArray(InObject.VAO);
 
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, InObject.VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	glGenBuffers(1, &EBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glGenBuffers(1, &InObject.EBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, InObject.EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	// Position attribute
@@ -329,13 +326,11 @@ void Graphics::DrawUIElement(UIElement& InObject, const char* textureFilePath)
 	glBindVertexArray(0);
 
 	// Assign VAO and VBO to the button's shader
-	InObject.ObjectShader->VAO = VAO;
-	InObject.ObjectShader->VBO = VBO;
-
+	//InObject.ObjectShader->VAO = VAO;
+	//InObject.ObjectShader->VBO = VBO;
 	// Load the texture
-	unsigned int textureID;
-	glGenTextures(1, &textureID);
-	glBindTexture(GL_TEXTURE_2D, textureID);
+	glGenTextures(1, &InObject.Texture);
+	glBindTexture(GL_TEXTURE_2D, InObject.Texture);
 
 	// Load texture data
 	int width, height, nrChannels;
@@ -343,7 +338,7 @@ void Graphics::DrawUIElement(UIElement& InObject, const char* textureFilePath)
 	unsigned char* data = stbi_load(textureFilePath, &width, &height, &nrChannels, 0);
 	if (data) {
 		GLenum format = (nrChannels == 4) ? GL_RGBA : GL_RGB; // Detect alpha channel
-		glBindTexture(GL_TEXTURE_2D, textureID);
+		glBindTexture(GL_TEXTURE_2D, InObject.Texture);
 		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 
@@ -353,7 +348,7 @@ void Graphics::DrawUIElement(UIElement& InObject, const char* textureFilePath)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-		InObject.ObjectShader->Texture = textureID; // Assign the texture ID to the button
+		///InObject.ObjectShader->Texture = textureID; // Assign the texture ID to the button
 	}
 	else {
 		std::cerr << "Failed to load texture: " << textureFilePath << std::endl;
@@ -361,10 +356,15 @@ void Graphics::DrawUIElement(UIElement& InObject, const char* textureFilePath)
 	stbi_image_free(data);
 
 	// Use the shader and set uniforms
-	InObject.ObjectShader->use();
-	glUniform1i(glGetUniformLocation(InObject.ObjectShader->ID, "texture1"), 0); // Texture unit 0
 
+		if (auto sharedPtr = ShaderProgram.lock()) { // Check if the object is still valid
+			glUniform1i(glGetUniformLocation(sharedPtr->ID, "texture1"), 0); // Texture unit 0
+		}
+		else {
+			std::cout << "The object has already been destroyed." << std::endl;
+		}
 }
+
 
 void Graphics::DrawShape2(GameObject& InObject)
 {
@@ -395,8 +395,8 @@ void Graphics::DrawShape2(GameObject& InObject)
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 	glBindVertexArray(VAO);
-	InObject.ObjectShader->VAO = VAO;
-	InObject.ObjectShader->VBO = VBO;
+	//InObject.ObjectShader->VAO = VAO;
+	//InObject.ObjectShader->VBO = VBO;
 	//InObject.ObjectShader->use();
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
 }
@@ -424,13 +424,13 @@ std::vector<float> Graphics::createGridVertices(float gridWidth, float gridHeigh
 	return vertices;
 }
 
-void Graphics::RenderText(Shader& shader, std::string text, float x, float y, float scale, glm::vec3 color, std::map<GLchar, Character>& InMap)
+void Graphics::RenderText(Shader& shader, const unsigned int VAO, const unsigned int VBO,std::string text, float x, float y, float scale, glm::vec3 color, std::map<GLchar, Character>& InMap)
 {
 	// activate corresponding render state	
 	shader.use();
 	glUniform3f(glGetUniformLocation(shader.ID, "textColor"), color.x, color.y, color.z);
 	glActiveTexture(GL_TEXTURE0);
-	glBindVertexArray(shader.VAO);
+	glBindVertexArray(VAO);
 
 	// iterate through all characters
 	std::string::const_iterator c;
@@ -456,7 +456,7 @@ void Graphics::RenderText(Shader& shader, std::string text, float x, float y, fl
 		// render glyph texture over quad
 		glBindTexture(GL_TEXTURE_2D, ch.TextureID);
 		// update content of VBO memory
-		glBindBuffer(GL_ARRAY_BUFFER, shader.VBO);
+		glBindBuffer(GL_ARRAY_BUFFER,VBO);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices); // be sure to use glBufferSubData and not glBufferData
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);

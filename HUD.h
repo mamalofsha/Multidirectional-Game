@@ -31,6 +31,8 @@ public:
 
 	std::map<GLchar, Character> Characters;
 	Shader font;
+	unsigned int fontVAO, fontVBO;
+	std::shared_ptr<Shader> UIE;
 	float WindowWidth, WindowHeight;
 	HUD(float inWindowWidth, float inWindowHeight);
 	void Update();

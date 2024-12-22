@@ -40,12 +40,8 @@ World::World(const std::string& InFileName)
 
 World::~World()
 {
-	for (auto it = Shaders.begin(); it < Shaders.end(); it++)
-	{
-		glDeleteVertexArrays(1, &it->shader.VAO);
-		glDeleteBuffers(1, &it->shader.VBO);
-		glDeleteBuffers(1, &it->shader.EBO);
-	}
+	// check to see if it actually clears ( eg there are not other objects pointing to this shared ptr 
+	NewShaders.clear();
 	MouseInteractionAPI* api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(Window));
 	if (api) {
 		delete api; // Free the dynamically allocated memory

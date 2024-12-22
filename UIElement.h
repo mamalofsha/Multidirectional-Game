@@ -1,14 +1,16 @@
 #pragma once
-
-class UIElement {
+#include "Object.h"
+class UIElement : public Object {
 public:
-    std::unique_ptr<Shader> ObjectShader;
     float x, y; // Center position
     float width, height; // Dimensions
     bool isHidden = false; // Visibility flag
+    unsigned int VBO, VAO, EBO;
+    unsigned int Texture;
 
-    UIElement(float x, float y, float width, float height)
-        : x(x), y(y), width(width), height(height) {
+    UIElement(std::shared_ptr<Shader> shaderProgram, float x, float y, float width, float height)
+        : Object(shaderProgram), x(x), y(y), width(width), height(height) {
+
     }
 
     virtual void draw() = 0; // Pure virtual function for rendering

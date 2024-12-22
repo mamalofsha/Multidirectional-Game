@@ -13,10 +13,6 @@ class Shader
 {
 public:
     unsigned int ID;
-    unsigned int VAO;
-    unsigned int VBO;
-    unsigned int EBO;
-    unsigned int Texture;
     Shader() : ID(0) { // Default constructor
         // Optionally, create a minimal shader program or leave empty
         std::cout << "Default Shader created" << std::endl;
