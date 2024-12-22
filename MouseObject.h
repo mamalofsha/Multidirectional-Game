@@ -11,7 +11,7 @@ public:
         const char* texturePath,
         const VertexAttribute& vertexData,
         World* InWorldPtr)
-        : TexturedObject(shaderProgram, vertices, indices, texturePath, vertexData,InWorldPtr) {
+        : TexturedObject(shaderProgram, vertices, indices, texturePath, vertexData,false,InWorldPtr) {
         // Additional MouseObject-specific initialization here
     }
     void draw() override {

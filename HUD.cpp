@@ -5,6 +5,8 @@
 #include "UIElement.h"
 HUD::HUD(float inWindowWidth, float inWindowHeight)
 {
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	WindowWidth = inWindowWidth;
 	WindowHeight = inWindowHeight;
 	font = Graphics::InitTextRender(Characters, inWindowWidth,inWindowHeight,fontVAO,fontVBO);

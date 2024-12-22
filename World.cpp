@@ -33,6 +33,8 @@ World::World(const std::string& InFileName)
 {
 	StartUpData Temp = XMLParser::LoadLeveL(InFileName);
 	Window = Graphics::InitWindow(Temp.LevelWidth * Temp.WindowScale, Temp.LevelHeight * Temp.WindowScale);
+	InitBackground();
+
 	//
 	std::shared_ptr<Shader> shader = std::make_shared<Shader>("TempItem.vert", "TempItem.frag");
 	// Vertex data with texture coordinates
@@ -49,13 +51,12 @@ World::World(const std::string& InFileName)
 		2, 3, 0  // Second triangle
 	};
 	VertexAttribute OutVertexData = { 4,{2,2} };
-	//mous = std::make_shared<MouseObject>(shader,vertices,indices,"bridge.png", OutVertexData,this);
-	//mous->setSize(0.4f);
+	mous = std::make_shared<MouseObject>(shader,vertices,indices,"bridge.png", OutVertexData,this);
+	mous->setSize(0.4f);
 	//.push_back(shader);
 	//objectRenderMap[shader->ID].push_back(mous);
 
 	//
-	InitBackground();
 	InitHUD();
 	InitGrid(Temp.GridFileName);
 	SetupMouseCallbacks();
@@ -91,7 +92,7 @@ void World::InitBackground()
 		1, 2, 3  // second triangle
 	};
 	VertexAttribute OutVertexData = { 8,{3,3,2} };
-	std::shared_ptr<TexturedObject> texturedObject = std::make_shared<TexturedObject>(shader, vertices, indices, "Map1.jpg", OutVertexData,this);
+	std::shared_ptr<TexturedObject> texturedObject = std::make_shared<TexturedObject>(shader, vertices, indices, "Map1.jpg", OutVertexData,true,this);
 	objectRenderMap[shader->ID].push_back(texturedObject);
 }
 
@@ -221,8 +222,8 @@ void World::RenderUpdate()
 			std::cerr << "No objects found for shader ID: " << shaderID << std::endl;
 		}
 	}
-	//mous->ObjectShader->use();
-	//mous->draw();
+	mous->ObjectShader->use();
+	mous->draw();
 
 	GameHUD->Update();
 	glfwSwapBuffers(Window);

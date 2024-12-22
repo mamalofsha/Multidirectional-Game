@@ -14,10 +14,12 @@ protected:
     float size;
     World* WorldPtr;
 public:
-    TexturedObject(std::shared_ptr<Shader> shaderProgram, const std::vector<float>& vertices, const std::vector<unsigned int>& indices, const char* texturePath, VertexAttribute InAttribute,World* InWorldptr)
+    //bool isRGBA = true;
+
+    TexturedObject(std::shared_ptr<Shader> shaderProgram, const std::vector<float>& vertices, const std::vector<unsigned int>& indices, const char* texturePath, VertexAttribute InAttribute,bool isRGB,World* InWorldptr)
         : Object(shaderProgram) {
         WorldPtr = InWorldptr;
-        RenderData NewData = Graphics::DrawTexture(vertices,indices, InAttribute,texturePath);
+        RenderData NewData = Graphics::DrawTexture(vertices,indices, InAttribute,texturePath, isRGB);
         VAO = NewData.VAO;
         VBO = NewData.VBO;
         EBO = NewData.EBO;

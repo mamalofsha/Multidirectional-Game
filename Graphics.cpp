@@ -46,7 +46,7 @@ GLFWwindow* Graphics::InitWindow(const unsigned int Width, const unsigned int He
 	return Window;
 }
 
-RenderData Graphics::DrawTexture( std::vector<float> vertices, std::vector<unsigned int> indices,VertexAttribute InAttribute, const char* InFileName)
+RenderData Graphics::DrawTexture( std::vector<float> vertices, std::vector<unsigned int> indices,VertexAttribute InAttribute, const char* InFileName, bool isRGB)
 {
 	//Shader ourShader("Texture.vert", "Texture.frag");
 
@@ -59,7 +59,7 @@ RenderData Graphics::DrawTexture( std::vector<float> vertices, std::vector<unsig
 	glGenBuffers(1, &EBO);
 
 	glBindVertexArray(VAO);
-
+	
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), vertices.data(), GL_STATIC_DRAW);
 
@@ -75,7 +75,22 @@ RenderData Graphics::DrawTexture( std::vector<float> vertices, std::vector<unsig
 		Sum += InAttribute.length[i];
 	}
 
+	
+
 	/*
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vertices), vertices.data(), GL_STATIC_DRAW);
+
+	// Bind and upload EBO
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER,  sizeof(indices), indices.data(), GL_STATIC_DRAW);
+
+	// Configure vertex attributes
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE,8 * sizeof(float), (void*)(3 * sizeof(float)));
@@ -93,7 +108,7 @@ RenderData Graphics::DrawTexture( std::vector<float> vertices, std::vector<unsig
 	// Texture parameters
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// Load image
@@ -101,11 +116,11 @@ RenderData Graphics::DrawTexture( std::vector<float> vertices, std::vector<unsig
 	stbi_set_flip_vertically_on_load(true);
 	unsigned char* data = stbi_load(InFileName, &width, &height, &nrChannels, 0);
 	if (data) {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
+		glTexImage2D(GL_TEXTURE_2D, 0, isRGB? GL_RGB: GL_RGBA, width, height, 0, isRGB ? GL_RGB : GL_RGBA, GL_UNSIGNED_BYTE, data);
+		//glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else {
-		std::cout << "Failed to load texture" << std::endl;
+		std::cerr << "Failed to load texture" << std::endl;
 	}
 	stbi_image_free(data);
 	RenderData OutData = { VAO, VBO, EBO, texture };
@@ -147,8 +162,7 @@ Shader Graphics::InitTextRender(std::map<GLchar, Character>& InMap,float inWindo
 	// OpenGL state
 	// ------------
 	//glEnable(GL_CULL_FACE);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 
 	// compile and setup the shader
 	// ----------------------------
