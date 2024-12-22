@@ -38,12 +38,17 @@ struct ShaderEntry {
 	Shader shader;
 	ShaderType type;
 };
-
+struct VertexAttribute
+{
+	int stride;
+	std::vector<int> length;
+};
 class Graphics
 {
 public:
 	static GLFWwindow* InitWindow(const unsigned int Width, const unsigned int Height);
-	static RenderData DrawTexture(std::vector<float> vertices, std::vector<unsigned int> indices, const char* InFileName);
+	static RenderData DrawTexture(std::vector<float> vertices, std::vector<unsigned int> indices, VertexAttribute InAttribute, const char* InFileName);
+
 	static Shader DrawGrid(const GridConfig InGridConfig,int WindowsWidth , int WindowsHeight);
 	static RenderData DrawUIElement(std::vector<float> position, std::vector<float> size, const char* textureFilePath);
 	static Shader InitTextRender(std::map<GLchar, Character>& InMap, float inWindowWidth, float inWindowHeight,unsigned int& VAO, unsigned int& VBO);

@@ -38,6 +38,8 @@ private:
 	std::vector<ShaderEntry> Shaders;
 	Shader GridShader;
 	Shader BackGround;
+	Shader floating;
+	std::shared_ptr<class MouseObject> mous;
 	//
 	void InitBackground();
 	void InitHUD();
@@ -53,6 +55,7 @@ public:
 	float GetPanX() { return panX; };
 	float GetPanY() { return panY; };
 	MouseState GetMouserState() { return mouseState; };
+	GLFWwindow* GetWindow() { return Window; };
 	std::vector<int> GetWindowSize();
 	World(std::vector<std::shared_ptr<GameObject>>& GameObjects);
 	World(const std::string& InFileName);

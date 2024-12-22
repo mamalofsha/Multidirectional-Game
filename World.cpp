@@ -11,6 +11,7 @@
 #include <ft2build.h>
 #include "TexturedObject.h"
 #include "GridObject.h"
+#include "MouseObject.h"
 #include FT_FREETYPE_H
 
 std::vector<int> World::GetWindowSize()
@@ -32,6 +33,28 @@ World::World(const std::string& InFileName)
 {
 	StartUpData Temp = XMLParser::LoadLeveL(InFileName);
 	Window = Graphics::InitWindow(Temp.LevelWidth * Temp.WindowScale, Temp.LevelHeight * Temp.WindowScale);
+	//
+	std::shared_ptr<Shader> shader = std::make_shared<Shader>("TempItem.vert", "TempItem.frag");
+	// Vertex data with texture coordinates
+	std::vector<float> vertices = {
+		// Positions      // Texture Coords
+		-0.5f, -0.5f,     0.0f, 0.0f, // Bottom-left
+		 0.5f, -0.5f,     1.0f, 0.0f, // Bottom-right
+		 0.5f,  0.5f,     1.0f, 1.0f, // Top-right
+		-0.5f,  0.5f,     0.0f, 1.0f  // Top-left
+	};
+
+	std::vector<unsigned int> indices = {
+		0, 1, 2, // First triangle
+		2, 3, 0  // Second triangle
+	};
+	VertexAttribute OutVertexData = { 4,{2,2} };
+	//mous = std::make_shared<MouseObject>(shader,vertices,indices,"bridge.png", OutVertexData,this);
+	//mous->setSize(0.4f);
+	//.push_back(shader);
+	//objectRenderMap[shader->ID].push_back(mous);
+
+	//
 	InitBackground();
 	InitHUD();
 	InitGrid(Temp.GridFileName);
@@ -67,8 +90,8 @@ void World::InitBackground()
 		0, 1, 3, // first triangle
 		1, 2, 3  // second triangle
 	};
-	std::shared_ptr<TexturedObject> texturedObject = std::make_shared<TexturedObject>(shader, vertices, indices, "Map1.jpg",this);
-	GameObjects.push_back(texturedObject);
+	VertexAttribute OutVertexData = { 8,{3,3,2} };
+	std::shared_ptr<TexturedObject> texturedObject = std::make_shared<TexturedObject>(shader, vertices, indices, "Map1.jpg", OutVertexData,this);
 	objectRenderMap[shader->ID].push_back(texturedObject);
 }
 
@@ -198,6 +221,9 @@ void World::RenderUpdate()
 			std::cerr << "No objects found for shader ID: " << shaderID << std::endl;
 		}
 	}
+	//mous->ObjectShader->use();
+	//mous->draw();
+
 	GameHUD->Update();
 	glfwSwapBuffers(Window);
 }

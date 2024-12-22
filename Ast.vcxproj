@@ -187,6 +187,7 @@
   <ItemGroup>
     <ClInclude Include="GridObject.h" />
     <ClInclude Include="HUD.h" />
+    <ClInclude Include="MouseObject.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="TexturedObject.h" />
     <ClInclude Include="UIButton.h" />

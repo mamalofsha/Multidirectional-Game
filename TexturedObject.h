@@ -7,17 +7,17 @@
 #include "World.h"
 
 class TexturedObject : public Object {
-private:
+protected:
     unsigned int VAO, VBO, EBO; // OpenGL handles
     unsigned int Texture;       // Texture handle
     glm::vec2 position;
     float size;
     World* WorldPtr;
 public:
-    TexturedObject(std::shared_ptr<Shader> shaderProgram, const std::vector<float>& vertices, const std::vector<unsigned int>& indices, const char* texturePath,World* InWorldptr)
+    TexturedObject(std::shared_ptr<Shader> shaderProgram, const std::vector<float>& vertices, const std::vector<unsigned int>& indices, const char* texturePath, VertexAttribute InAttribute,World* InWorldptr)
         : Object(shaderProgram) {
         WorldPtr = InWorldptr;
-        RenderData NewData = Graphics::DrawTexture(vertices,indices,texturePath);
+        RenderData NewData = Graphics::DrawTexture(vertices,indices, InAttribute,texturePath);
         VAO = NewData.VAO;
         VBO = NewData.VBO;
         EBO = NewData.EBO;

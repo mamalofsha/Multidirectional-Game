@@ -36,7 +36,7 @@ public:
     void HandleMouseClick(double xpos, double ypos, int windowWidth, int windowHeight);
     void SetPanZoom(float Panx, float pany,float zoom);
 
-private:
+public:
     MouseEventCallback OnHover = nullptr;
     MouseEventCallback OnClick = nullptr;
 
