@@ -63,7 +63,7 @@ HUD::HUD(float inWindowWidth, float inWindowHeight)
 
 void HUD::Update()
 {
-	UIE->use();
+	//UIE->use();
 	for (auto& Element : UIElements )
 	{
 		Element->draw();
