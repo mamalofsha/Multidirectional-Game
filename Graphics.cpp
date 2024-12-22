@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "XMLParser.h"
 #include "UIButton.h"
+#include "TexturedObject.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -45,22 +46,11 @@ GLFWwindow* Graphics::InitWindow(const unsigned int Width, const unsigned int He
 	return Window;
 }
 
-Shader Graphics::DrawTexture(const char* InFileName)
+RenderData Graphics::DrawTexture( std::vector<float> vertices, std::vector<unsigned int> indices,const char* InFileName)
 {
-	Shader ourShader("Texture.vert", "Texture.frag");
+	//Shader ourShader("Texture.vert", "Texture.frag");
 
 	// Vertex and index data
-	float vertices[] = {
-		// positions          // colors           // texture coords
-		 1.0f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-		 1.0f, -1.0f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-		-1.0f, -1.0f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-		-1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
-	};
-	unsigned int indices[] = {
-		0, 1, 3, // first triangle
-		1, 2, 3  // second triangle
-	};
 
 	// Create VAO, VBO, and EBO
 	unsigned int VAO, VBO, EBO;
@@ -71,10 +61,10 @@ Shader Graphics::DrawTexture(const char* InFileName)
 	glBindVertexArray(VAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), vertices.data(), GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), indices.data(), GL_STATIC_DRAW);
 
 	// Set vertex attribute pointers
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
@@ -109,20 +99,11 @@ Shader Graphics::DrawTexture(const char* InFileName)
 		std::cout << "Failed to load texture" << std::endl;
 	}
 	stbi_image_free(data);
-
-	// Assign VAO and Texture to shader
-	//ourShader.VAO = VAO;
-	//ourShader.VBO = VBO;
-	//ourShader.EBO = EBO;
-	//ourShader.Texture = texture;
-
-	return ourShader;
+	RenderData OutData = { VAO, VBO, EBO, texture };
+	return OutData;
 }
 
-Shader Graphics::GenerateTextureData(const std::vector<float>& IntexturedVertices, const std::vector<float>& IngridVertices)
-{
-	return Shader();
-}
+
 
 Shader Graphics::DrawGrid(const GridConfig InGridConfig, int WindowsWidth, int WindowsHeight)
 {
@@ -254,6 +235,76 @@ Shader Graphics::InitTextRender(std::map<GLchar, Character>& InMap,float inWindo
 	return shader;
 }
 
+void Graphics::InitDrawObject(GameObject& InObject)
+{
+	// Vertex data with texture coordinates
+	float vertices[] = {
+		// Positions      // Texture Coords
+		-0.5f, -0.5f,     0.0f, 0.0f, // Bottom-left
+		 0.5f, -0.5f,     1.0f, 0.0f, // Bottom-right
+		 0.5f,  0.5f,     1.0f, 1.0f, // Top-right
+		-0.5f,  0.5f,     0.0f, 1.0f  // Top-left
+	};
+
+	unsigned int indices[] = {
+		0, 1, 2, // First triangle
+		2, 3, 0  // Second triangle
+	};
+
+	// Vertex Array Object, Vertex Buffer Object, Element Buffer Object
+	unsigned int VAO, VBO, EBO;
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
+	glGenBuffers(1, &EBO);
+
+	// Bind VAO
+	glBindVertexArray(VAO);
+
+	// Bind and upload VBO
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	// Bind and upload EBO
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+	// Configure vertex attributes
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+
+	// Unbind VAO
+	glBindVertexArray(0);
+
+
+
+
+	// Load texture
+	unsigned int texture;
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	// Texture parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	// Load image
+	int width, height, nrChannels;
+	stbi_set_flip_vertically_on_load(true);
+	unsigned char* data = stbi_load("bridge.png", &width, &height, &nrChannels, 0);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else {
+		std::cerr << "Failed to load texture" << std::endl;
+	}
+	stbi_image_free(data);
+}
+/*
 void Graphics::DrawShape(GameObject& InObject)
 {
 		//Shader TriShader("Shader.vert", "Shader.frag"); // you can name your shader files however you like
@@ -283,35 +334,36 @@ void Graphics::DrawShape(GameObject& InObject)
 		InObject.ObjectShader->use();
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 }
-
-void Graphics::DrawUIElement(std::weak_ptr<Shader> ShaderProgram, UIElement& InObject, const char* textureFilePath)
+*/
+RenderData Graphics::DrawUIElement(std::vector<float> position, std::vector<float> size, const char* textureFilePath)
 {
-
 	// Define vertex data for the button (with texture coordinates)
 	float vertices[] = {
 		// Positions                       // Texture Coords
-		InObject.x - (InObject.width / 2.0f), InObject.y + (InObject.height / 2.0f), 0.0f, 1.0f, // Top-left
-		InObject.x + (InObject.width / 2.0f), InObject.y + (InObject.height / 2.0f), 1.0f, 1.0f, // Top-right
-		InObject.x + (InObject.width / 2.0f), InObject.y - (InObject.height / 2.0f), 1.0f, 0.0f, // Bottom-right
-		InObject.x - (InObject.width / 2.0f), InObject.y - (InObject.height / 2.0f), 0.0f, 0.0f  // Bottom-left
+		position[0] - (size[0] / 2.0f), position[1] + (size[1] / 2.0f), 0.0f, 1.0f, // Top-left
+		position[0] + (size[0] / 2.0f), position[1] + (size[1] / 2.0f), 1.0f, 1.0f, // Top-right
+		position[0] + (size[0] / 2.0f), position[1] - (size[1] / 2.0f), 1.0f, 0.0f, // Bottom-right
+		position[0] - (size[0] / 2.0f), position[1] - (size[1] / 2.0f), 0.0f, 0.0f  // Bottom-left
 	};
 
 	unsigned int indices[] = {
 		0, 1, 2, // First triangle
 		2, 3, 0  // Second triangle
 	};
+	unsigned int VAO,VBO,EBO;
+	unsigned int Texture;
 
 	// Generate VAO and VBO
-	glGenVertexArrays(1, &InObject.VAO);
-	glGenBuffers(1, &InObject.VBO);
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
 
-	glBindVertexArray(InObject.VAO);
+	glBindVertexArray(VAO);
 
-	glBindBuffer(GL_ARRAY_BUFFER, InObject.VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	glGenBuffers(1, &InObject.EBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, InObject.EBO);
+	glGenBuffers(1, &EBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	// Position attribute
@@ -329,8 +381,8 @@ void Graphics::DrawUIElement(std::weak_ptr<Shader> ShaderProgram, UIElement& InO
 	//InObject.ObjectShader->VAO = VAO;
 	//InObject.ObjectShader->VBO = VBO;
 	// Load the texture
-	glGenTextures(1, &InObject.Texture);
-	glBindTexture(GL_TEXTURE_2D, InObject.Texture);
+	glGenTextures(1, &Texture);
+	glBindTexture(GL_TEXTURE_2D, Texture);
 
 	// Load texture data
 	int width, height, nrChannels;
@@ -338,7 +390,7 @@ void Graphics::DrawUIElement(std::weak_ptr<Shader> ShaderProgram, UIElement& InO
 	unsigned char* data = stbi_load(textureFilePath, &width, &height, &nrChannels, 0);
 	if (data) {
 		GLenum format = (nrChannels == 4) ? GL_RGBA : GL_RGB; // Detect alpha channel
-		glBindTexture(GL_TEXTURE_2D, InObject.Texture);
+		glBindTexture(GL_TEXTURE_2D, Texture);
 		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 
@@ -355,14 +407,8 @@ void Graphics::DrawUIElement(std::weak_ptr<Shader> ShaderProgram, UIElement& InO
 	}
 	stbi_image_free(data);
 
-	// Use the shader and set uniforms
-
-		if (auto sharedPtr = ShaderProgram.lock()) { // Check if the object is still valid
-			glUniform1i(glGetUniformLocation(sharedPtr->ID, "texture1"), 0); // Texture unit 0
-		}
-		else {
-			std::cout << "The object has already been destroyed." << std::endl;
-		}
+		RenderData OutData = { VAO, VBO, EBO, Texture };
+		return OutData;
 }
 
 

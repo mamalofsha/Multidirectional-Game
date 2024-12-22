@@ -14,7 +14,7 @@ public:
 		: UIElement(shaderProgram, x, y, width, height), onClick(onClick) {
 		Hudptr = inHudptr;
 		Text = inText;
-		Graphics::DrawUIElement(shaderProgram, *this, inAssetPath.c_str());
+		initializeFromRenderData(Graphics::DrawUIElement(std::vector<float>{x, y}, std::vector<float>{width, height}, inAssetPath.c_str()));
 	}
 	void updateHoverState(double mouseX, double mouseY) {
 		isHovered = isInside(mouseX, mouseY); // Check if the mouse is within the button bounds
@@ -38,4 +38,5 @@ public:
 		float screenY = (1.0f - y) * 0.5f * Hudptr->WindowHeight; // Inversion for Y
 		Graphics::RenderText(Hudptr->font,Hudptr->fontVAO,Hudptr->fontVBO ,Text, screenX - 100.0f, Hudptr->WindowHeight - screenY, 1.0f, glm::vec3(0.0, 0.0f, 0.0f), Hudptr->Characters);
 	}
+
 };

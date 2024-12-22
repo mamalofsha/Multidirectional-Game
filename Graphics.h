@@ -20,6 +20,12 @@ struct GridConfig {
 	std::vector<std::vector<int>> tiles; // Stores the tile types (0 = empty, 1 = occupied, etc.)
 };
 
+struct RenderData
+{
+	unsigned int VAO, VBO, EBO;
+	unsigned int TextureID;
+};
+
 struct TextureData {
 	Shader OutShader;
 	std::vector<float> texturedVertices;
@@ -37,13 +43,12 @@ class Graphics
 {
 public:
 	static GLFWwindow* InitWindow(const unsigned int Width, const unsigned int Height);
-	static Shader DrawTexture(const char* InFileName);
-	static Shader GenerateTextureData(const std::vector<float>& IntexturedVertices,const std::vector<float>& IngridVertices);
+	static RenderData DrawTexture(std::vector<float> vertices, std::vector<unsigned int> indices, const char* InFileName);
 	static Shader DrawGrid(const GridConfig InGridConfig,int WindowsWidth , int WindowsHeight);
+	static RenderData DrawUIElement(std::vector<float> position, std::vector<float> size, const char* textureFilePath);
 	static Shader InitTextRender(std::map<GLchar, Character>& InMap, float inWindowWidth, float inWindowHeight,unsigned int& VAO, unsigned int& VBO);
-	static void DrawShape(class GameObject& InObject);
+	static void InitDrawObject(class GameObject& InObject);
 	//static void DrawUIElement(class UIElement& InObject, const char* textureFilePath);
-	static void DrawUIElement(std::weak_ptr<Shader> ShaderProgram,class UIElement& InObject, const char* textureFilePath);
 
 	static void DrawShape2(class GameObject& InObject);
 	static std::vector<float> createGridVertices(float gridWidth, float gridHeight, float OffsetX, float OffsetY);

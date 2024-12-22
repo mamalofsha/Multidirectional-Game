@@ -28,4 +28,12 @@ public:
         return mouseX >= x - halfWidth && mouseX <= x + halfWidth &&
             mouseY <= y + halfHeight && mouseY >= y - halfHeight;
     }
+
+    void initializeFromRenderData(const RenderData& data)override
+    {
+        VAO = data.VAO;
+        VBO = data.VBO;
+        EBO = data.EBO;
+        Texture = data.TextureID;
+    }
 };

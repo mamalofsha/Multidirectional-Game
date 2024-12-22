@@ -11,7 +11,7 @@ HUD::HUD(float inWindowWidth, float inWindowHeight)
 	UIE = std::make_shared<Shader>("UI.vert", "UI.frag");
 	
 	/// callmuse
-	shopWindow = std::make_shared<UIPaginatedWindow>(UIE,0.0f, 0.0f, 1.5f, 1.5f, "ShopItems.xml",this);
+	shopWindow = std::make_shared<UIPaginatedWindow>(UIE,0.0f, 0.0f, 1.5f, 1.5f, "ShopItems.xml","grass.png", this);
 	//Graphics::DrawUIElement(UIE ,*shopWindow, "grass.png");
 	
 	std::shared_ptr<UIButton> nextButton = std::make_shared<UIButton>(UIE,0.6f, -0.7f, 0.2f, 0.1f, [&]() {

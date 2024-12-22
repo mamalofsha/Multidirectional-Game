@@ -20,11 +20,11 @@ public:
 	std::string xmlName;
 	std::string ActiveTab = "Decorations";
 	HUD* Hudptr;
-	UIPaginatedWindow(std::shared_ptr<Shader> shaderProgram, float x, float y, float width, float height, std::string inXML, HUD* InHud)
+	UIPaginatedWindow(std::shared_ptr<Shader> shaderProgram, float x, float y, float width, float height, std::string inXML, const std::string& inAssetPath, HUD* InHud)
 		: UIWindow(shaderProgram, x, y, width, height) {
 		xmlName = inXML;
 		Hudptr = InHud;
-		Graphics::DrawUIElement(shaderProgram, *this, "grass.png");
+		initializeFromRenderData(Graphics::DrawUIElement(std::vector<float>{x, y}, std::vector<float>{width, height}, inAssetPath.c_str()));
 	}
 
 	std::vector<std::shared_ptr<UIButton>> getCatButtons()
