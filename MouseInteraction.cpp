@@ -132,3 +132,4 @@ std::pair<int, int> MouseInteractionAPI::ScreenToGrid(double screenX, double scr
 
     return { gridX, gridY };
 }
+

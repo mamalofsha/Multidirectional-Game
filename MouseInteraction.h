@@ -42,6 +42,7 @@ public:
 
     // Convert screen coordinates to grid coordinates
     std::pair<int, int> ScreenToGrid(double screenX, double screenY, float tileWidth, float tileHeight, float offsetX, float offsetY,float zoom , float panX, float panY ,int windowWidth, int windowHeight);
+
     std::pair<float, float> screenToNDC(float screenX, float screenY, int windowWidth, int windowHeight) {
         float ndcX = (screenX / windowWidth) * 2.0f - 1.0f;
         float ndcY = 1.0f - (screenY / windowHeight) * 2.0f; // Inversion for Y

@@ -4,7 +4,6 @@ class UIElement : public Object {
 public:
     float x, y; // Center position
     float width, height; // Dimensions
-    bool isHidden = false; // Visibility flag
     unsigned int VBO, VAO, EBO;
     unsigned int Texture;
 
@@ -17,10 +16,7 @@ public:
     virtual void update(float mouseX, float mouseY, bool isClicked) {
         // Default implementation for updating hover/click states
     }
-    virtual void SetHidden(bool newHidden)
-    {
-        isHidden = newHidden;
-    }
+
 
     bool isInside(float mouseX, float mouseY) const {
         float halfWidth = width / 2.0f;

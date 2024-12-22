@@ -39,7 +39,6 @@ private:
 	Shader GridShader;
 	Shader BackGround;
 	Shader floating;
-	std::shared_ptr<class MouseObject> mous;
 	//
 	void InitBackground();
 	void InitHUD();
@@ -50,10 +49,12 @@ private:
 	void SetupMouseCallbacks();
 	void RenderUpdate();
 public:
+
 	std::unique_ptr<HUD> GameHUD;
 	float GetZoom() { return Zoom; };
 	float GetPanX() { return panX; };
 	float GetPanY() { return panY; };
+	GridConfig GetGridConfig() { return gridConfig; };
 	MouseState GetMouserState() { return mouseState; };
 	GLFWwindow* GetWindow() { return Window; };
 	std::vector<int> GetWindowSize();

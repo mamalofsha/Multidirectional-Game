@@ -7,53 +7,29 @@
 			<goldgenrate>1404</goldgenrate>
 		</item1>
 		<item2>
-			<name>library</name>
-			<image>drugstore.png</image>
+			<name>Government</name>
+			<image>government.png</image>
 			<goldcost>1404</goldcost>
 			<goldgenrate>1404</goldgenrate>
 		</item2>
 		<item3>
-			<name>museum</name>
-			<image>drugstore.png</image>
+			<name>Museum</name>
+			<image>museum.png</image>
 			<goldcost>1404</goldcost>
 			<goldgenrate>1404</goldgenrate>
 		</item3>
-				<item3>
-			<name>museum</name>
-			<image>drugstore.png</image>
+		<item4>
+			<name>Property</name>
+			<image>property.png</image>
 			<goldcost>1404</goldcost>
 			<goldgenrate>1404</goldgenrate>
-		</item3>
-				<item3>
-			<name>museum</name>
-			<image>drugstore.png</image>
+		</item4>
+		<item5>
+			<name>Temple</name>
+			<image>Temple-icon.png</image>
 			<goldcost>1404</goldcost>
 			<goldgenrate>1404</goldgenrate>
-		</item3>
-				<item3>
-			<name>museum</name>
-			<image>drugstore.png</image>
-			<goldcost>1404</goldcost>
-			<goldgenrate>1404</goldgenrate>
-		</item3>
-					<item3>
-			<name>sadasdasdsdsa</name>
-			<image>drugstore.png</image>
-			<goldcost>1404</goldcost>
-			<goldgenrate>1404</goldgenrate>
-		</item3>
-							<item3>
-			<name>sadasdasdsdsa</name>
-			<image>drugstore.png</image>
-			<goldcost>1404</goldcost>
-			<goldgenrate>1404</goldgenrate>
-		</item3>
-									<item3>
-			<name>sadasdasdsdsa</name>
-			<image>drugstore.png</image>
-			<goldcost>1404</goldcost>
-			<goldgenrate>1404</goldgenrate>
-		</item3>
+		</item5>
     </workshops>
 	<decorations>
 		<item1>
@@ -94,7 +70,7 @@
 		</item1>
 				<item1>
 			<name>Briddasadsge</name>
-			<image>bridge.png</image>
+			<image>hangar.png</image>
 			<goldcost>1404</goldcost>
 			<happiness>1404</happiness>
 		</item1>

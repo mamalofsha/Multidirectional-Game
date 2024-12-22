@@ -3,6 +3,7 @@
 #include "UIButton.h"
 #include <map>
 #include "XMLParser.h"
+#include "MouseObject.h"
 
 enum TabType
 {
@@ -134,8 +135,10 @@ public:
 				int y = std::floor((uiElements.size() / columns) % rows);
 
 				int yhalf = y / columns;
-				std::shared_ptr<UIButton> button = std::make_shared<UIButton>(Hudptr->UIE, -0.3f + (x * 0.6f), 0.4f + (y * -0.4f), 0.2f, 0.1f, [&, item]() {
+				std::shared_ptr<UIButton> button = std::make_shared<UIButton>(Hudptr->UIE, -0.3f + (x * 0.6f), 0.4f + (y * -0.4f), 0.2f, 0.1f, [&,item]() {
 					std::cout << "Spawned item: " << item.Name << " and attached to the mouse." << std::endl;
+					this->SetHidden(true);
+					Hudptr->mous->ReloadTexture(item.ImageFile.c_str());
 					}, item.Name, item.ImageFile, Hudptr);
 				uiElements.push_back(button);
 
@@ -152,8 +155,9 @@ public:
 				int y = std::floor((uiElements.size() / columns) % rows);
 
 				int yhalf = y / columns;
-				std::shared_ptr<UIButton> button = std::make_shared<UIButton>(Hudptr->UIE, -0.3f + (x * 0.6f), 0.4f + (y * -0.4f), 0.2f, 0.1f, [&]() {
+				std::shared_ptr<UIButton> button = std::make_shared<UIButton>(Hudptr->UIE, -0.3f + (x * 0.6f), 0.4f + (y * -0.4f), 0.2f, 0.1f, [&, item]() {
 					this->SetHidden(true);
+					Hudptr->mous->ReloadTexture(item.ImageFile.c_str());
 					}, item.Name, item.ImageFile, Hudptr);
 				uiElements.push_back(button);
 			}

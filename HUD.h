@@ -19,7 +19,7 @@ struct Decoration :public ShopItemData
 };
 
 
-
+class World;
 struct Character;
 class HUD
 {
@@ -28,13 +28,14 @@ private:
 	std::vector<std::shared_ptr<class UIElement>> UIElements;
 public:
 	std::shared_ptr<class UIPaginatedWindow> shopWindow;
-
+	std::shared_ptr<class MouseObject> mous;
+	 World* Worldptr;
 	std::map<GLchar, Character> Characters;
 	Shader font;
 	unsigned int fontVAO, fontVBO;
 	std::shared_ptr<Shader> UIE;
 	float WindowWidth, WindowHeight;
-	HUD(float inWindowWidth, float inWindowHeight);
+	HUD(float inWindowWidth, float inWindowHeight, World* InWorld);
 	void Update();
 	void onHoverFunction(int gridX, int gridY, float screenX, float screenY);
 	void onClickFunction(int gridX, int gridY, float screenX, float screenY);

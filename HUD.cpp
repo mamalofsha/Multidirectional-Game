@@ -3,15 +3,37 @@
 #include "XMLParser.h"
 #include <map>
 #include "UIElement.h"
-HUD::HUD(float inWindowWidth, float inWindowHeight)
+#include"World.h"
+#include "MouseObject.h"
+HUD::HUD(float inWindowWidth, float inWindowHeight,World* InWorld)
 {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	WindowWidth = inWindowWidth;
 	WindowHeight = inWindowHeight;
+	Worldptr = InWorld;
 	font = Graphics::InitTextRender(Characters, inWindowWidth,inWindowHeight,fontVAO,fontVBO);
 	UIE = std::make_shared<Shader>("UI.vert", "UI.frag");
-	
+
+	//
+	std::shared_ptr<Shader> shader = std::make_shared<Shader>("TempItem.vert", "TempItem.frag");
+	// Vertex data with texture coordinates
+	std::vector<float> vertices = {
+		// Positions      // Texture Coords
+		-0.5f, -0.5f,     0.0f, 0.0f, // Bottom-left
+		 0.5f, -0.5f,     1.0f, 0.0f, // Bottom-right
+		 0.5f,  0.5f,     1.0f, 1.0f, // Top-right
+		-0.5f,  0.5f,     0.0f, 1.0f  // Top-left
+	};
+
+	std::vector<unsigned int> indices = {
+		0, 1, 2, // First triangle
+		2, 3, 0  // Second triangle
+	};
+	VertexAttribute OutVertexData = { 4,{2,2} };
+	mous = std::make_shared<MouseObject>(shader, vertices, indices, "bridge.png", OutVertexData, Worldptr);
+	mous->setSize(0.18f);
+
 	/// callmuse
 	shopWindow = std::make_shared<UIPaginatedWindow>(UIE,0.0f, 0.0f, 1.5f, 1.5f, "ShopItems.xml","grass.png", this);
 	//Graphics::DrawUIElement(UIE ,*shopWindow, "grass.png");
@@ -65,6 +87,7 @@ HUD::HUD(float inWindowWidth, float inWindowHeight)
 
 void HUD::Update()
 {
+	mous->draw();
 	//UIE->use();
 	for (auto& Element : UIElements )
 	{
@@ -75,7 +98,7 @@ shopWindow->draw();
 
 void HUD::onHoverFunction(int gridX, int gridY, float screenX, float screenY)
 {
-	std::cout << "Hovereddead over tile: (" << gridX << ", " << gridY << ")" << std::endl;
+	//std::cout << "Hovereddead over tile: (" << gridX << ", " << gridY << ")" << std::endl;
 	if (UIElements.empty()) return;
 	for (auto& element : UIElements)
 	{

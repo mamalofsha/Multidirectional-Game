@@ -327,6 +327,22 @@ void Graphics::InitDrawObject(GameObject& InObject)
 	}
 	stbi_image_free(data);
 }
+std::pair<int, int> Graphics::GridToWorldPosition(int gridX, int gridY, float tileWidth, float tileHeight, float offsetX, float offsetY, float panX,float panY,float zoom ,float windowWidth,float windowHeight)
+{
+	// Step 1: Calculate isometric screen coordinates without transformations
+	float isoScreenX = (gridX - gridY) * (tileWidth / 2.0f)  ;
+	float isoScreenY = (gridX + gridY) * (tileHeight / 2.0f) ;
+
+	// Step 2: Apply inverse panning and zooming
+	float adjustedScreenX = (isoScreenX + panX) * (zoom * (2000.0f / static_cast<float>(windowWidth)));
+	float adjustedScreenY = (isoScreenY + panY) * (zoom * (1404.0f / static_cast<float>(windowHeight)));
+
+	// Step 3: Convert to screen space
+	float screenX = (adjustedScreenX + 1.0f) / 2.0f * windowWidth;
+	float screenY = (1.0f - adjustedScreenY) / 2.0f * windowHeight;
+
+	return { screenX, screenY };
+}
 /*
 void Graphics::DrawShape(GameObject& InObject)
 {
