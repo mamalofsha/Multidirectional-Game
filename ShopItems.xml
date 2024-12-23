@@ -2,31 +2,31 @@
     <workshops>
 		<workshop1>
 			<name>Drug Store</name>
-			<image>drugstore.png</image>
+			<image>Assets/Images/drugstore.png</image>
 			<goldcost>1404</goldcost>
 			<goldgenrate>1404</goldgenrate>
 		</workshop1>
 		<workshop2>
 			<name>Government</name>
-			<image>government.png</image>
+			<image>Assets/Images/government.png</image>
 			<goldcost>1404</goldcost>
 			<goldgenrate>1404</goldgenrate>
 		</workshop2>
 		<workshop3>
 			<name>Museum</name>
-			<image>museum.png</image>
+			<image>Assets/Images/museum.png</image>
 			<goldcost>1404</goldcost>
 			<goldgenrate>1404</goldgenrate>
 		</workshop3>
 		<workshop4>
 			<name>Property</name>
-			<image>property.png</image>
+			<image>Assets/Images/property.png</image>
 			<goldcost>1404</goldcost>
 			<goldgenrate>1404</goldgenrate>
 		</workshop4>
 		<workshop5>
 			<name>Temple</name>
-			<image>Temple-icon.png</image>
+			<image>Assets/Images/Temple-icon.png</image>
 			<goldcost>1404</goldcost>
 			<goldgenrate>1404</goldgenrate>
 		</workshop5>
@@ -34,31 +34,31 @@
 	<decorations>
 		<decoration1>
 			<name>Bridge</name>
-			<image>bridge.png</image>
+			<image>Assets/Images/bridge.png</image>
 			<goldcost>1404</goldcost>
 			<happiness>1404</happiness>
 		</decoration1>
 		<decoration2>
 			<name>Hangar</name>
-			<image>hangar.png</image>
+			<image>Assets/Images/hangar.png</image>
 			<goldcost>1404</goldcost>
 			<happiness>1404</happiness>
 		</decoration2>
 		<decoration3>
 			<name>Building 1</name>
-			<image>building14.png</image>
+			<image>Assets/Images/building14.png</image>
 			<goldcost>1404</goldcost>
 			<happiness>1404</happiness>
 		</decoration3>
 		<decoration4>
 			<name>Building 2</name>
-			<image>building15.png</image>
+			<image>Assets/Images/building15.png</image>
 			<goldcost>1404</goldcost>
 			<happiness>1404</happiness>
 		</decoration4>
 		<decoration5>
 			<name>Building 3</name>
-			<image>building18.png</image>
+			<image>Assets/Images/building18.png</image>
 			<goldcost>1404</goldcost>
 			<happiness>1404</happiness>
 		</decoration5>

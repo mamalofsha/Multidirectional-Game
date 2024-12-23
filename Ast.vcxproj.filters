@@ -1,167 +1,381 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Shaders">
-      <UniqueIdentifier>{6ac9a45d-b41d-4416-9115-1fd5a3a26113}</UniqueIdentifier>
+    <Filter Include="Source">
+      <UniqueIdentifier>{c2520ac9-fe8c-4867-bd54-8f3d903946ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty">
+      <UniqueIdentifier>{68853918-c790-4428-bd27-9f304447c8a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\Freetype">
+      <UniqueIdentifier>{c7033172-9dc7-4afb-972a-d065d6129f50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\glad">
+      <UniqueIdentifier>{396bffd2-3bad-4c4a-995e-775c91dc71a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\glm">
+      <UniqueIdentifier>{293c3a82-fa71-4ce8-a30c-dffd4cef0b94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\stbimage">
+      <UniqueIdentifier>{fa23404a-867d-4ade-a4f1-86eb3be43a1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\TinyXML">
+      <UniqueIdentifier>{30f243ca-e457-4db4-9821-1f4917ccd30f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Shaders">
+      <UniqueIdentifier>{d0d09077-d412-4fa9-ba0e-3178bfe86420}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\OpenGL-Lib\glad.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="stb_image.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="World.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Math.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="XMLParser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MouseInteraction.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HUD.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GridObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Building.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Texture.vert">
-      <Filter>Shaders</Filter>
+    <None Include="Source\Shaders\Grid.frag">
+      <Filter>Source\Shaders</Filter>
     </None>
-    <None Include="Texture.frag">
-      <Filter>Shaders</Filter>
+    <None Include="Source\Shaders\Grid.vert">
+      <Filter>Source\Shaders</Filter>
     </None>
-    <None Include="Shader.vert">
-      <Filter>Shaders</Filter>
+    <None Include="Source\Shaders\Shader.frag">
+      <Filter>Source\Shaders</Filter>
     </None>
-    <None Include="Shader.frag">
-      <Filter>Shaders</Filter>
+    <None Include="Source\Shaders\Shader.vert">
+      <Filter>Source\Shaders</Filter>
     </None>
-    <None Include="Grid.frag">
-      <Filter>Shaders</Filter>
+    <None Include="Source\Shaders\TempItem.frag">
+      <Filter>Source\Shaders</Filter>
     </None>
-    <None Include="Grid.vert">
-      <Filter>Shaders</Filter>
+    <None Include="Source\Shaders\TempItem.vert">
+      <Filter>Source\Shaders</Filter>
     </None>
-    <None Include="UI.vert">
-      <Filter>Shaders</Filter>
+    <None Include="Source\Shaders\Text.frag">
+      <Filter>Source\Shaders</Filter>
     </None>
-    <None Include="UI.frag">
-      <Filter>Shaders</Filter>
+    <None Include="Source\Shaders\Text.vert">
+      <Filter>Source\Shaders</Filter>
     </None>
-    <None Include="Text.vert">
-      <Filter>Shaders</Filter>
+    <None Include="Source\Shaders\Texture.frag">
+      <Filter>Source\Shaders</Filter>
     </None>
-    <None Include="Text.frag">
-      <Filter>Shaders</Filter>
+    <None Include="Source\Shaders\Texture.vert">
+      <Filter>Source\Shaders</Filter>
     </None>
-    <None Include="TempItem.vert">
-      <Filter>Shaders</Filter>
+    <None Include="Source\Shaders\UI.frag">
+      <Filter>Source\Shaders</Filter>
     </None>
-    <None Include="TempItem.frag">
-      <Filter>Shaders</Filter>
+    <None Include="Source\Shaders\UI.vert">
+      <Filter>Source\Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameObject.h">
-      <Filter>Header Files</Filter>
+    <ClCompile Include="Source\Building.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GridObject.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\HUD.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Math.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MouseInteraction.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Source.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\World.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\XMLParser.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\stbimage\Include\stb_image.cpp">
+      <Filter>ThirdParty\stbimage</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\glad\glad.c">
+      <Filter>ThirdParty\glad</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Building.h">
+      <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="E:\downloads\stb_image.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Source\Decoration.h">
+      <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Source\Graphics.h">
+      <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="World.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Source\GridObject.h">
+      <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Graphics.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Source\HUD.h">
+      <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Math.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Source\Math.h">
+      <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerObject.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Source\MouseInteraction.h">
+      <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="XMLParser.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Source\MouseObject.h">
+      <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="MouseInteraction.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Source\Object.h">
+      <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="UIButton.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Source\Shader.h">
+      <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="UIPaginatedWindow.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Source\TexturedObject.h">
+      <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="UIElement.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Source\UIButton.h">
+      <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="UIWindow.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Source\UIElement.h">
+      <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="HUD.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Source\UIPaginatedWindow.h">
+      <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Source\UIWindow.h">
+      <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="TexturedObject.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Source\WorkShop.h">
+      <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="GridObject.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Source\World.h">
+      <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="MouseObject.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Source\XMLParser.h">
+      <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Building.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="ThirdParty\stbimage\Include\stb_image.h">
+      <Filter>ThirdParty\stbimage</Filter>
     </ClInclude>
-    <ClInclude Include="WorkShop.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="ThirdParty\TinyXML\Include\tinyxml2.h">
+      <Filter>ThirdParty\TinyXML</Filter>
     </ClInclude>
-    <ClInclude Include="Decoration.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="ThirdParty\glm\Include\common.hpp">
+      <Filter>ThirdParty\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\glm\Include\exponential.hpp">
+      <Filter>ThirdParty\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\glm\Include\ext.hpp">
+      <Filter>ThirdParty\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\glm\Include\fwd.hpp">
+      <Filter>ThirdParty\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\glm\Include\geometric.hpp">
+      <Filter>ThirdParty\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\glm\Include\glm.hpp">
+      <Filter>ThirdParty\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\glm\Include\integer.hpp">
+      <Filter>ThirdParty\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\glm\Include\mat2x2.hpp">
+      <Filter>ThirdParty\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\glm\Include\mat2x3.hpp">
+      <Filter>ThirdParty\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\glm\Include\mat2x4.hpp">
+      <Filter>ThirdParty\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\glm\Include\mat3x2.hpp">
+      <Filter>ThirdParty\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\glm\Include\mat3x3.hpp">
+      <Filter>ThirdParty\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\glm\Include\mat3x4.hpp">
+      <Filter>ThirdParty\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\glm\Include\mat4x2.hpp">
+      <Filter>ThirdParty\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\glm\Include\mat4x3.hpp">
+      <Filter>ThirdParty\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\glm\Include\mat4x4.hpp">
+      <Filter>ThirdParty\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\glm\Include\matrix.hpp">
+      <Filter>ThirdParty\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\glm\Include\packing.hpp">
+      <Filter>ThirdParty\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\glm\Include\trigonometric.hpp">
+      <Filter>ThirdParty\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\glm\Include\vec2.hpp">
+      <Filter>ThirdParty\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\glm\Include\vec3.hpp">
+      <Filter>ThirdParty\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\glm\Include\vec4.hpp">
+      <Filter>ThirdParty\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\glm\Include\vector_relational.hpp">
+      <Filter>ThirdParty\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\glad\Include\glad.h">
+      <Filter>ThirdParty\glad</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\freetype.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftadvanc.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftbbox.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftbdf.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftbitmap.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftbzip2.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftcache.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftchapters.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftcid.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftcolor.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftdriver.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\fterrdef.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\fterrors.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftfntfmt.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftgasp.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftglyph.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftgxval.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftgzip.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftimage.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftincrem.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftlcdfil.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftlist.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftlogging.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftlzw.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftmac.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftmm.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftmodapi.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftmoderr.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftotval.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftoutln.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftparams.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftpfr.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftrender.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftsizes.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftsnames.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftstroke.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftsynth.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftsystem.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\fttrigon.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\fttypes.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ftwinfnt.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\otsvg.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\t1tables.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\ttnameid.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\tttables.h">
+      <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Freetype\Include\tttags.h">
+      <Filter>ThirdParty\Freetype</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

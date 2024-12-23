@@ -18,6 +18,126 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Source\Shaders\Grid.frag" />
+    <None Include="Source\Shaders\Grid.vert" />
+    <None Include="Source\Shaders\Shader.frag" />
+    <None Include="Source\Shaders\Shader.vert" />
+    <None Include="Source\Shaders\TempItem.frag" />
+    <None Include="Source\Shaders\TempItem.vert" />
+    <None Include="Source\Shaders\Text.frag" />
+    <None Include="Source\Shaders\Text.vert" />
+    <None Include="Source\Shaders\Texture.frag" />
+    <None Include="Source\Shaders\Texture.vert" />
+    <None Include="Source\Shaders\UI.frag" />
+    <None Include="Source\Shaders\UI.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Building.cpp" />
+    <ClCompile Include="Source\Graphics.cpp" />
+    <ClCompile Include="Source\GridObject.cpp" />
+    <ClCompile Include="Source\HUD.cpp" />
+    <ClCompile Include="Source\Math.cpp" />
+    <ClCompile Include="Source\MouseInteraction.cpp" />
+    <ClCompile Include="Source\Object.cpp" />
+    <ClCompile Include="Source\Source.cpp" />
+    <ClCompile Include="Source\World.cpp" />
+    <ClCompile Include="Source\XMLParser.cpp" />
+    <ClCompile Include="ThirdParty\glad\glad.c" />
+    <ClCompile Include="ThirdParty\stbimage\Include\stb_image.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Building.h" />
+    <ClInclude Include="Source\Decoration.h" />
+    <ClInclude Include="Source\Graphics.h" />
+    <ClInclude Include="Source\GridObject.h" />
+    <ClInclude Include="Source\HUD.h" />
+    <ClInclude Include="Source\Math.h" />
+    <ClInclude Include="Source\MouseInteraction.h" />
+    <ClInclude Include="Source\MouseObject.h" />
+    <ClInclude Include="Source\Object.h" />
+    <ClInclude Include="Source\Shader.h" />
+    <ClInclude Include="Source\TexturedObject.h" />
+    <ClInclude Include="Source\UIButton.h" />
+    <ClInclude Include="Source\UIElement.h" />
+    <ClInclude Include="Source\UIPaginatedWindow.h" />
+    <ClInclude Include="Source\UIWindow.h" />
+    <ClInclude Include="Source\WorkShop.h" />
+    <ClInclude Include="Source\World.h" />
+    <ClInclude Include="Source\XMLParser.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\freetype.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftadvanc.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftbbox.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftbdf.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftbitmap.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftbzip2.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftcache.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftchapters.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftcid.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftcolor.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftdriver.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\fterrdef.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\fterrors.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftfntfmt.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftgasp.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftglyph.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftgxval.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftgzip.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftimage.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftincrem.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftlcdfil.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftlist.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftlogging.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftlzw.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftmac.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftmm.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftmodapi.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftmoderr.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftotval.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftoutln.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftparams.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftpfr.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftrender.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftsizes.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftsnames.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftstroke.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftsynth.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftsystem.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\fttrigon.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\fttypes.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ftwinfnt.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\otsvg.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\t1tables.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\ttnameid.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\tttables.h" />
+    <ClInclude Include="ThirdParty\Freetype\Include\tttags.h" />
+    <ClInclude Include="ThirdParty\glad\Include\glad.h" />
+    <ClInclude Include="ThirdParty\glm\Include\common.hpp" />
+    <ClInclude Include="ThirdParty\glm\Include\exponential.hpp" />
+    <ClInclude Include="ThirdParty\glm\Include\ext.hpp" />
+    <ClInclude Include="ThirdParty\glm\Include\fwd.hpp" />
+    <ClInclude Include="ThirdParty\glm\Include\geometric.hpp" />
+    <ClInclude Include="ThirdParty\glm\Include\glm.hpp" />
+    <ClInclude Include="ThirdParty\glm\Include\integer.hpp" />
+    <ClInclude Include="ThirdParty\glm\Include\mat2x2.hpp" />
+    <ClInclude Include="ThirdParty\glm\Include\mat2x3.hpp" />
+    <ClInclude Include="ThirdParty\glm\Include\mat2x4.hpp" />
+    <ClInclude Include="ThirdParty\glm\Include\mat3x2.hpp" />
+    <ClInclude Include="ThirdParty\glm\Include\mat3x3.hpp" />
+    <ClInclude Include="ThirdParty\glm\Include\mat3x4.hpp" />
+    <ClInclude Include="ThirdParty\glm\Include\mat4x2.hpp" />
+    <ClInclude Include="ThirdParty\glm\Include\mat4x3.hpp" />
+    <ClInclude Include="ThirdParty\glm\Include\mat4x4.hpp" />
+    <ClInclude Include="ThirdParty\glm\Include\matrix.hpp" />
+    <ClInclude Include="ThirdParty\glm\Include\packing.hpp" />
+    <ClInclude Include="ThirdParty\glm\Include\trigonometric.hpp" />
+    <ClInclude Include="ThirdParty\glm\Include\vec2.hpp" />
+    <ClInclude Include="ThirdParty\glm\Include\vec3.hpp" />
+    <ClInclude Include="ThirdParty\glm\Include\vec4.hpp" />
+    <ClInclude Include="ThirdParty\glm\Include\vector_relational.hpp" />
+    <ClInclude Include="ThirdParty\stbimage\Include\stb_image.h" />
+    <ClInclude Include="ThirdParty\TinyXML\Include\tinyxml2.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -72,20 +192,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>J:\OpenGL-Lib;$(IncludePath)</IncludePath>
-    <LibraryPath>J:\OpenGL-Lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)/ThirdParty/TinyXML/Include/;$(SolutionDir)/ThirdParty/stbimage/Include/;$(SolutionDir)/ThirdParty/glm/Include/;$(SolutionDir)/ThirdParty/glad/Include/;$(SolutionDir)/ThirdParty/KHR/Include/;$(SolutionDir)/ThirdParty/GLFW/Include/;$(SolutionDir)/ThirdParty/Freetype/Include/;$(SolutionDir)/ThirdParty/;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)/ThirdParty/TinyXML/lib/$(Configuration);$(SolutionDir)/ThirdParty/GLFW/lib/;$(SolutionDir)/ThirdParty/Freetype/lib/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>J:\OpenGL-Lib;$(IncludePath)</IncludePath>
-    <LibraryPath>J:\OpenGL-Lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)/ThirdParty/TinyXML/Include/;$(SolutionDir)/ThirdParty/stbimage/Include/;$(SolutionDir)/ThirdParty/glm/Include/;$(SolutionDir)/ThirdParty/glad/Include/;$(SolutionDir)/ThirdParty/KHR/Include/;$(SolutionDir)/ThirdParty/GLFW/Include/;$(SolutionDir)/ThirdParty/Freetype/Include/;$(SolutionDir)/ThirdParty/;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)/ThirdParty/TinyXML/lib/$(Configuration);$(SolutionDir)/ThirdParty/GLFW/lib/;$(SolutionDir)/ThirdParty/Freetype/lib/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>J:\OpenGL-Lib;$(IncludePath)</IncludePath>
-    <LibraryPath>J:\OpenGL-Lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)/ThirdParty/TinyXML/Include/;$(SolutionDir)/ThirdParty/stbimage/Include/;$(SolutionDir)/ThirdParty/glm/Include/;$(SolutionDir)/ThirdParty/glad/Include/;$(SolutionDir)/ThirdParty/KHR/Include/;$(SolutionDir)/ThirdParty/GLFW/Include/;$(SolutionDir)/ThirdParty/Freetype/Include/;$(SolutionDir)/ThirdParty/;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)/ThirdParty/TinyXML/lib/$(Configuration);$(SolutionDir)/ThirdParty/GLFW/lib/;$(SolutionDir)/ThirdParty/Freetype/lib/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>J:\OpenGL-Lib;$(IncludePath)</IncludePath>
-    <LibraryPath>J:\OpenGL-Lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)/ThirdParty/TinyXML/Include/;$(SolutionDir)/ThirdParty/stbimage/Include/;$(SolutionDir)/ThirdParty/glm/Include/;$(SolutionDir)/ThirdParty/glad/Include/;$(SolutionDir)/ThirdParty/KHR/Include/;$(SolutionDir)/ThirdParty/GLFW/Include/;$(SolutionDir)/ThirdParty/Freetype/Include/;$(SolutionDir)/ThirdParty/;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)/ThirdParty/TinyXML/lib/$(Configuration);$(SolutionDir)/ThirdParty/GLFW/lib/;$(SolutionDir)/ThirdParty/Freetype/lib/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -98,8 +218,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;tinyxml2_static.lib;freetype/freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>J:\OpenGL-Lib\tinyxml2\build\tinyxml2_static\x64\Debug;J:\OpenGL-Lib\tinyxml2\build\tinyxml2_static\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;tinyxml2_static.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -117,8 +237,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;tinyxml2_static.lib;freetype/freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>J:\OpenGL-Lib\tinyxml2\build\tinyxml2_static\x64\Debug;J:\OpenGL-Lib\tinyxml2\build\tinyxml2_static\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;tinyxml2_static.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -132,8 +252,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;tinyxml2_static.lib;freetype/freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>J:\OpenGL-Lib\tinyxml2\build\tinyxml2_static\x64\Debug;J:\OpenGL-Lib\tinyxml2\build\tinyxml2_static\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;tinyxml2_static.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -151,59 +271,10 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;tinyxml2_static.lib;freetype/freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>J:\OpenGL-Lib\tinyxml2\build\tinyxml2_static\x64\Debug;J:\OpenGL-Lib\tinyxml2\build\tinyxml2_static\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;tinyxml2_static.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\OpenGL-Lib\glad.c" />
-    <ClCompile Include="Building.cpp" />
-    <ClCompile Include="Graphics.cpp" />
-    <ClCompile Include="GridObject.cpp" />
-    <ClCompile Include="HUD.cpp" />
-    <ClCompile Include="Math.cpp" />
-    <ClCompile Include="MouseInteraction.cpp" />
-    <ClCompile Include="Object.cpp" />
-    <ClCompile Include="Source.cpp" />
-    <ClCompile Include="stb_image.cpp" />
-    <ClCompile Include="World.cpp" />
-    <ClCompile Include="XMLParser.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Grid.frag" />
-    <None Include="Grid.vert" />
-    <None Include="Shader.frag" />
-    <None Include="Shader.vert" />
-    <None Include="TempItem.frag" />
-    <None Include="TempItem.vert" />
-    <None Include="Text.frag" />
-    <None Include="Text.vert" />
-    <None Include="Texture.frag" />
-    <None Include="Texture.vert" />
-    <None Include="UI.frag" />
-    <None Include="UI.vert" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Building.h" />
-    <ClInclude Include="Decoration.h" />
-    <ClInclude Include="GridObject.h" />
-    <ClInclude Include="HUD.h" />
-    <ClInclude Include="MouseObject.h" />
-    <ClInclude Include="Object.h" />
-    <ClInclude Include="TexturedObject.h" />
-    <ClInclude Include="UIButton.h" />
-    <ClInclude Include="E:\downloads\stb_image.h" />
-    <ClInclude Include="Graphics.h" />
-    <ClInclude Include="Math.h" />
-    <ClInclude Include="MouseInteraction.h" />
-    <ClInclude Include="UIPaginatedWindow.h" />
-    <ClInclude Include="Shader.h" />
-    <ClInclude Include="UIElement.h" />
-    <ClInclude Include="UIWindow.h" />
-    <ClInclude Include="WorkShop.h" />
-    <ClInclude Include="World.h" />
-    <ClInclude Include="XMLParser.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
