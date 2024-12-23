@@ -13,7 +13,7 @@ public:
     }
 
     virtual void Draw() = 0; // Pure virtual function for rendering
-    virtual void update(float mouseX, float mouseY, bool isClicked) {
+    virtual void Update(float mouseX, float mouseY, bool isClicked) {
         // Default implementation for updating hover/click states
     }
 

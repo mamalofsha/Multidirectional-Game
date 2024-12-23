@@ -45,6 +45,7 @@
     <ClCompile Include="Source\XMLParser.cpp" />
     <ClCompile Include="ThirdParty\glad\glad.c" />
     <ClCompile Include="ThirdParty\stbimage\Include\stb_image.cpp" />
+    <ClCompile Include="UIWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Building.h" />

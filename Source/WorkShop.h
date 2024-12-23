@@ -13,8 +13,8 @@ public:
         World* InWorld,
         int InGridX,
         int InGridY,
-        const WorkshopData& data)
-        : Building(InShader, InVertices, InIndices, data.ImageFile.c_str(), InVertexData, InWorld, InGridX, InGridY) // Pass to base class constructor
+        const WorkshopData& InData)
+        : Building(InShader, InVertices, InIndices, InData.ImageFile.c_str(), InVertexData, InWorld, InGridX, InGridY) // Pass to base class constructor
     {
     }
 

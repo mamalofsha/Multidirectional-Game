@@ -105,6 +105,9 @@
     <ClCompile Include="ThirdParty\glad\glad.c">
       <Filter>ThirdParty\glad</Filter>
     </ClCompile>
+    <ClCompile Include="UIWindow.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Building.h">

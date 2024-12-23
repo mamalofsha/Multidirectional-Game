@@ -3,45 +3,30 @@
 
 void Building::Draw()
 {
-
-
 	if (IsHidden)return;
 	ObjectShader->use();
 	ObjectShader->setBool("isOverlapping", false);
-
-	float ndcX = 0.0f;
-	float ndcY = 0.0f;
-	float screenX = 0.0f;
-	float screenY = 0.0f;
-	auto [winX, winY] = WorldPtr->GetWindowSize();
+	float NdcX = 0.0f;
+	float NdcY = 0.0f;
+	float ScreenX = 0.0f;
+	float ScreenY = 0.0f;
+	auto [WinX, WinY] = WorldPtr->GetWindowSize();
 	MouseInteractionAPI* api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(WorldPtr->GetWindow()));
 
-	std::tie(screenX, screenY) = Graphics::GridToWorldPosition(GridX, GridY,
+	std::tie(ScreenX, ScreenY) = Graphics::GridToWorldPosition(GridX, GridY,
 		WorldPtr->GetGridConfig().TileWidth, WorldPtr->GetGridConfig().TileHeight,
-		WorldPtr->GetGridConfig().StartOffsetX, WorldPtr->GetGridConfig().StartOffsetY, WorldPtr->GetPan().first, WorldPtr->GetPan().second, Size, WorldPtr->GetZoom(), winX, winY, WorldPtr->GetLevelSize().first, WorldPtr->GetLevelSize().second);
-	std::tie(ndcX, ndcY) = api->screenToNDC(screenX, screenY, winX, winY);
-
-
-
-
-	float scaleX = WorldPtr->GetLevelSize().first / winX;
-	float scaleY = WorldPtr->GetLevelSize().second / winY;
+		WorldPtr->GetGridConfig().StartOffsetX, WorldPtr->GetGridConfig().StartOffsetY, WorldPtr->GetPan().first, WorldPtr->GetPan().second, Size, WorldPtr->GetZoom(), WinX, WinY, WorldPtr->GetLevelSize().first, WorldPtr->GetLevelSize().second);
+	std::tie(NdcX, NdcY) = api->screenToNDC(ScreenX, ScreenY, WinX, WinY);
+	float ScaleX = WorldPtr->GetLevelSize().first / WinX;
+	float ScaleY = WorldPtr->GetLevelSize().second / WinY;
 	glm::mat4 transform = glm::mat4(1.0f);
 	GLuint  transformLoc;
-	transform = glm::translate(transform, glm::vec3(ndcX, ndcY, 0.0f));
-	transform = glm::scale(transform, glm::vec3(scaleX * WorldPtr->GetZoom() * Size, scaleY * WorldPtr->GetZoom() * Size, 1.0f));
-
-	transformLoc = glGetUniformLocation(ObjectShader->ID, "transform");
-	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
-	// Set uniform values
-	//std::cout << ndcY << std::endl;
-	// Bind texture
+	transform = glm::translate(transform, glm::vec3(NdcX, NdcY, 0.0f));
+	transform = glm::scale(transform, glm::vec3(ScaleX * WorldPtr->GetZoom() * Size, ScaleY * WorldPtr->GetZoom() * Size, 1.0f));
+	ObjectShader->setMat4("transform", transform);
 	glBindTexture(GL_TEXTURE_2D, Texture);
-
-	// Draw quad
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 	glBindTexture(GL_TEXTURE_2D, 0);
-
 }

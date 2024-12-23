@@ -40,7 +40,7 @@ World::~World()
 	Shaders.clear();
 	MouseInteractionAPI* Api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(Window));
 	if (Api) {
-		delete Api; // Free the dynamically allocated memory
+		delete Api; 
 	}
 	GameObjects.clear();
 	glfwTerminate();
@@ -188,6 +188,7 @@ void World::RenderUpdate()
 
 void World::LoadSave()
 {
+	// make the rows in the xml file if this was initial launch 
 	XMLParser::CheckInitEmptySave(StartUp.GridFileName, GridConfigData.Width, GridConfigData.Height);
 	for (size_t i = 0; i < GridConfigData.Width; i++) {
 		for (size_t j = 0; j < GridConfigData.Height; j++) {

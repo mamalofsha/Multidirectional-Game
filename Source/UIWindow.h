@@ -5,44 +5,12 @@
 
 class UIWindow : public UIElement {
 public:
-    std::vector<std::shared_ptr<UIElement>> children;
+    std::vector<std::shared_ptr<UIElement>> Children;
 
-    UIWindow(std::shared_ptr<Shader> shaderProgram, float x, float y, float width, float height)
-        : UIElement(shaderProgram,x, y, width, height) {
+    UIWindow(std::shared_ptr<Shader> InShaderProgram, float InPosX, float InPosY, float InWidth, float InHeight)
+        : UIElement(InShaderProgram, InPosX, InPosY, InWidth, InHeight) {
     }
-
-    void Draw() override {
-        if (IsHidden) return;
-
-        // Render the window background
-        // Example: Use a shader for window appearance
-        ObjectShader->use();
-        // Draw the window as a rectangle or textured quad
-
-        for (auto& child : children) {
-            child->Draw();
-        }
-    }
-
-
-
-    void update(float mouseX, float mouseY, bool isClicked) override {
-        if (IsHidden) return;
-
-        for (auto& child : children) {
-            child->update(mouseX, mouseY, isClicked);
-        }
-    }
-
-    void addChild(std::shared_ptr<UIElement> child) {
-        children.push_back(child);
-    }
-
-    virtual void SetHidden(bool newHidden)override
-    {
-        IsHidden = newHidden;
-        for (auto& child : children) {
-            child->SetHidden(newHidden);
-        }
-    }
+    void Draw() override;
+    void Update(float mouseX, float mouseY, bool isClicked) override;
+    virtual void SetHidden(bool newHidden)override;
 };
