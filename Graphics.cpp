@@ -1,12 +1,9 @@
 #include "Graphics.h"
 #include "stb_image.h"
 #include "XMLParser.h"
-#include "UIButton.h"
-#include "TexturedObject.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "UIElement.h"
 #include <ft2build.h>
 #include FT_FREETYPE_H
 

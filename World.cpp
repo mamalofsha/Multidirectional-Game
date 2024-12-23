@@ -120,7 +120,7 @@ void World::ProcessInputGL(GLFWwindow* window)
 	}
 	float LevelWidth = StartUp.LevelWidth;
 	float LevelHeight = StartUp.LevelHeight;
-
+	// clamp with smaller one if todo
 	Zoom = std::clamp(Zoom, windowWidth/ LevelWidth, (windowWidth / LevelWidth)* 3.5f);
 	// Calculate visible bounds based on zoom
 	float halfVisibleWidth = (windowWidth / Zoom) / 2.0f;
