@@ -1,6 +1,5 @@
 #include "Graphics.h"
 #include "stb_image.h"
-#include "GameObject.h"
 #include "XMLParser.h"
 #include "UIButton.h"
 #include "TexturedObject.h"
@@ -259,75 +258,7 @@ Shader Graphics::InitTextRender(std::map<GLchar, Character>& InMap,float inWindo
 	return shader;
 }
 
-void Graphics::InitDrawObject(GameObject& InObject)
-{
-	// Vertex data with texture coordinates
-	float vertices[] = {
-		// Positions      // Texture Coords
-		-0.5f, -0.5f,     0.0f, 0.0f, // Bottom-left
-		 0.5f, -0.5f,     1.0f, 0.0f, // Bottom-right
-		 0.5f,  0.5f,     1.0f, 1.0f, // Top-right
-		-0.5f,  0.5f,     0.0f, 1.0f  // Top-left
-	};
 
-	unsigned int indices[] = {
-		0, 1, 2, // First triangle
-		2, 3, 0  // Second triangle
-	};
-
-	// Vertex Array Object, Vertex Buffer Object, Element Buffer Object
-	unsigned int VAO, VBO, EBO;
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-	glGenBuffers(1, &EBO);
-
-	// Bind VAO
-	glBindVertexArray(VAO);
-
-	// Bind and upload VBO
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	// Bind and upload EBO
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-	// Configure vertex attributes
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-
-	// Unbind VAO
-	glBindVertexArray(0);
-
-
-
-
-	// Load texture
-	unsigned int texture;
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
-
-	// Texture parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	// Load image
-	int width, height, nrChannels;
-	stbi_set_flip_vertically_on_load(true);
-	unsigned char* data = stbi_load("bridge.png", &width, &height, &nrChannels, 0);
-	if (data) {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else {
-		std::cerr << "Failed to load texture" << std::endl;
-	}
-	stbi_image_free(data);
-}
 std::pair<int, int> Graphics::GridToWorldPosition(int gridX, int gridY, float tileWidth, float tileHeight, float offsetX, float offsetY, float panX,float panY,float itemscale,float zoom ,float windowWidth,float windowHeight)
 {
 	// Step 1: Calculate isometric coordinates for the center of the tile
@@ -468,40 +399,7 @@ RenderData Graphics::DrawUIElement(std::vector<float> position, std::vector<floa
 }
 
 
-void Graphics::DrawShape2(GameObject& InObject)
-{
-	//Shader TriShader("Shader.vert", "Shader.frag"); // you can name your shader files however you like
-	InObject.ObjectShader = std::make_unique<Shader>("Shader.vert", "Shader.frag");
-	bool haz = InObject.GetIsHazard();
-	if (haz)
-	{
 
-	}
-	float vertices[] = {
-		// positions																																																														 // colors
-		InObject.GetTransform().Location[0] + InObject.GetLength() * std::cos(InObject.GetTransform().Rotation - (3 * PI / -1.0f))    , InObject.GetTransform().Location[1] + InObject.GetLength() * std::sin(InObject.GetTransform().Rotation - (3 * PI / -1.0f))    , 0.0f ,  haz ? 1.0f : 0.0f, haz ? 0.0f : 1.0f, 0.0f,  // bottom right
-		InObject.GetTransform().Location[0] + InObject.GetLength() * std::cos(InObject.GetTransform().Rotation + (3 * PI / -1.0f))    , InObject.GetTransform().Location[1] + InObject.GetLength() * std::sin(InObject.GetTransform().Rotation + (3 * PI / -1.0f))    , 0.0f ,  haz ? 1.0f : 0.0f, haz ? 0.0f : 1.0f, 0.0f,  // bottom left
-		InObject.GetTransform().Location[0] + InObject.GetLength() * std::cos(InObject.GetTransform().Rotation)                      , InObject.GetTransform().Location[1] + InObject.GetLength() * std::sin(InObject.GetTransform().Rotation)                      , 0.0f ,  haz ? 1.0f : 0.0f, haz ? 0.0f : 1.0f, 1.0f   // top 
-	};
-	unsigned int VBO, VAO;
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
-	glBindVertexArray(VAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-	// position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-	// color attribute
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-	glBindVertexArray(VAO);
-	//InObject.ObjectShader->VAO = VAO;
-	//InObject.ObjectShader->VBO = VBO;
-	//InObject.ObjectShader->use();
-	//glDrawArrays(GL_TRIANGLES, 0, 3);
-}
 
 std::vector<float> Graphics::createGridVertices(float gridWidth, float gridHeight, float OffsetX, float OffsetY)
 {

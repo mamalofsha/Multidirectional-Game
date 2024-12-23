@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
-#include "GameObject.h"
+//#include "GameObject.h"
+#include "Shader.h"
 #include <memory>
 #include <GLFW/glfw3.h>
 #include "MouseInteraction.h"

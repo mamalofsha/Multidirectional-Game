@@ -3,7 +3,6 @@
 #include <glm/fwd.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/ext/matrix_transform.hpp>
-#include "PlayerObject.h"
 #include "Math.h"
 #include "XMLParser.h"
 #include <algorithm>
@@ -24,10 +23,7 @@ std::pair<int, int> World::GetWindowSize()
 	return { windowWidth ,windowHeight };
 }
 
-World::World(std::vector<std::shared_ptr<GameObject>>& GameObjects)
-{
 
-}
 
 World::World(const std::string& InFileName)
 {

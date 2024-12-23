@@ -158,13 +158,11 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\OpenGL-Lib\glad.c" />
     <ClCompile Include="Building.cpp" />
-    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="GridObject.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="MouseInteraction.cpp" />
-    <ClCompile Include="PlayerObject.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="stb_image.cpp" />
@@ -195,12 +193,10 @@
     <ClInclude Include="TexturedObject.h" />
     <ClInclude Include="UIButton.h" />
     <ClInclude Include="E:\downloads\stb_image.h" />
-    <ClInclude Include="GameObject.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="MouseInteraction.h" />
     <ClInclude Include="UIPaginatedWindow.h" />
-    <ClInclude Include="PlayerObject.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="UIElement.h" />
     <ClInclude Include="UIWindow.h" />
