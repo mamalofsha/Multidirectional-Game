@@ -16,45 +16,45 @@ class World
 private:
 	GLFWwindow* Window;
 	StartUpData StartUp;
-	GridConfig gridConfig;
+	GridConfig GridConfigData;
 	// 
-	float panX = 0.0f;
-	float panY = 0.0f;
-	float Zoom = 0.25f;
+	float PanX = 0.0f;
+	float PanY = 0.0f;
+	float ZoomLevel = 0.25f;
 	//
 	std::vector<std::shared_ptr<Object>> GameObjects;
-	std::map<unsigned int, std::vector<std::shared_ptr<Object>>> objectRenderMap;
+	std::map<unsigned int, std::vector<std::shared_ptr<Object>>> ObjectRenderMap;
 	//
 	std::vector<std::shared_ptr<Shader>> Shaders;
 	Shader GridShader;
-	Shader BackGround;
-	Shader floating;
+	Shader BackgroundShader;
+	Shader FloatingShader;
 	//
-	MouseInteractionAPI* mouseAPI;
+	MouseInteractionAPI* MouseAPI;
 
 	void InitBackground();
 	void InitHUD();
 	void InitGrid(const std::string& InFileName);
-	void ProcessInputGL(GLFWwindow* window);
+	void ProcessInputGL(GLFWwindow* InWindow);
 	void GarbageCollection();
 	void SetupMouseCallbacks();
 	void RenderUpdate();
 	void LoadSave();
 public:
-	std::shared_ptr<Shader> Buildingshader;
-	std::vector<std::unique_ptr<class Building>> builds;
+	std::shared_ptr<Shader> BuildingShader;
+	std::vector<std::unique_ptr<class Building>> Buildings;
 	std::unique_ptr<HUD> GameHUD;
 
 	World(const std::string& InFileName);
 	~World();
-	void Update(float DeltaSeconds);
+	void Update(float InDeltaSeconds);
 	bool IsRunning();
 	std::pair<int, int> GetWindowSize();
 	std::pair<float, float> GetPan();
 	std::pair<float, float> GetLevelSize();
-	float GetZoom() { return Zoom; };
+	float GetZoom() { return ZoomLevel; };
 	GLFWwindow* GetWindow() { return Window; };
-	MouseState GetMouserState() { return mouseAPI->GetMouseState(); };
-	GridConfig GetGridConfig() { return gridConfig; };
+	MouseState GetMouseState() { return MouseAPI->GetMouseState(); };
+	GridConfig GetGridConfig() { return GridConfigData; };
 	StartUpData GetStartupData() { return StartUp; };
 };

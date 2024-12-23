@@ -30,8 +30,8 @@ HUD::HUD(float inWindowWidth, float inWindowHeight,World* InWorld)
 		2, 3, 0  // Second triangle
 	};
 	VertexAttribute OutVertexData = { 4,{2,2} };
-	mous = std::make_shared<MouseObject>(Worldptr->Buildingshader, vertices, indices, "Assets/Images/bridge.png", OutVertexData, Worldptr);
-	mous->setSize(0.05f);
+	mous = std::make_shared<MouseObject>(Worldptr->BuildingShader, vertices, indices, "Assets/Images/bridge.png", OutVertexData, Worldptr);
+	mous->SetSize(0.05f);
 	/// callmuse
 	shopWindow = std::make_shared<UIPaginatedWindow>(UIShader,0.0f, 0.0f, 1.5f, 1.5f, "ShopItems.xml","Assets/Images/grass.png", this);
 	//Graphics::DrawUIElement(UIE ,*shopWindow, "grass.png");
@@ -85,13 +85,13 @@ HUD::HUD(float inWindowWidth, float inWindowHeight,World* InWorld)
 
 void HUD::Update()
 {
-	mous->draw();
+	mous->Draw();
 	//UIE->use();
 	for (auto& Element : UIElements )
 	{
-		Element->draw();
+		Element->Draw();
 	}
-shopWindow->draw();
+shopWindow->Draw();
 }
 
 void HUD::onHoverFunction(int gridX, int gridY, float screenX, float screenY)
@@ -127,7 +127,7 @@ void HUD::onClickFunction(int gridX, int gridY, float screenX, float screenY)
 	for (auto& element : UIElements)
 	{
 		if (auto button = std::dynamic_pointer_cast<UIButton>(element)) {
-			if (button->isHovered) {
+			if (button->IsHovered) {
 				button->cllicked();
 				button->onClick();
 			}
@@ -136,7 +136,7 @@ void HUD::onClickFunction(int gridX, int gridY, float screenX, float screenY)
 			// Successfully cast, so the object is a Button
 			for (auto& el : Window->pageControls)
 			{
-					if (el->isHovered) {
+					if (el->IsHovered) {
 						el->cllicked();
 						el->onClick();
 					}
@@ -144,7 +144,7 @@ void HUD::onClickFunction(int gridX, int gridY, float screenX, float screenY)
 			}
 			for (auto& el : Window->getCatButtons())
 			{
-				if (el->isHovered) {
+				if (el->IsHovered) {
 					el->cllicked();
 					el->onClick();
 				}

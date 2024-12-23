@@ -5,22 +5,21 @@
 class Workshop : public Building {
 private:
     WorkshopData Data;
-
 public:
-    Workshop(std::shared_ptr<Shader> shader,
-        const std::vector<float>& vertices,
-        const std::vector<unsigned int>& indices,
-        const VertexAttribute& vertexData,
-        World* world,
-        int gridX,
-        int gridY,
+    Workshop(std::shared_ptr<Shader> InShader,
+        const std::vector<float>& InVertices,
+        const std::vector<unsigned int>& InIndices,
+        const VertexAttribute& InVertexData,
+        World* InWorld,
+        int InGridX,
+        int InGridY,
         const WorkshopData& data)
-        : Building(shader, vertices, indices, data.ImageFile.c_str(), vertexData, world, gridX, gridY) // Pass to base class constructor
+        : Building(InShader, InVertices, InIndices, data.ImageFile.c_str(), InVertexData, InWorld, InGridX, InGridY) // Pass to base class constructor
     {
     }
 
-    void draw() override {
+    void Draw() override {
         // Draw the workshop...
-        Building::draw();
+        Building::Draw();
     }
 };

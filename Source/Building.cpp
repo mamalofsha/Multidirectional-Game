@@ -1,11 +1,11 @@
 #include "Building.h"
 #pragma once
 
-void Building::draw()
+void Building::Draw()
 {
 
 
-	if (isHidden)return;
+	if (IsHidden)return;
 	ObjectShader->use();
 	ObjectShader->setBool("isOverlapping", false);
 
@@ -18,7 +18,7 @@ void Building::draw()
 
 	std::tie(screenX, screenY) = Graphics::GridToWorldPosition(GridX, GridY,
 		WorldPtr->GetGridConfig().TileWidth, WorldPtr->GetGridConfig().TileHeight,
-		WorldPtr->GetGridConfig().StartOffsetX, WorldPtr->GetGridConfig().StartOffsetY, WorldPtr->GetPan().first, WorldPtr->GetPan().second, size, WorldPtr->GetZoom(), winX, winY, WorldPtr->GetLevelSize().first, WorldPtr->GetLevelSize().second);
+		WorldPtr->GetGridConfig().StartOffsetX, WorldPtr->GetGridConfig().StartOffsetY, WorldPtr->GetPan().first, WorldPtr->GetPan().second, Size, WorldPtr->GetZoom(), winX, winY, WorldPtr->GetLevelSize().first, WorldPtr->GetLevelSize().second);
 	std::tie(ndcX, ndcY) = api->screenToNDC(screenX, screenY, winX, winY);
 
 
@@ -29,7 +29,7 @@ void Building::draw()
 	glm::mat4 transform = glm::mat4(1.0f);
 	GLuint  transformLoc;
 	transform = glm::translate(transform, glm::vec3(ndcX, ndcY, 0.0f));
-	transform = glm::scale(transform, glm::vec3(scaleX * WorldPtr->GetZoom() * size, scaleY * WorldPtr->GetZoom() * size, 1.0f));
+	transform = glm::scale(transform, glm::vec3(scaleX * WorldPtr->GetZoom() * Size, scaleY * WorldPtr->GetZoom() * Size, 1.0f));
 
 	transformLoc = glGetUniformLocation(ObjectShader->ID, "transform");
 	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));

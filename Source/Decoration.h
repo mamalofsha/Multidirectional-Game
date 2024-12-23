@@ -19,8 +19,8 @@ public:
     {
     }
 
-    void draw() override {
+    void Draw() override {
         // Draw the workshop...
-        Building::draw();
+        Building::Draw();
     }
 };

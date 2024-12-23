@@ -12,7 +12,7 @@ public:
 
     }
 
-    virtual void draw() = 0; // Pure virtual function for rendering
+    virtual void Draw() = 0; // Pure virtual function for rendering
     virtual void update(float mouseX, float mouseY, bool isClicked) {
         // Default implementation for updating hover/click states
     }
@@ -25,7 +25,7 @@ public:
             mouseY <= y + halfHeight && mouseY >= y - halfHeight;
     }
 
-    void initializeFromRenderData(const RenderData& data)override
+    void InitializeFromRenderData(const RenderData& data)override
     {
         VAO = data.VAO;
         VBO = data.VBO;

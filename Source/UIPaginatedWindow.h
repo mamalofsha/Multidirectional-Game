@@ -25,7 +25,7 @@ public:
 		: UIWindow(shaderProgram, x, y, width, height) {
 		xmlName = inXML;
 		Hudptr = InHud;
-		initializeFromRenderData(Graphics::DrawUIElement(std::vector<float>{x, y}, std::vector<float>{width, height}, inAssetPath.c_str()));
+		InitializeFromRenderData(Graphics::DrawUIElement(std::vector<float>{x, y}, std::vector<float>{width, height}, inAssetPath.c_str()));
 	}
 
 	std::vector<std::shared_ptr<UIButton>> getCatButtons()
@@ -33,12 +33,12 @@ public:
 		return tabs[ActiveTab];
 	}
 
-	void draw() override {
-		if (isHidden) return;
+	void Draw() override {
+		if (IsHidden) return;
 
 		// Render the window background
 		ObjectShader->use();
-		ObjectShader->setBool("isHidden", isHidden);
+		ObjectShader->setBool("isHidden", IsHidden);
 		ObjectShader->setBool("isHovered", false);
 		glBindTexture(GL_TEXTURE_2D, Texture);
 		glBindVertexArray(VAO);
@@ -52,7 +52,7 @@ public:
 
 
 		for (auto it = pageControls.begin(); it != pageControls.end(); ++it) {
-			(*it)->draw();// Access the UIButton via the dereferenced iterator
+			(*it)->Draw();// Access the UIButton via the dereferenced iterator
 		}
 
 		for (const auto& [tabName, buttons] : tabs) {
@@ -60,7 +60,7 @@ public:
 			if (tabName != ActiveTab) continue;
 			for (int i = startIndex; i < endIndex; ++i) {
 				if (i >= buttons.size())break;
-				buttons[i]->draw();
+				buttons[i]->Draw();
 			}
 		}
 
@@ -73,9 +73,9 @@ public:
 		{
 			if (Child)
 			{
-				if (isHidden)
+				if (IsHidden)
 				{
-					Child->isHovered = false;
+					Child->IsHovered = false;
 					continue;
 				}
 				Child->updateHoverState(x, y);
@@ -91,13 +91,13 @@ public:
 			//std::cout << "Tab: " << tabName << std::endl;
 			if (tabName != ActiveTab) continue;
 			for (int i = startIndex; i < endIndex; ++i) {
-				if (isHidden)
+				if (IsHidden)
 				{
-					buttons[i]->isHovered = false;
+					buttons[i]->IsHovered = false;
 					continue;
 				}
 				buttons[i]->updateHoverState(x, y);
-				if (buttons[i]->isHovered)
+				if (buttons[i]->IsHovered)
 					std::cout << i << std::endl;
 			}
 		}

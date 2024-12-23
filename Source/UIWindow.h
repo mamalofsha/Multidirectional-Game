@@ -11,8 +11,8 @@ public:
         : UIElement(shaderProgram,x, y, width, height) {
     }
 
-    void draw() override {
-        if (isHidden) return;
+    void Draw() override {
+        if (IsHidden) return;
 
         // Render the window background
         // Example: Use a shader for window appearance
@@ -20,14 +20,14 @@ public:
         // Draw the window as a rectangle or textured quad
 
         for (auto& child : children) {
-            child->draw();
+            child->Draw();
         }
     }
 
 
 
     void update(float mouseX, float mouseY, bool isClicked) override {
-        if (isHidden) return;
+        if (IsHidden) return;
 
         for (auto& child : children) {
             child->update(mouseX, mouseY, isClicked);
@@ -40,7 +40,7 @@ public:
 
     virtual void SetHidden(bool newHidden)override
     {
-        isHidden = newHidden;
+        IsHidden = newHidden;
         for (auto& child : children) {
             child->SetHidden(newHidden);
         }

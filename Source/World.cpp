@@ -25,7 +25,7 @@ World::World(const std::string& InFileName)
 	StartUp = XMLParser::LoadLevel(InFileName);
 	Window = Graphics::InitWindow(StartUp.LevelWidth * StartUp.WindowScale, StartUp.LevelHeight * StartUp.WindowScale);
 	// shader for buildings and hovered items
-	Buildingshader = std::make_shared<Shader>("Source/Shaders/TempItem.vert", "Source/Shaders/TempItem.frag");
+	BuildingShader = std::make_shared<Shader>("Source/Shaders/TempItem.vert", "Source/Shaders/TempItem.frag");
 	InitBackground();
 	InitGrid(StartUp.GridFileName);
 	InitHUD();
@@ -38,15 +38,15 @@ World::~World()
 {
 	// check to see if it actually clears ( eg there are not other objects pointing to this shared ptr 
 	Shaders.clear();
-	MouseInteractionAPI* api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(Window));
-	if (api) {
-		delete api; // Free the dynamically allocated memory
+	MouseInteractionAPI* Api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(Window));
+	if (Api) {
+		delete Api; // Free the dynamically allocated memory
 	}
 	GameObjects.clear();
 	glfwTerminate();
 }
 
-void World::Update(float DeltaSeconds)
+void World::Update(float InDeltaSeconds)
 {
 	GarbageCollection();
 	ProcessInputGL(Window);
@@ -61,206 +61,175 @@ bool World::IsRunning()
 
 void World::InitBackground()
 {
-	std::shared_ptr<Shader> shader = std::make_shared<Shader>("Source/Shaders/Texture.vert", "Source/Shaders/Texture.frag");
-	Shaders.push_back(shader);
-	std::vector<float> vertices = {
+	std::shared_ptr<Shader> ShaderProgram = std::make_shared<Shader>("Source/Shaders/Texture.vert", "Source/Shaders/Texture.frag");
+	Shaders.push_back(ShaderProgram);
+	std::vector<float> Vertices = {
 		// positions          // colors           // texture coords
 		 1.0f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
 		 1.0f, -1.0f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
 		-1.0f, -1.0f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
 		-1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
 	};
-	std::vector<unsigned int> indices = {
+	std::vector<unsigned int> Indices = {
 		0, 1, 3, // first triangle
 		1, 2, 3  // second triangle
 	};
 	VertexAttribute OutVertexData = { 8,{3,3,2} };
-	std::shared_ptr<TexturedObject> texturedObject = std::make_shared<TexturedObject>(shader, vertices, indices, StartUp.LevelFileName.c_str(), OutVertexData, this);
-	objectRenderMap[shader->ID].push_back(texturedObject);
+	std::shared_ptr<TexturedObject> TexturedObj = std::make_shared<TexturedObject>(ShaderProgram, Vertices, Indices, StartUp.LevelFileName.c_str(), OutVertexData, this);
+	ObjectRenderMap[ShaderProgram->ID].push_back(TexturedObj);
 }
 
 void World::InitHUD()
 {
-	auto [windowWidth, windowHeight] = GetWindowSize();
-	GameHUD = std::make_unique<HUD>(windowWidth,windowHeight,this);
+	auto [WindowWidth, WindowHeight] = GetWindowSize();
+	GameHUD = std::make_unique<HUD>(WindowWidth, WindowHeight, this);
 }
 
 void World::InitGrid(const std::string& InFileName)
 {
-	std::shared_ptr<Shader> shader = std::make_shared<Shader>("Source/Shaders/Grid.vert", "Source/Shaders/Grid.frag");
-	Shaders.push_back(shader);
-	gridConfig = XMLParser::ParseGridDataFromXML(InFileName);
-	std::shared_ptr<GridObject> gridObject = std::make_shared<GridObject>(shader, gridConfig, this);
-	objectRenderMap[shader->ID].push_back(gridObject);
+	std::shared_ptr<Shader> ShaderProgram = std::make_shared<Shader>("Source/Shaders/Grid.vert", "Source/Shaders/Grid.frag");
+	Shaders.push_back(ShaderProgram);
+	GridConfigData = XMLParser::ParseGridDataFromXML(InFileName);
+	std::shared_ptr<GridObject> GridObj = std::make_shared<GridObject>(ShaderProgram, GridConfigData, this);
+	ObjectRenderMap[ShaderProgram->ID].push_back(GridObj);
 }
 
-void World::ProcessInputGL(GLFWwindow* window)
+void World::ProcessInputGL(GLFWwindow* InWindow)
 {
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, true);
-	auto [windowWidth, windowHeight] = GetWindowSize();
-	float panSpeed = 0.01f; // Speed of panning
-	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
-		panX -= panSpeed;
+	if (glfwGetKey(InWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		glfwSetWindowShouldClose(InWindow, true);
+	auto [WindowWidth, WindowHeight] = GetWindowSize();
+	float PanSpeed = 0.01f; // Speed of panning
+	if (glfwGetKey(InWindow, GLFW_KEY_LEFT) == GLFW_PRESS) {
+		PanX -= PanSpeed;
 	}
-	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
-		panX += panSpeed;
+	if (glfwGetKey(InWindow, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+		PanX += PanSpeed;
 	}
-	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
-		panY += panSpeed;
+	if (glfwGetKey(InWindow, GLFW_KEY_UP) == GLFW_PRESS) {
+		PanY += PanSpeed;
 	}
-	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-		panY -= panSpeed;
+	if (glfwGetKey(InWindow, GLFW_KEY_DOWN) == GLFW_PRESS) {
+		PanY -= PanSpeed;
 	}
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-		if(Zoom < 3.5f)
-		Zoom +=  0.05f;
+	if (glfwGetKey(InWindow, GLFW_KEY_W) == GLFW_PRESS) {
+		if (ZoomLevel < 3.5f)
+			ZoomLevel += 0.05f;
 	}
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-		Zoom -= 0.05f;
+	if (glfwGetKey(InWindow, GLFW_KEY_S) == GLFW_PRESS) {
+		ZoomLevel -= 0.05f;
 	}
 	float LevelWidth = StartUp.LevelWidth;
 	float LevelHeight = StartUp.LevelHeight;
-	// clamp with smaller one if todo
-	Zoom = std::clamp(Zoom, windowWidth/ LevelWidth, (windowWidth / LevelWidth)* 3.5f);
-	// Calculate visible bounds based on zoom
-	float halfVisibleWidth = (windowWidth / Zoom) / 2.0f;
-	float halfVisibleHeight = (windowHeight / Zoom) / 2.0f;
-
-	// Background dimensions (2000x1404 assumed)
-	float bgHalfWidth = StartUp.LevelWidth / 2.0f;
-	float bgHalfHeight = StartUp.LevelHeight/ 2.0f;
-
-	// Calculate panning bounds
-	float minPanX = (- bgHalfWidth + halfVisibleWidth)/1000.0f;
-	float maxPanX = (bgHalfWidth - halfVisibleWidth) / 1000.0f;
-
-	float minPanY = (- bgHalfHeight + halfVisibleHeight)/1000.0f;
-	float maxPanY = (bgHalfHeight - halfVisibleHeight)/1000.0f;
-	panX = std::clamp(panX, minPanX, maxPanX);
-	// 2000/ 14004 = 1.42f
-	panY = std::clamp(panY, minPanY * (LevelWidth/ LevelHeight), maxPanY * (LevelWidth / LevelHeight));
-	MouseInteractionAPI* api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(window));
-	if (api) {
-		api->SetPanZoom(panX, panY, Zoom);
+	ZoomLevel = std::clamp(ZoomLevel, WindowWidth / LevelWidth, (WindowWidth / LevelWidth) * 3.5f);
+	float HalfVisibleWidth = (WindowWidth / ZoomLevel) / 2.0f;
+	float HalfVisibleHeight = (WindowHeight / ZoomLevel) / 2.0f;
+	float BgHalfWidth = StartUp.LevelWidth / 2.0f;
+	float BgHalfHeight = StartUp.LevelHeight / 2.0f;
+	float MinPanX = (-BgHalfWidth + HalfVisibleWidth) / 1000.0f;
+	float MaxPanX = (BgHalfWidth - HalfVisibleWidth) / 1000.0f;
+	float MinPanY = (-BgHalfHeight + HalfVisibleHeight) / 1000.0f;
+	float MaxPanY = (BgHalfHeight - HalfVisibleHeight) / 1000.0f;
+	PanX = std::clamp(PanX, MinPanX, MaxPanX);
+	PanY = std::clamp(PanY, MinPanY * (LevelWidth / LevelHeight), MaxPanY * (LevelWidth / LevelHeight));
+	MouseInteractionAPI* Api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(InWindow));
+	if (Api) {
+		Api->SetPanZoom(PanX, PanY, ZoomLevel);
 	}
-	//std::cout << "zoom: " << Zoom << std::endl;
-	//std::cout << "pan: " << panX << std::endl;
-	//std::cout << "panY lim: " << minPanY << ": " << maxPanY << std::endl;
 }
 
 void World::GarbageCollection()
 {
-	for (auto it = GameObjects.begin(); it != GameObjects.end(); )
-	{
-		if ((*it)->GetMarkedForDelete())
-		{
-			it = GameObjects.erase(it);
+	for (auto It = GameObjects.begin(); It != GameObjects.end();) {
+		if ((*It)->GetMarkedForDelete()) {
+			It = GameObjects.erase(It);
 		}
-		else
-			++it;
+		else {
+			++It;
+		}
 	}
 }
 
 void World::SetupMouseCallbacks()
 {
-	// Mouse Interaction API setup
-	mouseAPI = new MouseInteractionAPI(Window,gridConfig,StartUp.LevelWidth,StartUp.LevelHeight);
-	mouseAPI->SetClickCallback([this](int gridX, int gridY, float screenX, float screenY) {
-		this->GameHUD->onClickFunction(gridX, gridY, screenX, screenY);
+	MouseAPI = new MouseInteractionAPI(Window, GridConfigData, StartUp.LevelWidth, StartUp.LevelHeight);
+	MouseAPI->SetClickCallback([this](int InGridX, int InGridY, float InScreenX, float InScreenY) {
+		this->GameHUD->onClickFunction(InGridX, InGridY, InScreenX, InScreenY);
 		});
-	mouseAPI->SetHoverCallback([this](int gridX, int gridY, float screenX, float screenY) {
-		this->GameHUD->onHoverFunction(gridX, gridY, screenX, screenY);
+	MouseAPI->SetHoverCallback([this](int InGridX, int InGridY, float InScreenX, float InScreenY) {
+		this->GameHUD->onHoverFunction(InGridX, InGridY, InScreenX, InScreenY);
 		});
-	// Set the user pointer
 }
 
 void World::RenderUpdate()
 {
-	//
 	glClearColor(0.2f, 0.3f, 0.76f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
-	for (auto it = Shaders.begin(); it < Shaders.end(); it++)
-	{
-		(*it)->use();
-		unsigned int shaderID = (*it)->ID;
-
-		// Lookup objects in the map
-		auto mapIt = objectRenderMap.find(shaderID);
-		if (mapIt != objectRenderMap.end()) {
-			// Iterate through all objects associated with this shader
-			for (const auto& object : mapIt->second) {
-				object->draw(); // Draw the object
+	for (auto It = Shaders.begin(); It < Shaders.end(); It++) {
+		(*It)->use();
+		unsigned int ShaderID = (*It)->ID;
+		auto MapIt = ObjectRenderMap.find(ShaderID);
+		if (MapIt != ObjectRenderMap.end()) {
+			for (const auto& Object : MapIt->second) {
+				Object->Draw();
 			}
 		}
 		else {
-			std::cerr << "No objects found for shader ID: " << shaderID << std::endl;
+			std::cerr << "No objects found for shader ID: " << ShaderID << std::endl;
 		}
 	}
-	if(!builds.empty())
-		for (auto it = builds.begin(); it < builds.end(); it++)
-		{
-			(*it)->draw();
+	if (!Buildings.empty())
+		for (auto It = Buildings.begin(); It < Buildings.end(); It++) {
+			(*It)->Draw();
 		}
-
 	GameHUD->Update();
 	glfwSwapBuffers(Window);
 }
 
 void World::LoadSave()
 {
-	XMLParser::CheckInitEmptySave(StartUp.GridFileName,gridConfig.Width, gridConfig.Height);
-	for (size_t i = 0; i < gridConfig.Width; i++)
-	{
-		for (size_t j = 0; j < gridConfig.Height; j++)
-		{
-			std::string value =  XMLParser::GetGridValue(StartUp.GridFileName, i, j);
-			if (value != "0")
-			{
-				std::vector<float> vertices = {
-					// Positions      // Texture Coords
-					-0.5f, -0.5f,     0.0f, 0.0f, // Bottom-left
-					 0.5f, -0.5f,     1.0f, 0.0f, // Bottom-right
-					 0.5f,  0.5f,     1.0f, 1.0f, // Top-right
-					-0.5f,  0.5f,     0.0f, 1.0f  // Top-left
+	XMLParser::CheckInitEmptySave(StartUp.GridFileName, GridConfigData.Width, GridConfigData.Height);
+	for (size_t i = 0; i < GridConfigData.Width; i++) {
+		for (size_t j = 0; j < GridConfigData.Height; j++) {
+			std::string Value = XMLParser::GetGridValue(StartUp.GridFileName, i, j);
+			if (Value != "0") {
+				std::vector<float> Vertices = {
+					-0.5f, -0.5f,     0.0f, 0.0f,
+					 0.5f, -0.5f,     1.0f, 0.0f,
+					 0.5f,  0.5f,     1.0f, 1.0f,
+					-0.5f,  0.5f,     0.0f, 1.0f
 				};
-
-				std::vector<unsigned int> indices = {
-					0, 1, 2, // First triangle
-					2, 3, 0  // Second triangle
+				std::vector<unsigned int> Indices = {
+					0, 1, 2,
+					2, 3, 0
 				};
 				VertexAttribute OutVertexData = { 4,{2,2} };
-
-				WorkshopData TempWorkShopData = XMLParser::LoadWorkshop("ShopItems.xml", "workshops", value);
-				if (!TempWorkShopData.Name.empty())
-				{
-					builds.emplace_back(std::make_unique<Workshop>(Buildingshader, vertices, indices, OutVertexData, this, i, j, TempWorkShopData));
+				WorkshopData TempWorkShopData = XMLParser::LoadWorkshop("ShopItems.xml", "workshops", Value);
+				if (!TempWorkShopData.Name.empty()) {
+					Buildings.emplace_back(std::make_unique<Workshop>(BuildingShader, Vertices, Indices, OutVertexData, this, i, j, TempWorkShopData));
 				}
-				DecorationData TempDecoratoinData = XMLParser::LoadDecoration("ShopItems.xml", "decorations", value);
-				if (!TempDecoratoinData.Name.empty())
-				{
-					builds.emplace_back(std::make_unique<Decoration>(Buildingshader, vertices, indices, OutVertexData, this, i, j, TempDecoratoinData));
+				DecorationData TempDecorationData = XMLParser::LoadDecoration("ShopItems.xml", "decorations", Value);
+				if (!TempDecorationData.Name.empty()) {
+					Buildings.emplace_back(std::make_unique<Decoration>(BuildingShader, Vertices, Indices, OutVertexData, this, i, j, TempDecorationData));
 				}
 			}
 		}
-
 	}
 }
 
 std::pair<int, int> World::GetWindowSize()
 {
-	int windowWidth, windowHeight;
-	glfwGetWindowSize(Window, &windowWidth, &windowHeight);
-	return { windowWidth ,windowHeight };
+	int WindowWidth, WindowHeight;
+	glfwGetWindowSize(Window, &WindowWidth, &WindowHeight);
+	return { WindowWidth, WindowHeight };
 }
 
 std::pair<float, float> World::GetPan()
 {
-	return { panX ,panY };
-}
-std::pair<float, float> World::GetLevelSize()
-{
-	return {static_cast<float>(StartUp.LevelWidth),static_cast<float>(StartUp.LevelHeight) };
+	return { PanX, PanY };
 }
 
-/// make different grid sizes work with save 
+std::pair<float, float> World::GetLevelSize()
+{
+	return { static_cast<float>(StartUp.LevelWidth), static_cast<float>(StartUp.LevelHeight) };
+}

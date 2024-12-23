@@ -5,7 +5,7 @@
 #include "HUD.h"
 class UIButton :public  UIElement {
 public:
-	bool isHovered = false;
+	bool IsHovered = false;
 	std::function<void()> onClick;
 	std::string Text;
 	HUD* Hudptr;
@@ -14,20 +14,20 @@ public:
 		: UIElement(shaderProgram, x, y, width, height), onClick(onClick) {
 		Hudptr = inHudptr;
 		Text = inText;
-		initializeFromRenderData(Graphics::DrawUIElement(std::vector<float>{x, y}, std::vector<float>{width, height}, inAssetPath.c_str()));
+		InitializeFromRenderData(Graphics::DrawUIElement(std::vector<float>{x, y}, std::vector<float>{width, height}, inAssetPath.c_str()));
 	}
 	void updateHoverState(double mouseX, double mouseY) {
-		isHovered = isInside(mouseX, mouseY); // Check if the mouse is within the button bounds
+		IsHovered = isInside(mouseX, mouseY); // Check if the mouse is within the button bounds
 	}
 
 	void cllicked() {
 		std::cout << Text;
 	}
 
-	void draw() {
+	void Draw() {
 		ObjectShader->use();
-		ObjectShader->setBool("isHovered", isHovered);
-		ObjectShader->setBool("isHidden", isHidden);
+		ObjectShader->setBool("isHovered", IsHovered);
+		ObjectShader->setBool("isHidden", IsHidden);
 		glBindTexture(GL_TEXTURE_2D, Texture);
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

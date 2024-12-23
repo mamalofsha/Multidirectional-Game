@@ -39,13 +39,13 @@ public:
         glDeleteBuffers(1, &VBO);
     }
 
-    void draw() override {
+    void Draw() override {
 		auto [winX, winY] = WorldPtr->GetWindowSize();
         float scaleX = (WorldPtr->GetLevelSize().first) / winX;
         float scaleY = (WorldPtr->GetLevelSize().second) / winY;
 		glm::mat4 transform = glm::mat4(1.0f);
 		GLuint  transformLoc;
-		ObjectShader->setUniform2i("tileCoor", WorldPtr->GetMouserState().GridX, WorldPtr->GetMouserState().GridY);
+		ObjectShader->setUniform2i("tileCoor", WorldPtr->GetMouseState().GridX, WorldPtr->GetMouseState().GridY);
 		transform = glm::scale(transform, glm::vec3(scaleX * WorldPtr->GetZoom(), scaleY * WorldPtr->GetZoom(), 1.0f));
 		transform = glm::translate(transform, glm::vec3(WorldPtr->GetPan().first, WorldPtr->GetPan().second, 0.0f));
 		transformLoc = glGetUniformLocation(ObjectShader->ID, "transform");

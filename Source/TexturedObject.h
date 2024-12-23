@@ -29,7 +29,7 @@ public:
         glDeleteTextures(1, &Texture);
     }
 
-    void draw() override {
+    void Draw() override {
         auto [winX,winY] = WorldPtr->GetWindowSize();
         float scaleX = WorldPtr->GetLevelSize().first / winX;
         float scaleY = WorldPtr->GetLevelSize().second / winY;
@@ -41,6 +41,5 @@ public:
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
-
     }
 };

@@ -20,12 +20,12 @@ public:
 		World* InWorldPtr)
 		: TexturedObject(shaderProgram, vertices, indices, texturePath, vertexData, InWorldPtr) , cachedfilePath(texturePath){
 		// Additional MouseObject-specific initialization here
-		isHidden = true;
+		IsHidden = true;
 
 	}
-	void draw() override {
+	void Draw() override {
 
-		if (isHidden)return;
+		if (IsHidden)return;
 		ObjectShader->use();
 
 		float ndcX = 0.0f;
@@ -40,7 +40,7 @@ public:
 			std::string gridvalue = XMLParser::GetGridValue(WorldPtr->GetStartupData().GridFileName, api->GetMouseState().GridX, api->GetMouseState().GridY);
 			if (gridvalue != "0")
 			{
-				setSize(0.05f);
+				SetSize(0.05f);
 				std::tie(ndcX, ndcY) = api->screenToNDC(api->GetMouseState().x, api->GetMouseState().y, winX, winY);
 				isAttachedToGrid = false;
 				ObjectShader->setBool("isOverlapping", true);
@@ -50,12 +50,12 @@ public:
 			{
 				ObjectShader->setBool("isOverlapping", false);
 
-				setSize(0.15f);
+				SetSize(0.15f);
 				auto [winX, winY] = WorldPtr->GetWindowSize();
 
 				std::tie(screenX, screenY) = Graphics::GridToWorldPosition(api->GetMouseState().GridX, api->GetMouseState().GridY,
 					WorldPtr->GetGridConfig().TileWidth, WorldPtr->GetGridConfig().TileHeight,
-					WorldPtr->GetGridConfig().StartOffsetX, WorldPtr->GetGridConfig().StartOffsetY, WorldPtr->GetPan().first, WorldPtr->GetPan().second, size, WorldPtr->GetZoom(), winX, winY, WorldPtr->GetLevelSize().first, WorldPtr->GetLevelSize().second);
+					WorldPtr->GetGridConfig().StartOffsetX, WorldPtr->GetGridConfig().StartOffsetY, WorldPtr->GetPan().first, WorldPtr->GetPan().second, Size, WorldPtr->GetZoom(), winX, winY, WorldPtr->GetLevelSize().first, WorldPtr->GetLevelSize().second);
 				std::tie(ndcX, ndcY) = api->screenToNDC(screenX, screenY, winX, winY);
 				isAttachedToGrid = true;
 			}
@@ -65,7 +65,7 @@ public:
 		{
 			ObjectShader->setBool("isOverlapping", false);
 
-			setSize(0.05f);
+			SetSize(0.05f);
 			std::tie(ndcX, ndcY) = api->screenToNDC(api->GetMouseState().x, api->GetMouseState().y, winX, winY);
 			isAttachedToGrid = false;
 		}
@@ -74,7 +74,7 @@ public:
 		float scaleY = WorldPtr->GetLevelSize().second / winY;
 		glm::mat4 transform = glm::mat4(1.0f);
 		transform = glm::translate(transform, glm::vec3(ndcX, ndcY, 0.0f));
-		transform = glm::scale(transform, glm::vec3(scaleX * WorldPtr->GetZoom()*size, scaleY * WorldPtr->GetZoom() * size, 1.0f));
+		transform = glm::scale(transform, glm::vec3(scaleX * WorldPtr->GetZoom()*Size, scaleY * WorldPtr->GetZoom() * Size, 1.0f));
 		ObjectShader->setMat4("transform", transform);
 		glBindTexture(GL_TEXTURE_2D, Texture);
 		// Draw quad
@@ -144,14 +144,14 @@ public:
 			WorkshopData TempWorkShopData = XMLParser::LoadWorkshop("ShopItems.xml", "workshops", ItemID);
 			if (!TempWorkShopData.Name.empty())
 			{
-				WorldPtr->builds.emplace_back(std::make_unique<Workshop>(ObjectShader, vertices, indices, OutVertexData, WorldPtr, api->GetMouseState().GridX, api->GetMouseState().GridY, TempWorkShopData));
+				WorldPtr->Buildings.emplace_back(std::make_unique<Workshop>(ObjectShader, vertices, indices, OutVertexData, WorldPtr, api->GetMouseState().GridX, api->GetMouseState().GridY, TempWorkShopData));
 			}
 			else
 			{
 				DecorationData TempDecorationData = XMLParser::LoadDecoration("ShopItems.xml", "decorations", ItemID);
 				if (!TempDecorationData.Name.empty())
 				{
-					WorldPtr->builds.emplace_back(std::make_unique<Decoration>(ObjectShader, vertices, indices, OutVertexData, WorldPtr, api->GetMouseState().GridX, api->GetMouseState().GridY, TempDecorationData));
+					WorldPtr->Buildings.emplace_back(std::make_unique<Decoration>(ObjectShader, vertices, indices, OutVertexData, WorldPtr, api->GetMouseState().GridX, api->GetMouseState().GridY, TempDecorationData));
 				}
 			}
 			XMLParser::UpdateGridValue(WorldPtr->GetStartupData().GridFileName, api->GetMouseState().GridX, api->GetMouseState().GridY, ItemID.c_str());
