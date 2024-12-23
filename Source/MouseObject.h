@@ -6,6 +6,7 @@ class MouseObject : public TexturedObject
 {
 private:
     bool IsAttachedToGrid;
+    bool IsOverlapping = false;
     // For passing it to the actual building that goes up 
     std::string ItemID;
 public:

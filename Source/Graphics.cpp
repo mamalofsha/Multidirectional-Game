@@ -116,7 +116,7 @@ Shader Graphics::InitTextRender(std::map<GLchar, Character>& InMap, float InWind
 	Shader TextShader("Source/Shaders/Text.vert", "Source/Shaders/Text.frag");
 	glm::mat4 Projection = glm::ortho(0.0f, InWindowWidth, 0.0f, InWindowHeight);
 	TextShader.use();
-	glUniformMatrix4fv(glGetUniformLocation(TextShader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(Projection));
+	glUniformMatrix4fv(glGetUniformLocation(TextShader.ID, "Projection"), 1, GL_FALSE, glm::value_ptr(Projection));
 
 	// Initialize FreeType
 	FT_Library FreeTypeLibrary;

@@ -2,8 +2,6 @@
 layout(location = 0) in vec2 aPos;
 layout(location = 1) in vec2 aTexCoord;
 out vec2 TexCoord;
-uniform vec2 mousePos;
-uniform float size;
 uniform mat4 Transform;
 
 void main() {
