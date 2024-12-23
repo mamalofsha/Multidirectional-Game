@@ -31,6 +31,7 @@ World::World(const std::string& InFileName)
 	InitHUD();
 	SetupMouseCallbacks();
 	LoadSave();
+	//XMLParser::ResetSave("grid_config.xml");
 }
 
 World::~World()
@@ -208,6 +209,7 @@ void World::RenderUpdate()
 
 void World::LoadSave()
 {
+	XMLParser::CheckInitEmptySave(StartUp.GridFileName,gridConfig.width, gridConfig.height);
 	for (size_t i = 0; i < gridConfig.width; i++)
 	{
 		for (size_t j = 0; j < gridConfig.height; j++)
@@ -260,3 +262,5 @@ std::pair<float, float> World::GetLevelSize()
 {
 	return {static_cast<float>(StartUp.LevelWidth),static_cast<float>(StartUp.LevelHeight) };
 }
+
+/// make different grid sizes work with save 

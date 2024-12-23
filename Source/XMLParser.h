@@ -11,7 +11,6 @@ struct StartUpData
 	float WindowScale;
 	std::string GridFileName;
 	std::string LevelFileName;
-
 };
 
 struct WorkshopData;
@@ -29,6 +28,7 @@ public:
 	static void UpdateGridValue(const std::string& filename, int gridX, int gridY, const char* newValue);
 	static void ResetSave(const std::string& filename);
 	static std::string GetGridValue(const std::string& filename, int gridX, int gridY);
+	static void CheckInitEmptySave(const std::string& filename, int gridX, int gridY);
 };
 
 
