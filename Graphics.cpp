@@ -259,7 +259,7 @@ Shader Graphics::InitTextRender(std::map<GLchar, Character>& InMap,float inWindo
 }
 
 
-std::pair<int, int> Graphics::GridToWorldPosition(int gridX, int gridY, float tileWidth, float tileHeight, float offsetX, float offsetY, float panX,float panY,float itemscale,float zoom ,float windowWidth,float windowHeight)
+std::pair<int, int> Graphics::GridToWorldPosition(int gridX, int gridY, float tileWidth, float tileHeight, float offsetX, float offsetY, float panX,float panY,float itemscale,float zoom ,float windowWidth,float windowHeight, float levelWidth, float levelHeight)
 {
 	// Step 1: Calculate isometric coordinates for the center of the tile
 	float isoScreenX = (gridX  - gridY + offsetX - offsetY) * (tileWidth / 2.0f);
@@ -269,15 +269,15 @@ std::pair<int, int> Graphics::GridToWorldPosition(int gridX, int gridY, float ti
 
 
 	float isoScreenYY = (gridX + gridY + 1 + offsetY + offsetX) * (tileHeight / 2.0f);
-	float adjustedScreenYY = (isoScreenYY + panY) * (zoom * (1404.0f / windowHeight));
+	float adjustedScreenYY = (isoScreenYY + panY) * (zoom * (levelHeight / windowHeight));
 	float screenYY = (1.0f - adjustedScreenYY) / 2.0f * windowHeight;
 	// Optional: Offset to center tiles (if needed)
 	//isoScreenX -= itemscale*(tileWidth / 2.0f);
 	//isoScreenY -= itemscale*(tileHeight);
 
 	// Step 2: Apply panning and zoom adjustments
-	float adjustedScreenX = (isoScreenX + panX) * (zoom * (2000.0f / windowWidth));
-	float adjustedScreenY = (isoScreenY + panY) * (zoom * (1404.0f / windowHeight));
+	float adjustedScreenX = (isoScreenX + panX) * (zoom * (levelWidth / windowWidth));
+	float adjustedScreenY = (isoScreenY + panY) * (zoom * (levelHeight / windowHeight));
 
 	// Step 3: Convert to actual screen space coordinates
 	float screenX = (adjustedScreenX + 1.0f) / 2.0f * windowWidth;

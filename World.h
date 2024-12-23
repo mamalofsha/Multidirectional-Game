@@ -37,7 +37,6 @@ private:
 	void InitGrid(const std::string& InFileName);
 	void ProcessInputGL(GLFWwindow* window);
 	void GarbageCollection();
-	void InputUpdate();
 	void SetupMouseCallbacks();
 	void RenderUpdate();
 	void LoadSave();
@@ -57,4 +56,5 @@ public:
 	GLFWwindow* GetWindow() { return Window; };
 	MouseState GetMouserState() { return mouseState; };
 	GridConfig GetGridConfig() { return gridConfig; };
+	StartUpData GetStartupData() { return StartUp; };
 };

@@ -34,7 +34,7 @@ public:
 
 		std::tie(screenX, screenY) = Graphics::GridToWorldPosition(GridX, GridY,
 		WorldPtr->GetGridConfig().tileWidth, WorldPtr->GetGridConfig().tileHeight,
-		WorldPtr->GetGridConfig().StartOffsetX, WorldPtr->GetGridConfig().StartOffsetY, WorldPtr->GetPan().first, WorldPtr->GetPan().second, size, WorldPtr->GetZoom(), winX, winY);
+		WorldPtr->GetGridConfig().StartOffsetX, WorldPtr->GetGridConfig().StartOffsetY, WorldPtr->GetPan().first, WorldPtr->GetPan().second, size, WorldPtr->GetZoom(), winX, winY,WorldPtr->GetLevelSize().first, WorldPtr->GetLevelSize().second);
 		std::tie(ndcX, ndcY) = api->screenToNDC(screenX, screenY, winX, winY);
 
 

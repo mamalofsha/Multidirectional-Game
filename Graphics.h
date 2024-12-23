@@ -54,7 +54,7 @@ public:
 	static Shader InitTextRender(std::map<GLchar, Character>& InMap, float inWindowWidth, float inWindowHeight,unsigned int& VAO, unsigned int& VBO);
 	static void InitDrawObject(class GameObject& InObject);
 	//static void DrawUIElement(class UIElement& InObject, const char* textureFilePath);
-	static std::pair<int, int> GridToWorldPosition(int gridX, int gridY, float tileWidth, float tileHeight, float offsetX, float offsetY, float panX, float panY,float itemscale, float zoom, float windowWidth, float windowHeight);
+	static std::pair<int, int> GridToWorldPosition(int gridX, int gridY, float tileWidth, float tileHeight, float offsetX, float offsetY, float panX, float panY,float itemscale, float zoom, float windowWidth, float windowHeight , float levelWidth, float levelHeight);
 
 	static void DrawShape2(class GameObject& InObject);
 	static std::vector<float> createGridVertices(float gridWidth, float gridHeight, float OffsetX, float OffsetY);

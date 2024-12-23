@@ -20,10 +20,12 @@ private:
     float TileHeight;
     float gridoffsetX;
     float gridoffsetY;
+    float levelWidth;
+    float levelHeight;
 public:
     using MouseEventCallback = std::function<void(int gridX, int gridY,float screenX,float screenY)>;
     
-    MouseInteractionAPI(GLFWwindow* InWindow,GridConfig InConfig);
+    MouseInteractionAPI(GLFWwindow* InWindow, GridConfig InConfig, float inLevelwidth, float inLevelheight);
     ~MouseInteractionAPI();
     void SetMouseState(MouseState InState);
     MouseState GetMouseState();
@@ -41,7 +43,7 @@ public:
     MouseEventCallback OnClick = nullptr;
 
     // Convert screen coordinates to grid coordinates
-    std::pair<int, int> ScreenToGrid(double screenX, double screenY, float tileWidth, float tileHeight, float offsetX, float offsetY,float zoom , float panX, float panY ,int windowWidth, int windowHeight);
+    std::pair<int, int> ScreenToGrid(double screenX, double screenY, float tileWidth, float tileHeight, float offsetX, float offsetY,float zoom , float panX, float panY ,int windowWidth, int windowHeight,float levelWidth,float levelHeight);
 
     std::pair<float, float> screenToNDC(float screenX, float screenY, int windowWidth, int windowHeight) {
         float ndcX = (screenX / windowWidth) * 2.0f - 1.0f;

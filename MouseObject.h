@@ -37,7 +37,7 @@ public:
 		if (api->GetMouseState().GridX >= 0 && api->GetMouseState().GridX < WorldPtr->GetGridConfig().width &&
 			api->GetMouseState().GridY >= 0 && api->GetMouseState().GridY < WorldPtr->GetGridConfig().height)
 		{
-			std::string gridvalue = XMLParser::GetGridValue("grid_config.xml", api->GetMouseState().GridX, api->GetMouseState().GridY);
+			std::string gridvalue = XMLParser::GetGridValue(WorldPtr->GetStartupData().GridFileName, api->GetMouseState().GridX, api->GetMouseState().GridY);
 			if (gridvalue != "0")
 			{
 				setSize(0.05f);
@@ -55,7 +55,7 @@ public:
 
 				std::tie(screenX, screenY) = Graphics::GridToWorldPosition(api->GetMouseState().GridX, api->GetMouseState().GridY,
 					WorldPtr->GetGridConfig().tileWidth, WorldPtr->GetGridConfig().tileHeight,
-					WorldPtr->GetGridConfig().StartOffsetX, WorldPtr->GetGridConfig().StartOffsetY, WorldPtr->GetPan().first, WorldPtr->GetPan().second, size, WorldPtr->GetZoom(), winX, winY);
+					WorldPtr->GetGridConfig().StartOffsetX, WorldPtr->GetGridConfig().StartOffsetY, WorldPtr->GetPan().first, WorldPtr->GetPan().second, size, WorldPtr->GetZoom(), winX, winY, WorldPtr->GetLevelSize().first, WorldPtr->GetLevelSize().second);
 				std::tie(ndcX, ndcY) = api->screenToNDC(screenX, screenY, winX, winY);
 				isAttachedToGrid = true;
 			}
@@ -70,20 +70,13 @@ public:
 			isAttachedToGrid = false;
 		}
 
-		float scaleX = 2000.0f / winX;
-		float scaleY = 1404.0f / winY;
+		float scaleX = WorldPtr->GetLevelSize().first / winX;
+		float scaleY = WorldPtr->GetLevelSize().second / winY;
 		glm::mat4 transform = glm::mat4(1.0f);
-		GLuint  transformLoc;
 		transform = glm::translate(transform, glm::vec3(ndcX, ndcY, 0.0f));
 		transform = glm::scale(transform, glm::vec3(scaleX * WorldPtr->GetZoom()*size, scaleY * WorldPtr->GetZoom() * size, 1.0f));
 		ObjectShader->setMat4("transform", transform);
-		//transformLoc = glGetUniformLocation(ObjectShader->ID, "transform");
-		//glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
-		// Set uniform values
-		//std::cout << ndcY << std::endl;
-		// Bind texture
 		glBindTexture(GL_TEXTURE_2D, Texture);
-
 		// Draw quad
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -161,7 +154,7 @@ public:
 					WorldPtr->builds.emplace_back(std::make_unique<Decoration>(ObjectShader, vertices, indices, OutVertexData, WorldPtr, api->GetMouseState().GridX, api->GetMouseState().GridY, TempDecorationData));
 				}
 			}
-			XMLParser::UpdateGridValue("grid_config.xml", api->GetMouseState().GridX, api->GetMouseState().GridY, ItemID.c_str());
+			XMLParser::UpdateGridValue(WorldPtr->GetStartupData().GridFileName, api->GetMouseState().GridX, api->GetMouseState().GridY, ItemID.c_str());
 
 		}
 	}

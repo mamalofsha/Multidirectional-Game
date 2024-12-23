@@ -31,8 +31,6 @@ World::World(const std::string& InFileName)
 	InitHUD();
 	SetupMouseCallbacks();
 	LoadSave();
-	//XMLParser::ResetSave("grid_config.xml");
-
 }
 
 World::~World()
@@ -45,6 +43,14 @@ World::~World()
 	}
 	GameObjects.clear();
 	glfwTerminate();
+}
+
+void World::Update(float DeltaSeconds)
+{
+	GarbageCollection();
+	ProcessInputGL(Window);
+	RenderUpdate();
+	glfwPollEvents();
 }
 
 bool World::IsRunning()
@@ -91,14 +97,10 @@ void World::ProcessInputGL(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
-	int windowWidth, windowHeight;
-	glfwGetWindowSize(window, &windowWidth, &windowHeight);
+	auto [windowWidth, windowHeight] = GetWindowSize();
 	float panSpeed = 0.01f; // Speed of panning
-
-
 	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
 		panX -= panSpeed;
-
 	}
 	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
 		panX += panSpeed;
@@ -116,8 +118,10 @@ void World::ProcessInputGL(GLFWwindow* window)
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
 		Zoom -= 0.05f;
 	}
+	float LevelWidth = StartUp.LevelWidth;
+	float LevelHeight = StartUp.LevelHeight;
 
-	Zoom = std::clamp(Zoom, windowWidth/2000.0f, (windowWidth / 2000.0f)* 3.5f);
+	Zoom = std::clamp(Zoom, windowWidth/ LevelWidth, (windowWidth / LevelWidth)* 3.5f);
 	// Calculate visible bounds based on zoom
 	float halfVisibleWidth = (windowWidth / Zoom) / 2.0f;
 	float halfVisibleHeight = (windowHeight / Zoom) / 2.0f;
@@ -134,7 +138,7 @@ void World::ProcessInputGL(GLFWwindow* window)
 	float maxPanY = (bgHalfHeight - halfVisibleHeight)/1000.0f;
 	panX = std::clamp(panX, minPanX, maxPanX);
 	// 2000/ 14004 = 1.42f
-	panY = std::clamp(panY, minPanY*1.42f,maxPanY*1.42f);
+	panY = std::clamp(panY, minPanY * (LevelWidth/ LevelHeight), maxPanY * (LevelWidth / LevelHeight));
 	MouseInteractionAPI* api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(window));
 	if (api) {
 		api->SetPanZoom(panX, panY, Zoom);
@@ -157,15 +161,10 @@ void World::GarbageCollection()
 	}
 }
 
-void World::InputUpdate()
-{
-	ProcessInputGL(Window);
-}
-
 void World::SetupMouseCallbacks()
 {
 	// Mouse Interaction API setup
-	MouseInteractionAPI* mouseAPI = new MouseInteractionAPI(Window,gridConfig);
+	MouseInteractionAPI* mouseAPI = new MouseInteractionAPI(Window,gridConfig,StartUp.LevelWidth,StartUp.LevelHeight);
 	mouseAPI->SetClickCallback([this](int gridX, int gridY, float screenX, float screenY) {
 		this->GameHUD->onClickFunction(gridX, gridY, screenX, screenY);
 		});
@@ -213,7 +212,7 @@ void World::LoadSave()
 	{
 		for (size_t j = 0; j < gridConfig.height; j++)
 		{
-			std::string value =  XMLParser::GetGridValue("grid_config.xml", i, j);
+			std::string value =  XMLParser::GetGridValue(StartUp.GridFileName, i, j);
 			if (value != "0")
 			{
 				std::vector<float> vertices = {
@@ -246,26 +245,6 @@ void World::LoadSave()
 	}
 }
 
-
-
-
-
-
-
-
-
-void World::Update(float DeltaSeconds)
-{
-	GarbageCollection();
-	InputUpdate();
-	RenderUpdate();
-	glfwPollEvents();
-	//CollisionUpdate();
-
-}
-
-
-
 std::pair<int, int> World::GetWindowSize()
 {
 	int windowWidth, windowHeight;
@@ -281,5 +260,3 @@ std::pair<float, float> World::GetLevelSize()
 {
 	return {static_cast<float>(StartUp.LevelWidth),static_cast<float>(StartUp.LevelHeight) };
 }
-///////// todo
-// one shader cna be used with multiple purposes and different places , -> 1 shader for texture can draw multiple textures , shoyld 
