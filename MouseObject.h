@@ -2,11 +2,14 @@
 #include "TexturedObject.h"
 #include "MouseInteraction.h"
 #include "Building.h"
+#include "Decoration.h"
+#include "WorkShop.h"
 
 class MouseObject : public TexturedObject
 {
 private :
 	bool isAttachedToGrid;
+	std::string ItemID;
 	const char* cachedfilePath;
 public:
 	MouseObject(std::shared_ptr<Shader> shaderProgram,
@@ -34,8 +37,8 @@ public:
 		if (api->GetMouseState().GridX >= 0 && api->GetMouseState().GridX < WorldPtr->GetGridConfig().width &&
 			api->GetMouseState().GridY >= 0 && api->GetMouseState().GridY < WorldPtr->GetGridConfig().height)
 		{
-			int gridvalue = XMLParser::GetGridValue("grid_config.xml", api->GetMouseState().GridX, api->GetMouseState().GridY);
-			if (gridvalue != 0)
+			std::string gridvalue = XMLParser::GetGridValue("grid_config.xml", api->GetMouseState().GridX, api->GetMouseState().GridY);
+			if (gridvalue != "0")
 			{
 				setSize(0.05f);
 				std::tie(ndcX, ndcY) = api->screenToNDC(api->GetMouseState().x, api->GetMouseState().y, winX, winY);
@@ -89,6 +92,8 @@ public:
 
 	}
 
+	void SetItemID(const std::string InItemID) { ItemID = InItemID; };
+
 	void ReloadTexture(const char* filePath)
 	{
 		glBindTexture(GL_TEXTURE_2D, Texture);
@@ -140,10 +145,24 @@ public:
 				0, 1, 2, // First triangle
 				2, 3, 0  // Second triangle
 			};
-			MouseInteractionAPI* api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(WorldPtr->GetWindow()));
-
 			VertexAttribute OutVertexData = { 4,{2,2} };
-			WorldPtr->builds.emplace_back(std::make_unique<Building>(ObjectShader, vertices, indices, cachedfilePath, OutVertexData, WorldPtr, api->GetMouseState().GridX, api->GetMouseState().GridY));
+
+			MouseInteractionAPI* api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(WorldPtr->GetWindow()));
+			WorkshopData TempWorkShopData = XMLParser::LoadWorkShop("ShopItems.xml", "workshops", ItemID);
+			if (!TempWorkShopData.Name.empty())
+			{
+				WorldPtr->builds.emplace_back(std::make_unique<Workshop>(ObjectShader, vertices, indices, OutVertexData, WorldPtr, api->GetMouseState().GridX, api->GetMouseState().GridY, TempWorkShopData));
+			}
+			else
+			{
+				DecorationData TempDecorationData = XMLParser::LoadDecoration("ShopItems.xml", "decorations", ItemID);
+				if (!TempDecorationData.Name.empty())
+				{
+					WorldPtr->builds.emplace_back(std::make_unique<Decoration>(ObjectShader, vertices, indices, OutVertexData, WorldPtr, api->GetMouseState().GridX, api->GetMouseState().GridY, TempDecorationData));
+				}
+			}
+			XMLParser::UpdateGridValue("grid_config.xml", api->GetMouseState().GridX, api->GetMouseState().GridY, ItemID.c_str());
+
 		}
 	}
 };

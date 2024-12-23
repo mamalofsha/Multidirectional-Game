@@ -13,6 +13,7 @@
 #include "GridObject.h"
 #include "MouseObject.h"
 #include "Building.h"
+#include "WorkShop.h"
 
 #include FT_FREETYPE_H
 
@@ -32,6 +33,8 @@ World::World(const std::string& InFileName)
 {
 	StartUpData Temp = XMLParser::LoadLeveL(InFileName);
 	Window = Graphics::InitWindow(Temp.LevelWidth * Temp.WindowScale, Temp.LevelHeight * Temp.WindowScale);
+	Buildingshader = std::make_shared<Shader>("TempItem.vert", "TempItem.frag");
+
 	InitBackground();
 
 
@@ -42,6 +45,9 @@ World::World(const std::string& InFileName)
 	InitHUD();
 	InitGrid(Temp.GridFileName);
 	SetupMouseCallbacks();
+	LoadSave();
+	//XMLParser::ResetSave("grid_config.xml");
+
 }
 
 World::~World()
@@ -212,6 +218,45 @@ void World::RenderUpdate()
 
 	GameHUD->Update();
 	glfwSwapBuffers(Window);
+}
+
+void World::LoadSave()
+{
+	for (size_t i = 0; i < gridConfig.width; i++)
+	{
+		for (size_t j = 0; j < gridConfig.height; j++)
+		{
+			std::string value =  XMLParser::GetGridValue("grid_config.xml", i, j);
+			if (value != "0")
+			{
+				std::vector<float> vertices = {
+					// Positions      // Texture Coords
+					-0.5f, -0.5f,     0.0f, 0.0f, // Bottom-left
+					 0.5f, -0.5f,     1.0f, 0.0f, // Bottom-right
+					 0.5f,  0.5f,     1.0f, 1.0f, // Top-right
+					-0.5f,  0.5f,     0.0f, 1.0f  // Top-left
+				};
+
+				std::vector<unsigned int> indices = {
+					0, 1, 2, // First triangle
+					2, 3, 0  // Second triangle
+				};
+				VertexAttribute OutVertexData = { 4,{2,2} };
+
+				WorkshopData TempWorkShopData = XMLParser::LoadWorkShop("ShopItems.xml", "workshops", value);
+				if (!TempWorkShopData.Name.empty())
+				{
+					builds.emplace_back(std::make_unique<Workshop>(Buildingshader, vertices, indices, OutVertexData, this, i, j, TempWorkShopData));
+				}
+				DecorationData TempDecoratoinData = XMLParser::LoadDecoration("ShopItems.xml", "decorations", value);
+				if (!TempDecoratoinData.Name.empty())
+				{
+					builds.emplace_back(std::make_unique<Decoration>(Buildingshader, vertices, indices, OutVertexData, this, i, j, TempDecoratoinData));
+				}
+			}
+		}
+
+	}
 }
 
 

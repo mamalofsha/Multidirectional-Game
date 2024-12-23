@@ -13,7 +13,7 @@ struct StartUpData
 };
 
 struct WorkshopData;
-struct Decoration;
+struct DecorationData;
 
 class XMLParser
 {
@@ -21,10 +21,12 @@ public:
 	static GridConfig ParseGridDataFromXML(const std::string& InFileName);
 	static StartUpData LoadLeveL(const std::string& InFileName);
     static std::vector<WorkshopData> LoadWorkShops(const std::string& InFileName, const std::string& InCategoryName);
-	static std::vector<Decoration> LoadDecorations(const std::string& InFileName, const std::string& InCategoryName);
-	static void UpdateGridValue(const std::string& filename, int gridX, int gridY, int newValue);
-	void ResetSave(const std::string& filename);
-	static int GetGridValue(const std::string& filename, int gridX, int gridY);
+	static WorkshopData LoadWorkShop(const std::string& InFileName, const std::string& InCategoryName, const std::string& InItemName);
+	static DecorationData LoadDecoration(const std::string& InFileName, const std::string& InCategoryName, const std::string& InItemName);
+	static std::vector<DecorationData> LoadDecorations(const std::string& InFileName, const std::string& InCategoryName);
+	static void UpdateGridValue(const std::string& filename, int gridX, int gridY, const char* newValue);
+	static void ResetSave(const std::string& filename);
+	static std::string GetGridValue(const std::string& filename, int gridX, int gridY);
 };
 
 

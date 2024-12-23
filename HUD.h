@@ -4,6 +4,7 @@
 
 struct ShopItemData
 {
+	std::string ItemID;
 	std::string Name;
 	std::string ImageFile;
 	float goldCost;
@@ -13,7 +14,7 @@ struct WorkshopData : public ShopItemData
 {
 	float goldGenrate;
 };
-struct Decoration :public ShopItemData
+struct DecorationData :public ShopItemData
 {
 	float happiness;
 };

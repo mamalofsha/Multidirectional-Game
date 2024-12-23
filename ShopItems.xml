@@ -1,78 +1,66 @@
 <items>
     <workshops>
-		<item1>
+		<workshop1>
 			<name>Drug Store</name>
 			<image>drugstore.png</image>
 			<goldcost>1404</goldcost>
 			<goldgenrate>1404</goldgenrate>
-		</item1>
-		<item2>
+		</workshop1>
+		<workshop2>
 			<name>Government</name>
 			<image>government.png</image>
 			<goldcost>1404</goldcost>
 			<goldgenrate>1404</goldgenrate>
-		</item2>
-		<item3>
+		</workshop2>
+		<workshop3>
 			<name>Museum</name>
 			<image>museum.png</image>
 			<goldcost>1404</goldcost>
 			<goldgenrate>1404</goldgenrate>
-		</item3>
-		<item4>
+		</workshop3>
+		<workshop4>
 			<name>Property</name>
 			<image>property.png</image>
 			<goldcost>1404</goldcost>
 			<goldgenrate>1404</goldgenrate>
-		</item4>
-		<item5>
+		</workshop4>
+		<workshop5>
 			<name>Temple</name>
 			<image>Temple-icon.png</image>
 			<goldcost>1404</goldcost>
 			<goldgenrate>1404</goldgenrate>
-		</item5>
+		</workshop5>
     </workshops>
 	<decorations>
-		<item1>
+		<decoration1>
 			<name>Bridge</name>
 			<image>bridge.png</image>
 			<goldcost>1404</goldcost>
 			<happiness>1404</happiness>
-		</item1>
-				<item1>
-			<name>Bridgettt</name>
-			<image>adjusted_property.png</image>
-			<goldcost>1404</goldcost>
-			<happiness>1404</happiness>
-		</item1>
-				<item1>
-			<name>Brissdge23</name>
-			<image>building18_double_size.png</image>
-			<goldcost>1404</goldcost>
-			<happiness>1404</happiness>
-		</item1>
-				<item1>
-			<name>Bridasddge</name>
-			<image>building18.png</image>
-			<goldcost>1404</goldcost>
-			<happiness>1404</happiness>
-		</item1>
-				<item1>
-			<name>Bridgddde</name>
-			<image>grass.png</image>
-			<goldcost>1404</goldcost>
-			<happiness>1404</happiness>
-		</item1>
-				<item1>
-			<name>Bridgdd11e</name>
-			<image>building14.png</image>
-			<goldcost>1404</goldcost>
-			<happiness>1404</happiness>
-		</item1>
-				<item1>
-			<name>Briddasadsge</name>
+		</decoration1>
+		<decoration2>
+			<name>Hangar</name>
 			<image>hangar.png</image>
 			<goldcost>1404</goldcost>
 			<happiness>1404</happiness>
-		</item1>
+		</decoration2>
+		<decoration3>
+			<name>Building 1</name>
+			<image>building14.png</image>
+			<goldcost>1404</goldcost>
+			<happiness>1404</happiness>
+		</decoration3>
+		<decoration4>
+			<name>Building 2</name>
+			<image>building15.png</image>
+			<goldcost>1404</goldcost>
+			<happiness>1404</happiness>
+		</decoration4>
+		<decoration5>
+			<name>Building 3</name>
+			<image>building18.png</image>
+			<goldcost>1404</goldcost>
+			<happiness>1404</happiness>
+		</decoration5>
     </decorations>
 </items>

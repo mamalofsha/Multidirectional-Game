@@ -16,7 +16,6 @@ HUD::HUD(float inWindowWidth, float inWindowHeight,World* InWorld)
 	UIE = std::make_shared<Shader>("UI.vert", "UI.frag");
 
 	//
-	std::shared_ptr<Shader> shader = std::make_shared<Shader>("TempItem.vert", "TempItem.frag");
 	// Vertex data with texture coordinates
 	std::vector<float> vertices = {
 		// Positions      // Texture Coords
@@ -31,7 +30,7 @@ HUD::HUD(float inWindowWidth, float inWindowHeight,World* InWorld)
 		2, 3, 0  // Second triangle
 	};
 	VertexAttribute OutVertexData = { 4,{2,2} };
-	mous = std::make_shared<MouseObject>(shader, vertices, indices, "bridge.png", OutVertexData, Worldptr);
+	mous = std::make_shared<MouseObject>(Worldptr->Buildingshader, vertices, indices, "bridge.png", OutVertexData, Worldptr);
 	mous->setSize(0.05f);
 
 	/// callmuse
@@ -60,7 +59,7 @@ HUD::HUD(float inWindowWidth, float inWindowHeight,World* InWorld)
 		shopWindow->ActiveTab = "Decorations";
 		},"Dec", "buttonBG.png", this);
 	shopWindow->addTab<WorkshopData>("Work Shops", "workshops");
-	shopWindow->addTab<Decoration>("Decorations", "decorations");
+	shopWindow->addTab<DecorationData>("Decorations", "decorations");
 	shopWindow->pageControls.push_back(nextButton);
 	shopWindow->pageControls.push_back(prevButton);
 	shopWindow->pageControls.push_back(cat1);

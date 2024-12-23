@@ -138,6 +138,7 @@ public:
 				std::shared_ptr<UIButton> button = std::make_shared<UIButton>(Hudptr->UIE, -0.3f + (x * 0.6f), 0.4f + (y * -0.4f), 0.2f, 0.1f, [&,item]() {
 					std::cout << "Spawned item: " << item.Name << " and attached to the mouse." << std::endl;
 					this->SetHidden(true);
+					Hudptr->mous->SetItemID(item.ItemID);
 					Hudptr->mous->ReloadTexture(item.ImageFile.c_str());
 					}, item.Name, item.ImageFile, Hudptr);
 				uiElements.push_back(button);
@@ -145,9 +146,9 @@ public:
 			}
 
 		}
-		else if constexpr (std::is_same<T, Decoration>::value) {
+		else if constexpr (std::is_same<T, DecorationData>::value) {
 			// std::vector<Decoration> items = XMLParser::LoadItems<Decoration>(xmlName, xmlcategory);
-			std::vector<Decoration> items = XMLParser::LoadDecorations(xmlName, xmlcategory);
+			std::vector<DecorationData> items = XMLParser::LoadDecorations(xmlName, xmlcategory);
 			for (const auto& item : items) {
 				std::cout << item.Name;
 
@@ -157,6 +158,7 @@ public:
 				int yhalf = y / columns;
 				std::shared_ptr<UIButton> button = std::make_shared<UIButton>(Hudptr->UIE, -0.3f + (x * 0.6f), 0.4f + (y * -0.4f), 0.2f, 0.1f, [&, item]() {
 					this->SetHidden(true);
+					Hudptr->mous->SetItemID(item.ItemID);
 					Hudptr->mous->ReloadTexture(item.ImageFile.c_str());
 					}, item.Name, item.ImageFile, Hudptr);
 				uiElements.push_back(button);

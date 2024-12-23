@@ -48,7 +48,9 @@ private:
 	void InputUpdate();
 	void SetupMouseCallbacks();
 	void RenderUpdate();
+	void LoadSave();
 public:
+	std::shared_ptr<Shader> Buildingshader;
 
 	 std::vector<std::unique_ptr<class Building>> builds;
 	std::unique_ptr<HUD> GameHUD;

@@ -119,7 +119,8 @@ std::vector<WorkshopData> XMLParser::LoadWorkShops(const std::string& InFileName
     // Iterate through the items in the category
     for (auto* item = category->FirstChildElement(); item; item = item->NextSiblingElement()) {
         WorkshopData data;
-
+        std::cout << item->Name()<<" --" << std::endl;
+        data.ItemID = item->Name();
         // Parse name
         auto* nameElement = item->FirstChildElement("name");
         if (nameElement && nameElement->GetText()) {
@@ -151,9 +152,9 @@ std::vector<WorkshopData> XMLParser::LoadWorkShops(const std::string& InFileName
     return OutData;
 }
 
-std::vector<Decoration> XMLParser::LoadDecorations(const std::string& InFileName, const std::string& InCategoryName)
+WorkshopData XMLParser::LoadWorkShop(const std::string& InFileName, const std::string& InCategoryName, const std::string& InItemName)
 {
-    std::vector<Decoration> OutData;
+    WorkshopData OutData;
     XMLDocument doc;
     if (doc.LoadFile(InFileName.c_str()) != XML_SUCCESS) {
         std::cerr << "Error loading XML file: " << InFileName << std::endl;
@@ -173,8 +174,118 @@ std::vector<Decoration> XMLParser::LoadDecorations(const std::string& InFileName
 
     // Iterate through the items in the category
     for (auto* item = category->FirstChildElement(); item; item = item->NextSiblingElement()) {
-        Decoration data;
+        std::cout << item->Name() << " --" << std::endl;
+        if (item->Name() != InItemName) continue;
+        OutData.ItemID = item->Name();
 
+        // Parse name
+        auto* nameElement = item->FirstChildElement("name");
+        if (nameElement && nameElement->GetText()) {
+            OutData.Name = nameElement->GetText();
+        }
+
+        // Parse image file
+        auto* imageElement = item->FirstChildElement("image");
+        if (imageElement && imageElement->GetText()) {
+            OutData.ImageFile = imageElement->GetText();
+        }
+
+        // Parse gold cost
+        auto* goldCostElement = item->FirstChildElement("goldcost");
+        if (goldCostElement) {
+            goldCostElement->QueryFloatText(&OutData.goldCost);
+        }
+
+        // Parse gold generation rate
+        auto* goldGenElement = item->FirstChildElement("goldgenrate");
+        if (goldGenElement) {
+            goldGenElement->QueryFloatText(&OutData.goldGenrate);
+        }
+        break;
+        // Add the parsed data to the output vector
+    }
+
+    return OutData;
+}
+
+DecorationData XMLParser::LoadDecoration(const std::string& InFileName, const std::string& InCategoryName, const std::string& InItemName)
+{
+    DecorationData OutData;
+    XMLDocument doc;
+    if (doc.LoadFile(InFileName.c_str()) != XML_SUCCESS) {
+        std::cerr << "Error loading XML file: " << InFileName << std::endl;
+        return OutData;
+    }
+    auto* root = doc.FirstChildElement("items");
+    if (!root) {
+        std::cerr << "Invalid XML structure: No <level> element." << std::endl;
+        return OutData;
+    }
+    // Locate the specified category (e.g., "workshops")
+    auto* category = root->FirstChildElement(InCategoryName.c_str());
+    if (!category) {
+        std::cerr << "Category " << InCategoryName << " not found in XML." << std::endl;
+        return OutData;
+    }
+
+    // Iterate through the items in the category
+    for (auto* item = category->FirstChildElement(); item; item = item->NextSiblingElement()) {
+        if (item->Name() != InItemName) continue;
+        OutData.ItemID = item->Name();
+        // Parse name
+        auto* nameElement = item->FirstChildElement("name");
+        if (nameElement && nameElement->GetText()) {
+            OutData.Name = nameElement->GetText();
+        }
+
+        // Parse image file
+        auto* imageElement = item->FirstChildElement("image");
+        if (imageElement && imageElement->GetText()) {
+            OutData.ImageFile = imageElement->GetText();
+        }
+
+        // Parse gold cost
+        auto* goldCostElement = item->FirstChildElement("goldcost");
+        if (goldCostElement) {
+            goldCostElement->QueryFloatText(&OutData.goldCost);
+        }
+
+        // Parse gold generation rate
+        auto* happyElement = item->FirstChildElement("happiness");
+        if (happyElement) {
+            happyElement->QueryFloatText(&OutData.happiness);
+        }
+        break;
+        // Add the parsed data to the output vector
+    }
+
+    return OutData;
+}
+
+std::vector<DecorationData> XMLParser::LoadDecorations(const std::string& InFileName, const std::string& InCategoryName)
+{
+    std::vector<DecorationData> OutData;
+    XMLDocument doc;
+    if (doc.LoadFile(InFileName.c_str()) != XML_SUCCESS) {
+        std::cerr << "Error loading XML file: " << InFileName << std::endl;
+        return OutData;
+    }
+    auto* root = doc.FirstChildElement("items");
+    if (!root) {
+        std::cerr << "Invalid XML structure: No <level> element." << std::endl;
+        return OutData;
+    }
+    // Locate the specified category (e.g., "workshops")
+    auto* category = root->FirstChildElement(InCategoryName.c_str());
+    if (!category) {
+        std::cerr << "Category " << InCategoryName << " not found in XML." << std::endl;
+        return OutData;
+    }
+
+    // Iterate through the items in the category
+    for (auto* item = category->FirstChildElement(); item; item = item->NextSiblingElement()) {
+        DecorationData data;
+        data.ItemID = item->Name();
         // Parse name
         auto* nameElement = item->FirstChildElement("name");
         if (nameElement && nameElement->GetText()) {
@@ -206,32 +317,32 @@ std::vector<Decoration> XMLParser::LoadDecorations(const std::string& InFileName
     return OutData;
 }
 
-void XMLParser::UpdateGridValue(const std::string& filename, int gridX, int gridY, int newValue)
+void XMLParser::UpdateGridValue(const std::string& filename, int gridX, int gridY, const char* newValue)
 {
     tinyxml2::XMLDocument doc;
 
     // Load the XML file
-    if (doc.LoadFile(filename.c_str()) != XML_SUCCESS) {
+    if (doc.LoadFile(filename.c_str()) != tinyxml2::XML_SUCCESS) {
         std::cerr << "Error: Unable to load XML file: " << filename << std::endl;
         return;
     }
 
     // Locate the <grid> element
-    XMLElement* root = doc.FirstChildElement("grid");
+    tinyxml2::XMLElement* root = doc.FirstChildElement("grid");
     if (!root) {
         std::cerr << "Error: No <grid> element found in XML." << std::endl;
         return;
     }
 
     // Locate the <tiles> element
-    XMLElement* tiles = root->FirstChildElement("tiles");
+    tinyxml2::XMLElement* tiles = root->FirstChildElement("tiles");
     if (!tiles) {
         std::cerr << "Error: No <tiles> element found in XML." << std::endl;
         return;
     }
 
     // Navigate to the correct row
-    XMLElement* rowElement = tiles->FirstChildElement("row");
+    tinyxml2::XMLElement* rowElement = tiles->FirstChildElement("row");
     for (int i = 0; i < gridY; ++i) {
         if (rowElement) {
             rowElement = rowElement->NextSiblingElement("row");
@@ -247,7 +358,7 @@ void XMLParser::UpdateGridValue(const std::string& filename, int gridX, int grid
         return;
     }
 
-    // Parse the row into a vector
+    // Parse the row into a vector of strings
     const char* rowText = rowElement->GetText();
     if (!rowText) {
         std::cerr << "Error: Row is empty." << std::endl;
@@ -255,8 +366,8 @@ void XMLParser::UpdateGridValue(const std::string& filename, int gridX, int grid
     }
 
     std::stringstream ss(rowText);
-    std::vector<int> rowValues;
-    int value;
+    std::vector<std::string> rowValues;
+    std::string value;
     while (ss >> value) {
         rowValues.push_back(value);
     }
@@ -283,7 +394,7 @@ void XMLParser::UpdateGridValue(const std::string& filename, int gridX, int grid
     rowElement->SetText(newRowText.str().c_str());
 
     // Save the updated XML back to the file
-    if (doc.SaveFile(filename.c_str()) != XML_SUCCESS) {
+    if (doc.SaveFile(filename.c_str()) != tinyxml2::XML_SUCCESS) {
         std::cerr << "Error: Unable to save XML file." << std::endl;
     }
     else {
@@ -355,28 +466,28 @@ void XMLParser::ResetSave(const std::string& filename)
     }
 }
 
-int XMLParser::GetGridValue(const std::string& filename, int gridX, int gridY)
+std::string XMLParser::GetGridValue(const std::string& filename, int gridX, int gridY)
 {
    XMLDocument doc;
 
     // Load the XML file
     if (doc.LoadFile(filename.c_str()) != XML_SUCCESS) {
         std::cerr << "Error: Unable to load XML file: " << filename << std::endl;
-        return -1; // Return an invalid value to indicate an error
+        return std::string(); // Return an invalid value to indicate an error
     }
 
     // Locate the <grid> element
     XMLElement* root = doc.FirstChildElement("grid");
     if (!root) {
         std::cerr << "Error: No <grid> element found in XML." << std::endl;
-        return -1;
+        return std::string();
     }
 
     // Locate the <tiles> element
     XMLElement* tiles = root->FirstChildElement("tiles");
     if (!tiles) {
         std::cerr << "Error: No <tiles> element found in XML." << std::endl;
-        return -1;
+        return std::string();
     }
 
     // Navigate to the correct row
@@ -387,25 +498,25 @@ int XMLParser::GetGridValue(const std::string& filename, int gridX, int gridY)
         }
         else {
             std::cerr << "Error: Row index out of range." << std::endl;
-            return -1;
+            return std::string();
         }
     }
 
     if (!rowElement) {
         std::cerr << "Error: Row not found." << std::endl;
-        return -1;
+        return std::string();
     }
 
     // Parse the row into a vector
     const char* rowText = rowElement->GetText();
     if (!rowText) {
         std::cerr << "Error: Row is empty." << std::endl;
-        return -1;
+        return std::string();
     }
 
     std::stringstream ss(rowText);
-    std::vector<int> rowValues;
-    int value;
+    std::vector<std::string> rowValues;
+    std::string value;
     while (ss >> value) {
         rowValues.push_back(value);
     }
@@ -413,7 +524,7 @@ int XMLParser::GetGridValue(const std::string& filename, int gridX, int gridY)
     // Check if the column index is valid
     if (gridX < 0 || gridX >= static_cast<int>(rowValues.size())) {
         std::cerr << "Error: Column index out of range." << std::endl;
-        return -1;
+        return std::string();
     }
 
     // Return the value at the specified column
