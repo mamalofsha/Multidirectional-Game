@@ -11,6 +11,6 @@ public:
         : UIElement(InShaderProgram, InPosX, InPosY, InWidth, InHeight) {
     }
     void Draw() override;
-    void Update(float mouseX, float mouseY, bool isClicked) override;
-    virtual void SetHidden(bool newHidden)override;
+    void Update(float InMouseX, float InMouseY, bool IsClicked) override;
+    virtual void SetHidden(bool NewHidden)override;
 };

@@ -37,32 +37,32 @@ HUD::HUD(float inWindowWidth, float inWindowHeight,World* InWorld)
 	//Graphics::DrawUIElement(UIE ,*shopWindow, "grass.png");
 	
 	std::shared_ptr<UIButton> nextButton = std::make_shared<UIButton>(UIShader,0.6f, -0.7f, 0.2f, 0.1f, [&]() {
-		shopWindow->nextPage();
+		shopWindow->NextPage();
 
 		},"", "Assets/Images/shop.png", this);
 	//Graphics::DrawUIElement(UIE, *nextButton, "shop.png");
 
 	std::shared_ptr<UIButton> prevButton = std::make_shared<UIButton>(UIShader,-0.6f, -0.7f, 0.2f, 0.1f, [&]() {
-		shopWindow->previousPage();
+		shopWindow->PreviousPage();
 		}, "", "Assets/Images/shop.png", this);
 	//Graphics::DrawUIElement(UIE, *prevButton, "shop.png");
 
 	std::shared_ptr<UIButton> cat1 = std::make_shared<UIButton>(UIShader,-0.6f, 0.7f, 0.2f, 0.1f, [&]() {
 		if (shopWindow->ActiveTab == "Work Shops") return;
-		shopWindow->currentPage = 0;
+		shopWindow->CurrentPage = 0;
 		shopWindow->ActiveTab = "Work Shops";
 		},"wowo", "Assets/Images/buttonBG.png", this);
 	std::shared_ptr<UIButton> cat2 = std::make_shared<UIButton>(UIShader,-0.f, 0.7f, 0.2f, 0.1f, [&]() {
 		if (shopWindow->ActiveTab == "Decorations") return;
-		shopWindow->currentPage = 0;
+		shopWindow->CurrentPage = 0;
 		shopWindow->ActiveTab = "Decorations";
 		},"Dec", "Assets/Images/buttonBG.png", this);
-	shopWindow->addTab<WorkshopData>("Work Shops", "workshops");
-	shopWindow->addTab<DecorationData>("Decorations", "decorations");
-	shopWindow->pageControls.push_back(nextButton);
-	shopWindow->pageControls.push_back(prevButton);
-	shopWindow->pageControls.push_back(cat1);
-	shopWindow->pageControls.push_back(cat2);
+	shopWindow->AddTab<WorkshopData>("Work Shops", "workshops");
+	shopWindow->AddTab<DecorationData>("Decorations", "decorations");
+	shopWindow->PageControls.push_back(nextButton);
+	shopWindow->PageControls.push_back(prevButton);
+	shopWindow->PageControls.push_back(cat1);
+	shopWindow->PageControls.push_back(cat2);
 
 	shopWindow->SetHidden(true);
 	
@@ -134,7 +134,7 @@ void HUD::onClickFunction(int gridX, int gridY, float screenX, float screenY)
 		}
 		if (auto Window = std::dynamic_pointer_cast<UIPaginatedWindow>(element)) {
 			// Successfully cast, so the object is a Button
-			for (auto& el : Window->pageControls)
+			for (auto& el : Window->PageControls)
 			{
 					if (el->IsHovered) {
 						el->cllicked();
@@ -142,7 +142,7 @@ void HUD::onClickFunction(int gridX, int gridY, float screenX, float screenY)
 					}
 				
 			}
-			for (auto& el : Window->getCatButtons())
+			for (auto& el : Window->GetCatButtons())
 			{
 				if (el->IsHovered) {
 					el->cllicked();

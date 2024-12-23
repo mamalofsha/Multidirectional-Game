@@ -4,23 +4,23 @@ void UIWindow::Draw()
 {
     if (IsHidden) return;
     ObjectShader->use();
-    for (auto& child : Children) {
-        child->Draw();
+    for (auto& Child : Children) {
+        Child->Draw();
     }
 }
 
-void UIWindow::Update(float mouseX, float mouseY, bool isClicked)
+void UIWindow::Update(float InMouseX, float InMouseY, bool IsClicked)
 {
     if (IsHidden) return;
     for (auto& Child : Children) {
-        Child->Update(mouseX, mouseY, isClicked);
+        Child->Update(InMouseX, InMouseY, IsClicked);
     }
 }
 
-void UIWindow::SetHidden(bool newHidden)
+void UIWindow::SetHidden(bool NewHidden)
 {
-    IsHidden = newHidden;
+    IsHidden = NewHidden;
     for (auto& Child : Children) {
-        Child->SetHidden(newHidden);
+        Child->SetHidden(NewHidden);
     }
 }

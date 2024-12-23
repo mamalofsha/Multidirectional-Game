@@ -108,6 +108,9 @@
     <ClCompile Include="UIWindow.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\UIPaginatedWindow.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Building.h">

@@ -41,6 +41,7 @@
     <ClCompile Include="Source\MouseInteraction.cpp" />
     <ClCompile Include="Source\Object.cpp" />
     <ClCompile Include="Source\Source.cpp" />
+    <ClCompile Include="Source\UIPaginatedWindow.cpp" />
     <ClCompile Include="Source\World.cpp" />
     <ClCompile Include="Source\XMLParser.cpp" />
     <ClCompile Include="ThirdParty\glad\glad.c" />
