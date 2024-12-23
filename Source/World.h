@@ -16,7 +16,6 @@ class World
 private:
 	GLFWwindow* Window;
 	StartUpData StartUp;
-	MouseState mouseState;
 	GridConfig gridConfig;
 	// 
 	float panX = 0.0f;
@@ -31,6 +30,7 @@ private:
 	Shader BackGround;
 	Shader floating;
 	//
+	MouseInteractionAPI* mouseAPI;
 
 	void InitBackground();
 	void InitHUD();
@@ -54,7 +54,7 @@ public:
 	std::pair<float, float> GetLevelSize();
 	float GetZoom() { return Zoom; };
 	GLFWwindow* GetWindow() { return Window; };
-	MouseState GetMouserState() { return mouseState; };
+	MouseState GetMouserState() { return mouseAPI->GetMouseState(); };
 	GridConfig GetGridConfig() { return gridConfig; };
 	StartUpData GetStartupData() { return StartUp; };
 };

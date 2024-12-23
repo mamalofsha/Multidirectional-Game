@@ -127,7 +127,7 @@ public:
 			// uiElement = std::make_shared<UIElement>(item.name, "Workshop");
 		   //  uiElement->setCost(item.cost);
 		   //  uiElement->setGoldGenerate(item.goldGenerate);
-			std::vector<WorkshopData> items = XMLParser::LoadWorkShops(xmlName, xmlcategory);
+			std::vector<WorkshopData> items = XMLParser::LoadWorkshops(xmlName, xmlcategory);
 			for (const auto& item : items) {
 				std::cout << item.Name;
 

@@ -5,7 +5,7 @@ MouseInteractionAPI::MouseInteractionAPI(GLFWwindow* InWindow, GridConfig InConf
 {
     glfwSetCursorPosCallback(InWindow,CursorCallback);
     glfwSetMouseButtonCallback(InWindow,ClickCallback);
-    SetTile(InConfig.tileWidth, InConfig.tileHeight);
+    SetTile(InConfig.TileWidth, InConfig.TileHeight);
     gridoffsetX = InConfig.StartOffsetX;
     gridoffsetY = InConfig.StartOffsetY;
     levelWidth = inLevelwidth;

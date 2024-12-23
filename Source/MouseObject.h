@@ -34,8 +34,8 @@ public:
 		float screenY = 0.0f;
 		auto [winX, winY] = WorldPtr->GetWindowSize();
 		MouseInteractionAPI* api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(WorldPtr->GetWindow()));
-		if (api->GetMouseState().GridX >= 0 && api->GetMouseState().GridX < WorldPtr->GetGridConfig().width &&
-			api->GetMouseState().GridY >= 0 && api->GetMouseState().GridY < WorldPtr->GetGridConfig().height)
+		if (api->GetMouseState().GridX >= 0 && api->GetMouseState().GridX < WorldPtr->GetGridConfig().Width &&
+			api->GetMouseState().GridY >= 0 && api->GetMouseState().GridY < WorldPtr->GetGridConfig().Height)
 		{
 			std::string gridvalue = XMLParser::GetGridValue(WorldPtr->GetStartupData().GridFileName, api->GetMouseState().GridX, api->GetMouseState().GridY);
 			if (gridvalue != "0")
@@ -54,7 +54,7 @@ public:
 				auto [winX, winY] = WorldPtr->GetWindowSize();
 
 				std::tie(screenX, screenY) = Graphics::GridToWorldPosition(api->GetMouseState().GridX, api->GetMouseState().GridY,
-					WorldPtr->GetGridConfig().tileWidth, WorldPtr->GetGridConfig().tileHeight,
+					WorldPtr->GetGridConfig().TileWidth, WorldPtr->GetGridConfig().TileHeight,
 					WorldPtr->GetGridConfig().StartOffsetX, WorldPtr->GetGridConfig().StartOffsetY, WorldPtr->GetPan().first, WorldPtr->GetPan().second, size, WorldPtr->GetZoom(), winX, winY, WorldPtr->GetLevelSize().first, WorldPtr->GetLevelSize().second);
 				std::tie(ndcX, ndcY) = api->screenToNDC(screenX, screenY, winX, winY);
 				isAttachedToGrid = true;
@@ -141,7 +141,7 @@ public:
 			VertexAttribute OutVertexData = { 4,{2,2} };
 
 			MouseInteractionAPI* api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(WorldPtr->GetWindow()));
-			WorkshopData TempWorkShopData = XMLParser::LoadWorkShop("ShopItems.xml", "workshops", ItemID);
+			WorkshopData TempWorkShopData = XMLParser::LoadWorkshop("ShopItems.xml", "workshops", ItemID);
 			if (!TempWorkShopData.Name.empty())
 			{
 				WorldPtr->builds.emplace_back(std::make_unique<Workshop>(ObjectShader, vertices, indices, OutVertexData, WorldPtr, api->GetMouseState().GridX, api->GetMouseState().GridY, TempWorkShopData));

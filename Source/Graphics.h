@@ -13,10 +13,10 @@ struct Character {
 };
 /// Holds all state information relevant to grid data
 struct GridConfig {
-	int width, height;					 // Stores rows and columns count e.g 5x5
-	float tileWidth, tileHeight;		 // Stores tile sizes (0.2 x 0.1 (diamond shaped - for isometric illusion)) 
+	int Width, Height;					 // Stores rows and columns count e.g 5x5
+	float TileWidth, TileHeight;		 // Stores tile sizes (0.2 x 0.1 (diamond shaped - for isometric illusion)) 
 	float StartOffsetX, StartOffsetY;    // Stores the grid origin offset
-	std::vector<std::vector<int>> tiles; // Stores the tile types (0 = empty, (!= 0) = occupied)
+	std::vector<std::vector<int>> Tiles; // Stores the tile types (0 = empty, (!= 0) = occupied)
 };
 /// Holds all state information relevant to render an object
 struct RenderData

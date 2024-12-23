@@ -130,7 +130,7 @@ Shader Graphics::DrawGrid(const GridConfig InGridConfig, int WindowsWidth, int W
 {
 	Shader ourShader("Source/Shaders/Grid.vert", "Source/Shaders/Grid.frag");
 
-	std::vector<float> gridVertices = createGridVertices(InGridConfig.width, InGridConfig.height,InGridConfig.StartOffsetX,InGridConfig.StartOffsetY);
+	std::vector<float> gridVertices = createGridVertices(InGridConfig.Width, InGridConfig.Height,InGridConfig.StartOffsetX,InGridConfig.StartOffsetY);
 
 	// Create vertex buffer and array objects
 	GLuint VBO, VAO;
@@ -148,7 +148,7 @@ Shader Graphics::DrawGrid(const GridConfig InGridConfig, int WindowsWidth, int W
 	// Set uniform values
 	ourShader.use();
 	GLint tileSizeLocation = glGetUniformLocation(ourShader.ID, "tileSize");
-	glUniform2f(tileSizeLocation, InGridConfig.tileWidth, InGridConfig.tileHeight);
+	glUniform2f(tileSizeLocation, InGridConfig.TileWidth, InGridConfig.TileHeight);
 	GLint screenSizeLocation = glGetUniformLocation(ourShader.ID, "screenSize");
 	glUniform2f(screenSizeLocation, WindowsWidth, WindowsHeight);
 	return ourShader;

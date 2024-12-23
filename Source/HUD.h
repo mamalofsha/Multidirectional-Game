@@ -7,18 +7,17 @@ struct ShopItemData
 	std::string ItemID;
 	std::string Name;
 	std::string ImageFile;
-	float goldCost;
+	float GoldCost;
 };
 
 struct WorkshopData : public ShopItemData
 {
-	float goldGenrate;
+	float GoldGenRate;
 };
 struct DecorationData :public ShopItemData
 {
-	float happiness;
+	float Happiness;
 };
-
 
 class World;
 struct Character;

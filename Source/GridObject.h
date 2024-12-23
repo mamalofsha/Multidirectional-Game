@@ -17,7 +17,7 @@ public:
         // OpenGL setup (VAO, VBO, EBO, texture loading, etc.)
         // Create VAO, VBO, and EBO
         WorldPtr = InWorldptr;
-		std::vector<float> gridVertices = Graphics::createGridVertices(InGridConfig.width, InGridConfig.height, InGridConfig.StartOffsetX, InGridConfig.StartOffsetY);
+		std::vector<float> gridVertices = Graphics::createGridVertices(InGridConfig.Width, InGridConfig.Height, InGridConfig.StartOffsetX, InGridConfig.StartOffsetY);
         gridVerticesSize = gridVertices.size();
 		// Create vertex buffer and array objects
 		glGenBuffers(1, &VBO);
@@ -29,7 +29,7 @@ public:
 		glEnableVertexAttribArray(0);
 		ObjectShader->use();
 		// Set uniform values
-		ObjectShader->setUniform2f("tileSize",InGridConfig.tileWidth, InGridConfig.tileHeight);
+		ObjectShader->setUniform2f("tileSize",InGridConfig.TileWidth, InGridConfig.TileHeight);
 		auto [winX,winY]= WorldPtr->GetWindowSize();
 		ObjectShader->setUniform2f("screenSize", winX, winY);
     }

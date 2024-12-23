@@ -22,7 +22,7 @@
 
 World::World(const std::string& InFileName)
 {
-	StartUp = XMLParser::LoadLeveL(InFileName);
+	StartUp = XMLParser::LoadLevel(InFileName);
 	Window = Graphics::InitWindow(StartUp.LevelWidth * StartUp.WindowScale, StartUp.LevelHeight * StartUp.WindowScale);
 	// shader for buildings and hovered items
 	Buildingshader = std::make_shared<Shader>("Source/Shaders/TempItem.vert", "Source/Shaders/TempItem.frag");
@@ -165,7 +165,7 @@ void World::GarbageCollection()
 void World::SetupMouseCallbacks()
 {
 	// Mouse Interaction API setup
-	MouseInteractionAPI* mouseAPI = new MouseInteractionAPI(Window,gridConfig,StartUp.LevelWidth,StartUp.LevelHeight);
+	mouseAPI = new MouseInteractionAPI(Window,gridConfig,StartUp.LevelWidth,StartUp.LevelHeight);
 	mouseAPI->SetClickCallback([this](int gridX, int gridY, float screenX, float screenY) {
 		this->GameHUD->onClickFunction(gridX, gridY, screenX, screenY);
 		});
@@ -209,10 +209,10 @@ void World::RenderUpdate()
 
 void World::LoadSave()
 {
-	XMLParser::CheckInitEmptySave(StartUp.GridFileName,gridConfig.width, gridConfig.height);
-	for (size_t i = 0; i < gridConfig.width; i++)
+	XMLParser::CheckInitEmptySave(StartUp.GridFileName,gridConfig.Width, gridConfig.Height);
+	for (size_t i = 0; i < gridConfig.Width; i++)
 	{
-		for (size_t j = 0; j < gridConfig.height; j++)
+		for (size_t j = 0; j < gridConfig.Height; j++)
 		{
 			std::string value =  XMLParser::GetGridValue(StartUp.GridFileName, i, j);
 			if (value != "0")
@@ -231,7 +231,7 @@ void World::LoadSave()
 				};
 				VertexAttribute OutVertexData = { 4,{2,2} };
 
-				WorkshopData TempWorkShopData = XMLParser::LoadWorkShop("ShopItems.xml", "workshops", value);
+				WorkshopData TempWorkShopData = XMLParser::LoadWorkshop("ShopItems.xml", "workshops", value);
 				if (!TempWorkShopData.Name.empty())
 				{
 					builds.emplace_back(std::make_unique<Workshop>(Buildingshader, vertices, indices, OutVertexData, this, i, j, TempWorkShopData));
