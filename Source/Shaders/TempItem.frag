@@ -2,11 +2,11 @@
 out vec4 FragColor;
 in vec2 TexCoord;
 uniform sampler2D texture1;
-uniform bool isOverlapping;    
+uniform bool IsOverlapping;    
 
 void main() 
 {
-    if(isOverlapping)
+    if(IsOverlapping)
     {
             FragColor = vec4(1.0, 0.0, 0.0, 1.0) *texture(texture1, TexCoord) ; // Solid red color
     }

@@ -2,34 +2,16 @@
 #include "Object.h"
 class UIElement : public Object {
 public:
-    float x, y; // Center position
-    float width, height; // Dimensions
+    float PosX, PosY; // Center position
+    float Width, Height; // Dimensions
     unsigned int VBO, VAO, EBO;
     unsigned int Texture;
 
-    UIElement(std::shared_ptr<Shader> shaderProgram, float x, float y, float width, float height)
-        : Object(shaderProgram), x(x), y(y), width(width), height(height) {
-
+    UIElement(std::shared_ptr<Shader> InShaderProgram, float InX, float InY, float InWidth, float InHeight)
+        : Object(InShaderProgram), PosX(InX), PosY(InY), Width(InWidth), Height(InHeight) {
     }
-
-    virtual void Draw() = 0; // Pure virtual function for rendering
-    virtual void Update(float mouseX, float mouseY, bool isClicked) {
-        // Default implementation for updating hover/click states
-    }
-
-
-    bool isInside(float mouseX, float mouseY) const {
-        float halfWidth = width / 2.0f;
-        float halfHeight = height / 2.0f;
-        return mouseX >= x - halfWidth && mouseX <= x + halfWidth &&
-            mouseY <= y + halfHeight && mouseY >= y - halfHeight;
-    }
-
-    void InitializeFromRenderData(const RenderData& data)override
-    {
-        VAO = data.VAO;
-        VBO = data.VBO;
-        EBO = data.EBO;
-        Texture = data.TextureID;
-    }
+    virtual void Draw() = 0;
+    virtual void Update(float InMouseX, float InMouseY, bool InIsClicked) {}
+    bool IsInside(float InMouseX, float InMouseY) const;
+    void InitializeFromRenderData(const RenderData& InData) override;
 };

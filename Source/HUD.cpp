@@ -102,7 +102,7 @@ void HUD::onHoverFunction(int gridX, int gridY, float screenX, float screenY)
 	{
 		if (auto button = std::dynamic_pointer_cast<UIButton>(element)) {
 			// Successfully cast, so the object is a Button
-			button->updateHoverState(screenX, screenY);
+			button->UpdateHoverState(screenX, screenY);
 		}
 		if (auto Window = std::dynamic_pointer_cast<UIPaginatedWindow>(element)) {
 			// Successfully cast, so the object is a Button
@@ -128,8 +128,8 @@ void HUD::onClickFunction(int gridX, int gridY, float screenX, float screenY)
 	{
 		if (auto button = std::dynamic_pointer_cast<UIButton>(element)) {
 			if (button->IsHovered) {
-				button->cllicked();
-				button->onClick();
+				button->Clicked();
+				button->OnClick();
 			}
 		}
 		if (auto Window = std::dynamic_pointer_cast<UIPaginatedWindow>(element)) {
@@ -137,18 +137,17 @@ void HUD::onClickFunction(int gridX, int gridY, float screenX, float screenY)
 			for (auto& el : Window->PageControls)
 			{
 					if (el->IsHovered) {
-						el->cllicked();
-						el->onClick();
+						el->Clicked();
+						el->OnClick();
 					}
 				
 			}
 			for (auto& el : Window->GetCatButtons())
 			{
 				if (el->IsHovered) {
-					el->cllicked();
-					el->onClick();
+					el->Clicked();
+					el->OnClick();
 				}
-
 			}
 		}
 	}

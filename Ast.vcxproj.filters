@@ -105,10 +105,22 @@
     <ClCompile Include="ThirdParty\glad\glad.c">
       <Filter>ThirdParty\glad</Filter>
     </ClCompile>
-    <ClCompile Include="UIWindow.cpp">
+    <ClCompile Include="Source\UIPaginatedWindow.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\UIPaginatedWindow.cpp">
+    <ClCompile Include="Source\UIElement.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UIButton.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TexturedObject.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UIWindow.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MouseObject.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

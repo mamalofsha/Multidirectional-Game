@@ -4,10 +4,12 @@
 
 
 struct MouseState {
-    double x, y = 0.0;
-    int GridX, GridY = 0;// Current mouse position
-    bool leftPressed=false;  // Is the left button pressed?
-    bool rightPressed=false; // Is the right button pressed?
+    double X = 0.0;
+    double Y = 0.0;
+    int GridX = 0;
+    int GridY = 0; // Current mouse position
+    bool LeftPressed = false;  // Is the left button pressed?
+    bool RightPressed = false; // Is the right button pressed?
 };
 
 class MouseInteractionAPI {
@@ -18,36 +20,38 @@ private:
     float PanX;
     float PanY;
     float TileHeight;
-    float gridoffsetX;
-    float gridoffsetY;
-    float levelWidth;
-    float levelHeight;
+    float GridOffsetX;
+    float GridOffsetY;
+    float LevelWidth;
+    float LevelHeight;
 public:
-    using MouseEventCallback = std::function<void(int gridX, int gridY,float screenX,float screenY)>;
-    
-    MouseInteractionAPI(GLFWwindow* InWindow, GridConfig InConfig, float inLevelwidth, float inLevelheight);
+    using MouseEventCallback = std::function<void(int InGridX, int InGridY, float InScreenX, float InScreenY)>;
+
+    MouseInteractionAPI(GLFWwindow* InWindow, GridConfig InConfig, float InLevelWidth, float InLevelHeight);
     ~MouseInteractionAPI();
     void SetMouseState(MouseState InState);
     MouseState GetMouseState();
     void SetTile(float InTileWidth, float InTileHeight);
-    static void CursorCallback( GLFWwindow* window, double xpos, double ypos);
-    static void ClickCallback(GLFWwindow* window, int button, int action, int mods);
-    void SetHoverCallback(MouseEventCallback callback) { OnHover = callback; }
-    void SetClickCallback(MouseEventCallback callback) { OnClick = callback; }
-    void HandleMouseMove(double xpos, double ypos, int windowWidth, int windowHeight);
-    void HandleMouseClick(double xpos, double ypos, int windowWidth, int windowHeight);
-    void SetPanZoom(float Panx, float pany,float zoom);
+    static void CursorCallback(GLFWwindow* InWindow, double InXPos, double InYPos);
+    static void ClickCallback(GLFWwindow* InWindow, int InButton, int InAction, int InMods);
+    void SetHoverCallback(MouseEventCallback InCallback) { OnHover = InCallback; }
+    void SetClickCallback(MouseEventCallback InCallback) { OnClick = InCallback; }
+    void HandleMouseMove(double InXPos, double InYPos, int InWindowWidth, int InWindowHeight);
+    void HandleMouseClick(double InXPos, double InYPos, int InWindowWidth, int InWindowHeight);
+    void SetPanZoom(float InPanX, float InPanY, float InZoom);
 
 public:
     MouseEventCallback OnHover = nullptr;
     MouseEventCallback OnClick = nullptr;
 
     // Convert screen coordinates to grid coordinates
-    std::pair<int, int> ScreenToGrid(double screenX, double screenY, float tileWidth, float tileHeight, float offsetX, float offsetY,float zoom , float panX, float panY ,int windowWidth, int windowHeight,float levelWidth,float levelHeight);
+    std::pair<int, int> ScreenToGrid(double InScreenX, double InScreenY, float InTileWidth, float InTileHeight,
+        float InOffsetX, float InOffsetY, float InZoom, float InPanX, float InPanY,
+        int InWindowWidth, int InWindowHeight, float InLevelWidth, float InLevelHeight);
 
-    std::pair<float, float> screenToNDC(float screenX, float screenY, int windowWidth, int windowHeight) {
-        float ndcX = (screenX / windowWidth) * 2.0f - 1.0f;
-        float ndcY = 1.0f - (screenY / windowHeight) * 2.0f; // Inversion for Y
-        return { ndcX, ndcY };
+    std::pair<float, float> ScreenToNDC(float InScreenX, float InScreenY, int InWindowWidth, int InWindowHeight) {
+        float NdcX = (InScreenX / InWindowWidth) * 2.0f - 1.0f;
+        float NdcY = 1.0f - (InScreenY / InWindowHeight) * 2.0f; // Inversion for Y
+        return { NdcX, NdcY };
     }
 };

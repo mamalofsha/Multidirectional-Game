@@ -13,6 +13,7 @@
 #include "MouseObject.h"
 #include "Building.h"
 #include "WorkShop.h"
+#include "Decoration.h"
 
 #include FT_FREETYPE_H
 

@@ -39,14 +39,18 @@
     <ClCompile Include="Source\HUD.cpp" />
     <ClCompile Include="Source\Math.cpp" />
     <ClCompile Include="Source\MouseInteraction.cpp" />
+    <ClCompile Include="Source\MouseObject.cpp" />
     <ClCompile Include="Source\Object.cpp" />
     <ClCompile Include="Source\Source.cpp" />
+    <ClCompile Include="Source\TexturedObject.cpp" />
+    <ClCompile Include="Source\UIButton.cpp" />
+    <ClCompile Include="Source\UIElement.cpp" />
     <ClCompile Include="Source\UIPaginatedWindow.cpp" />
+    <ClCompile Include="Source\UIWindow.cpp" />
     <ClCompile Include="Source\World.cpp" />
     <ClCompile Include="Source\XMLParser.cpp" />
     <ClCompile Include="ThirdParty\glad\glad.c" />
     <ClCompile Include="ThirdParty\stbimage\Include\stb_image.cpp" />
-    <ClCompile Include="UIWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Building.h" />

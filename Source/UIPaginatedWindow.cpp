@@ -5,12 +5,11 @@ void UIPaginatedWindow::Draw()
     if (IsHidden) return;
 
     // Render the window background
-
-    glBindTexture(GL_TEXTURE_2D, Texture);
-    glBindVertexArray(VAO);
     ObjectShader->use();
     ObjectShader->setBool("IsHidden", IsHidden);
      ObjectShader->setBool("IsHovered", false);
+     glBindTexture(GL_TEXTURE_2D, Texture);
+     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
@@ -42,7 +41,7 @@ void UIPaginatedWindow::UpdateChildrenButtons(float InX, float InY)
                 Child->IsHovered = false;
                 continue;
             }
-            Child->updateHoverState(InX, InY);
+            Child->UpdateHoverState(InX, InY);
         }
     }
 
@@ -61,7 +60,7 @@ void UIPaginatedWindow::UpdateChildrenButtons(float InX, float InY)
                 Buttons[i]->IsHovered = false;
                 continue;
             }
-            Buttons[i]->updateHoverState(InX, InY);
+            Buttons[i]->UpdateHoverState(InX, InY);
             if (Buttons[i]->IsHovered)
                 std::cout << i << std::endl;
         }

@@ -6,13 +6,13 @@ out vec3 ourColor;
 out vec2 TexCoord;
 uniform vec3 panOffset;
 uniform float zoom;
-uniform mat4 transform;
+uniform mat4 Transform;
 
 void main()
-{
+{ 
 ourColor = aColor;
 TexCoord = aTexCoord;
-    gl_Position = transform * vec4(aPos, 1.0); // Apply transformation
+    gl_Position = Transform * vec4(aPos, 1.0); // Apply transformation
 }
 
 
