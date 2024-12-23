@@ -1,9 +1,9 @@
 #pragma once
 #include "UIWindow.h"
-#include "UIButton.h"
-#include <map>
-#include "XMLParser.h"
 #include "MouseObject.h"
+#include "XMLParser.h"
+#include "HUD.h"
+class UIButton;
 
 enum TabType
 {

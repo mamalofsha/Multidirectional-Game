@@ -1,6 +1,5 @@
 #include "XMLParser.h"
 #include <vector>
-#include "Graphics.h"
 #include "HUD.h"
 
 GridConfig XMLParser::ParseGridDataFromXML(const std::string& InFileName)

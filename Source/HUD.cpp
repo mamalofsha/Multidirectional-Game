@@ -5,6 +5,7 @@
 #include "UIElement.h"
 #include"World.h"
 #include "MouseObject.h"
+#include "UIButton.h"
 HUD::HUD(float inWindowWidth, float inWindowHeight,World* InWorld)
 {
 	// for having transparent images and also text

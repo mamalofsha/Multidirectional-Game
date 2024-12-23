@@ -1,25 +1,20 @@
 #include "World.h"
-#include "Graphics.h"
 #include <glm/fwd.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/ext/matrix_transform.hpp>
 #include "Math.h"
-#include "XMLParser.h"
 #include <algorithm>
 #include "UIPaginatedWindow.h"
-#include <ft2build.h>
 #include "TexturedObject.h"
 #include "GridObject.h"
 #include "MouseObject.h"
 #include "Building.h"
 #include "WorkShop.h"
 #include "Decoration.h"
-
+#include "UIButton.h"
+#include "HUD.h"
+#include <ft2build.h>
 #include FT_FREETYPE_H
-
-
-
-
 
 World::World(const std::string& InFileName)
 {

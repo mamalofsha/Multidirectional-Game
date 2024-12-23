@@ -37,7 +37,6 @@
     <ClCompile Include="Source\Graphics.cpp" />
     <ClCompile Include="Source\GridObject.cpp" />
     <ClCompile Include="Source\HUD.cpp" />
-    <ClCompile Include="Source\Math.cpp" />
     <ClCompile Include="Source\MouseInteraction.cpp" />
     <ClCompile Include="Source\MouseObject.cpp" />
     <ClCompile Include="Source\Object.cpp" />
@@ -58,7 +57,6 @@
     <ClInclude Include="Source\Graphics.h" />
     <ClInclude Include="Source\GridObject.h" />
     <ClInclude Include="Source\HUD.h" />
-    <ClInclude Include="Source\Math.h" />
     <ClInclude Include="Source\MouseInteraction.h" />
     <ClInclude Include="Source\MouseObject.h" />
     <ClInclude Include="Source\Object.h" />

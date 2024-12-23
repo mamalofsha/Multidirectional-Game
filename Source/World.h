@@ -1,16 +1,16 @@
 #pragma once
 #include <vector>
-//#include "GameObject.h"
-#include "Shader.h"
-#include <memory>
-#include <GLFW/glfw3.h>
-#include "MouseInteraction.h"
 #include "Graphics.h"
+#include <memory>
 #include <functional>
 #include "MouseInteraction.h"
-#include "UIButton.h"
-#include "HUD.h"
 #include "XMLparser.h"
+
+class Object;
+class MouseInteractionAPI;
+class Building;
+class HUD;
+
 class World
 {
 private:
@@ -42,7 +42,7 @@ private:
 	void LoadSave();
 public:
 	std::shared_ptr<Shader> BuildingShader;
-	std::vector<std::unique_ptr<class Building>> Buildings;
+	std::vector<std::unique_ptr<Building>> Buildings;
 	std::unique_ptr<HUD> GameHUD;
 
 	World(const std::string& InFileName);

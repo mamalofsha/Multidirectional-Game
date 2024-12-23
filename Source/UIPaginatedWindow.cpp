@@ -1,4 +1,5 @@
 #include "UIPaginatedWindow.h"
+#include "UIButton.h"
 
 void UIPaginatedWindow::Draw()
 {

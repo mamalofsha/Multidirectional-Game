@@ -1,7 +1,5 @@
 #pragma once
 #include "UIElement.h"
-#include <vector>
-#include <memory>
 
 class UIWindow : public UIElement {
 public:

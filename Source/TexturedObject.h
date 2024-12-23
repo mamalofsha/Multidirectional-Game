@@ -12,10 +12,10 @@ protected:
     unsigned int Texture;       // Texture handle
 
 public:
-    TexturedObject(std::shared_ptr<Shader> shaderProgram, const std::vector<float>& vertices, const std::vector<unsigned int>& indices, const char* texturePath, VertexAttribute InAttribute,World* InWorldptr)
-        : Object(shaderProgram) {
+    TexturedObject(std::shared_ptr<Shader> InShaderProgram, const std::vector<float>& InVertices, const std::vector<unsigned int>& InIndices, const char* InTexturePath, VertexAttribute InAttribute,World* InWorldptr)
+        : Object(InShaderProgram) {
         WorldPtr = InWorldptr;
-        InitializeFromRenderData(Graphics::DrawTexture(vertices, indices, InAttribute, texturePath));
+        InitializeFromRenderData(Graphics::DrawTexture(InVertices, InIndices, InAttribute, InTexturePath));
     }
     ~TexturedObject() {
         glDeleteVertexArrays(1, &VAO);

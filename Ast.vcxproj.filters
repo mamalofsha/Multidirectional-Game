@@ -81,9 +81,6 @@
     <ClCompile Include="Source\HUD.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Math.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="Source\MouseInteraction.cpp">
       <Filter>Source</Filter>
     </ClCompile>
@@ -138,9 +135,6 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\HUD.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Math.h">
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\MouseInteraction.h">

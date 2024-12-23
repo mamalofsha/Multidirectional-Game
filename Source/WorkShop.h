@@ -1,6 +1,5 @@
 #pragma once
 #include "Building.h"
-#include "HUD.h"
 
 class Workshop : public Building {
 private:
