@@ -5,18 +5,16 @@ class Building : public TexturedObject
 {
 protected:
     int GridX,GridY;
-
 public:
-	Building(std::shared_ptr<Shader> shaderProgram,
-		const std::vector<float>& vertices,
-		const std::vector<unsigned int>& indices,
-		const char* texturePath,
-		const VertexAttribute& vertexData,
-		World* InWorldPtr, int InGridX, int InGridY)
-		: TexturedObject(shaderProgram, vertices, indices, texturePath, vertexData, InWorldPtr), GridX(InGridX), GridY(InGridY){
-		// Additional MouseObject-specific initialization here
-		SetSize(0.15f);
-		/// fix it , it breaks the ui but everyone here counts from 0
-	}
+    Building(std::shared_ptr<Shader> InShaderProgram,
+        const std::vector<float>& InVertices,
+        const std::vector<unsigned int>& InIndices,
+        const char* InTexturePath,
+        const VertexAttribute& InVertexData,
+        World* InWorldPtr, int InGridX, int InGridY)
+        : TexturedObject(InShaderProgram, InVertices, InIndices, InTexturePath, InVertexData, InWorldPtr),
+        GridX(InGridX), GridY(InGridY) {
+        SetSize(0.15f);
+    }
 	void Draw() override;
 };

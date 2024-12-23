@@ -9,29 +9,28 @@
 class GridObject : public Object
 {
 private:
-    unsigned int VAO, VBO; // OpenGL handles
-    size_t gridVerticesSize;
+    unsigned int VAO, VBO; 
+    size_t GridVerticesSize;
 public:
-    GridObject(std::shared_ptr<Shader> shaderProgram, GridConfig InGridConfig, World* InWorldptr)
-        : Object(shaderProgram) {
-        // OpenGL setup (VAO, VBO, EBO, texture loading, etc.)
-        // Create VAO, VBO, and EBO
-        WorldPtr = InWorldptr;
-		std::vector<float> gridVertices = Graphics::createGridVertices(InGridConfig.Width, InGridConfig.Height, InGridConfig.StartOffsetX, InGridConfig.StartOffsetY);
-        gridVerticesSize = gridVertices.size();
-		// Create vertex buffer and array objects
-		glGenBuffers(1, &VBO);
-		glGenVertexArrays(1, &VAO);
-		glBindVertexArray(VAO);
-		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glBufferData(GL_ARRAY_BUFFER, gridVerticesSize * sizeof(float), gridVertices.data(), GL_STATIC_DRAW);
-		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(0);
-		ObjectShader->use();
-		// Set uniform values
-		ObjectShader->setUniform2f("tileSize",InGridConfig.TileWidth, InGridConfig.TileHeight);
-		auto [winX,winY]= WorldPtr->GetWindowSize();
-		ObjectShader->setUniform2f("screenSize", winX, winY);
+    GridObject(std::shared_ptr<Shader> InShaderProgram, GridConfig InGridConfig, World* InWorldPtr)
+        : Object(InShaderProgram)
+    {
+        WorldPtr = InWorldPtr;
+        std::vector<float> GridVertices = Graphics::CreateGridVertices(InGridConfig.Width, InGridConfig.Height, 
+                                                                       InGridConfig.StartOffsetX, InGridConfig.StartOffsetY);
+        GridVerticesSize = GridVertices.size();
+        glGenBuffers(1, &VBO);
+        glGenVertexArrays(1, &VAO);
+        glBindVertexArray(VAO);
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBufferData(GL_ARRAY_BUFFER, GridVerticesSize * sizeof(float), GridVertices.data(), GL_STATIC_DRAW);
+        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+        glEnableVertexAttribArray(0);
+        ObjectShader->use();
+        // Set uniform values
+        ObjectShader->setUniform2f("TileSize", InGridConfig.TileWidth, InGridConfig.TileHeight);
+        auto [WindowWidth, WindowHeight] = WorldPtr->GetWindowSize();
+        ObjectShader->setUniform2f("ScreenSize", WindowWidth, WindowHeight);
     }
 
     ~GridObject() {
@@ -39,19 +38,5 @@ public:
         glDeleteBuffers(1, &VBO);
     }
 
-    void Draw() override {
-		auto [winX, winY] = WorldPtr->GetWindowSize();
-        float scaleX = (WorldPtr->GetLevelSize().first) / winX;
-        float scaleY = (WorldPtr->GetLevelSize().second) / winY;
-		glm::mat4 transform = glm::mat4(1.0f);
-		GLuint  transformLoc;
-		ObjectShader->setUniform2i("tileCoor", WorldPtr->GetMouseState().GridX, WorldPtr->GetMouseState().GridY);
-		transform = glm::scale(transform, glm::vec3(scaleX * WorldPtr->GetZoom(), scaleY * WorldPtr->GetZoom(), 1.0f));
-		transform = glm::translate(transform, glm::vec3(WorldPtr->GetPan().first, WorldPtr->GetPan().second, 0.0f));
-		transformLoc = glGetUniformLocation(ObjectShader->ID, "transform");
-		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
-		glBindVertexArray(VAO);
-		glDrawArrays(GL_LINES, 0, gridVerticesSize / 2);
-
-    }
+	void Draw() override;
 };

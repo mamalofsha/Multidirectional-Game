@@ -25,24 +25,22 @@ struct RenderData
 	unsigned int TextureID;
 };
 // for being able to do this 	glVertexAttribPointer(i, InAttribute.length[i], GL_FLOAT, GL_FALSE, InAttribute.stride * sizeof(float), (void*)(Sum * sizeof(float)));
-struct VertexAttribute
-{
-	int stride;
-	std::vector<int> length;
+struct VertexAttribute {
+    int Stride;
+    std::vector<int> Length;
 };
 
-class Graphics
-{
+class Graphics {
 public:
-	static GLFWwindow* InitWindow(const unsigned int Width, const unsigned int Height);
-	static RenderData DrawTexture(std::vector<float> vertices, std::vector<unsigned int> indices, VertexAttribute InAttribute, const char* InFileName);
+    static GLFWwindow* InitWindow(const unsigned int InWidth, const unsigned int InHeight);
+    static RenderData DrawTexture(std::vector<float> InVertices, std::vector<unsigned int> InIndices, VertexAttribute InAttribute, const char* InFileName);
 
-	static Shader DrawGrid(const GridConfig InGridConfig,int WindowsWidth , int WindowsHeight);
-	static RenderData DrawUIElement(std::vector<float> position, std::vector<float> size, const char* textureFilePath);
-	static Shader InitTextRender(std::map<GLchar, Character>& InMap, float inWindowWidth, float inWindowHeight,unsigned int& VAO, unsigned int& VBO);
-	static std::pair<int, int> GridToWorldPosition(int gridX, int gridY, float tileWidth, float tileHeight, float offsetX, float offsetY, float panX, float panY,float itemscale, float zoom, float windowWidth, float windowHeight , float levelWidth, float levelHeight);
+    static Shader DrawGrid(const GridConfig InGridConfig, int InWindowWidth, int InWindowHeight);
+    static RenderData DrawUIElement(std::vector<float> InPosition, std::vector<float> InSize, const char* InTextureFilePath);
+    static Shader InitTextRender(std::map<GLchar, Character>& InMap, float InWindowWidth, float InWindowHeight, unsigned int& InVAO, unsigned int& InVBO);
+    static std::pair<int, int> GridToWorldPosition(int InGridX, int InGridY, float InTileWidth, float InTileHeight, float InOffsetX, float InOffsetY, float InPanX, float InPanY, float InItemScale, float InZoom, float InWindowWidth, float InWindowHeight, float InLevelWidth, float InLevelHeight);
 
-	static std::vector<float> createGridVertices(float gridWidth, float gridHeight, float OffsetX, float OffsetY);
-	static void RenderText(Shader& shader,const unsigned int VAO, const unsigned int VBO,std::string text, float x, float y, float scale, glm::vec3 color, std::map<GLchar, Character>& InMap);
-	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+    static std::vector<float> CreateGridVertices(float InGridWidth, float InGridHeight, float InOffsetX, float InOffsetY);
+    static void RenderText(Shader& InShader, const unsigned int InVAO, const unsigned int InVBO, std::string InText, float InX, float InY, float InScale, glm::vec3 InColor, std::map<GLchar, Character>& InMap);
+    static void FramebufferSizeCallback(GLFWwindow* InWindow, int InWidth, int InHeight);
 };
