@@ -50,8 +50,8 @@
       "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:ThirdParty\\glad\\glad.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\AST\\THIRDPARTY\\FT2BUILD.H||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:THIRDPARTY\\FT2BUILD.H||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|J:\\Ast\\ThirdParty\\ft2build.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ThirdParty\\ft2build.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -73,8 +73,7 @@
               "RelativeToolTip": "Source\\Graphics.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAIIAAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-12-23T16:19:02.907Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T16:19:02.907Z"
             },
             {
               "$type": "Document",
@@ -84,7 +83,7 @@
               "RelativeDocumentMoniker": "Source\\HUD.cpp",
               "ToolTip": "J:\\Ast\\Source\\HUD.cpp",
               "RelativeToolTip": "Source\\HUD.cpp",
-              "ViewState": "AgIAAEQAAAAAAAAAAAAnwFMAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAGIAAAAAAAAAAAAnwG0AAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-12-23T16:18:52.72Z",
               "EditorCaption": ""
@@ -99,8 +98,7 @@
               "RelativeToolTip": "Source\\TexturedObject.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-23T16:18:47.938Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T16:18:47.938Z"
             },
             {
               "$type": "Document",
@@ -112,8 +110,7 @@
               "RelativeToolTip": "Source\\UIButton.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-23T16:18:46.613Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T16:18:46.613Z"
             },
             {
               "$type": "Document",
@@ -125,8 +122,7 @@
               "RelativeToolTip": "Source\\UIPaginatedWindow.h",
               "ViewState": "AgIAAAgAAAAAAAAAAAAIwBcAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-23T16:18:44.817Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T16:18:44.817Z"
             },
             {
               "$type": "Document",
@@ -138,8 +134,7 @@
               "RelativeToolTip": "Source\\UIWindow.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-23T16:18:43.294Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T16:18:43.294Z"
             },
             {
               "$type": "Document",
@@ -151,8 +146,7 @@
               "RelativeToolTip": "Source\\WorkShop.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-23T16:18:42.408Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T16:18:42.408Z"
             },
             {
               "$type": "Document",
@@ -162,8 +156,7 @@
               "ToolTip": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\include\\memory",
               "ViewState": "AgIAACIFAAAAAAAAAIAwwDEFAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-12-23T16:16:09.56Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T16:16:09.56Z"
             },
             {
               "$type": "Document",
@@ -175,8 +168,7 @@
               "RelativeToolTip": "Source\\World.cpp",
               "ViewState": "AgIAALIAAAAAAAAAAAAAAM0AAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-12-23T16:13:25.523Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T16:13:25.523Z"
             },
             {
               "$type": "Document",
@@ -188,8 +180,7 @@
               "RelativeToolTip": "Source\\World.h",
               "ViewState": "AgIAACoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-23T16:13:12.83Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T16:13:12.83Z"
             },
             {
               "$type": "Document",
@@ -201,8 +192,7 @@
               "RelativeToolTip": "Source\\Shader.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAIwA8AAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-23T15:58:11.203Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T15:58:11.203Z"
             },
             {
               "$type": "Document",
@@ -214,8 +204,7 @@
               "RelativeToolTip": "ThirdParty\\glad\\glad.c",
               "ViewState": "AgIAAAkAAAAAAAAAAAAIwBEAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-12-23T15:57:55.528Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T15:57:55.528Z"
             },
             {
               "$type": "Document",
@@ -227,8 +216,7 @@
               "RelativeToolTip": "ThirdParty\\ft2build.h",
               "ViewState": "AgIAABUAAAAAAAAAAAAIwCQAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-23T15:51:48.593Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T15:51:48.593Z"
             }
           ]
         }
