@@ -18,7 +18,7 @@ public:
 		const char* texturePath,
 		const VertexAttribute& vertexData,
 		World* InWorldPtr)
-		: TexturedObject(shaderProgram, vertices, indices, texturePath, vertexData, false, InWorldPtr) , cachedfilePath(texturePath){
+		: TexturedObject(shaderProgram, vertices, indices, texturePath, vertexData, InWorldPtr) , cachedfilePath(texturePath){
 		// Additional MouseObject-specific initialization here
 		isHidden = true;
 
@@ -55,7 +55,7 @@ public:
 
 				std::tie(screenX, screenY) = Graphics::GridToWorldPosition(api->GetMouseState().GridX, api->GetMouseState().GridY,
 					WorldPtr->GetGridConfig().tileWidth, WorldPtr->GetGridConfig().tileHeight,
-					WorldPtr->GetGridConfig().StartOffsetX, WorldPtr->GetGridConfig().StartOffsetY, WorldPtr->GetPanX(), WorldPtr->GetPanY(), size, WorldPtr->GetZoom(), winX, winY);
+					WorldPtr->GetGridConfig().StartOffsetX, WorldPtr->GetGridConfig().StartOffsetY, WorldPtr->GetPan().first, WorldPtr->GetPan().second, size, WorldPtr->GetZoom(), winX, winY);
 				std::tie(ndcX, ndcY) = api->screenToNDC(screenX, screenY, winX, winY);
 				isAttachedToGrid = true;
 			}

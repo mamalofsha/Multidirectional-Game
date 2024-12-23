@@ -13,7 +13,7 @@ public:
 		const char* texturePath,
 		const VertexAttribute& vertexData,
 		World* InWorldPtr, int InGridX, int InGridY)
-		: TexturedObject(shaderProgram, vertices, indices, texturePath, vertexData, false, InWorldPtr), GridX(InGridX), GridY(InGridY){
+		: TexturedObject(shaderProgram, vertices, indices, texturePath, vertexData, InWorldPtr), GridX(InGridX), GridY(InGridY){
 		// Additional MouseObject-specific initialization here
 		setSize(0.15f);
 		/// fix it , it breaks the ui but everyone here counts from 0
@@ -34,14 +34,14 @@ public:
 
 		std::tie(screenX, screenY) = Graphics::GridToWorldPosition(GridX, GridY,
 		WorldPtr->GetGridConfig().tileWidth, WorldPtr->GetGridConfig().tileHeight,
-		WorldPtr->GetGridConfig().StartOffsetX, WorldPtr->GetGridConfig().StartOffsetY, WorldPtr->GetPanX(), WorldPtr->GetPanY(), size, WorldPtr->GetZoom(), winX, winY);
+		WorldPtr->GetGridConfig().StartOffsetX, WorldPtr->GetGridConfig().StartOffsetY, WorldPtr->GetPan().first, WorldPtr->GetPan().second, size, WorldPtr->GetZoom(), winX, winY);
 		std::tie(ndcX, ndcY) = api->screenToNDC(screenX, screenY, winX, winY);
 
 
 
 
-		float scaleX = 2000.0f / winX;
-		float scaleY = 1404.0f / winY;
+		float scaleX = WorldPtr->GetLevelSize().first / winX;
+		float scaleY = WorldPtr->GetLevelSize().second / winY;
 		glm::mat4 transform = glm::mat4(1.0f);
 		GLuint  transformLoc;
 		transform = glm::translate(transform, glm::vec3(ndcX, ndcY, 0.0f));

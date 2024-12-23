@@ -34,9 +34,9 @@ public:
 		glBindVertexArray(0);
 
 		if (Text.empty() || !Hudptr)return;
-		float screenX = (x + 1.0f) * 0.5f * Hudptr->WindowWidth;
-		float screenY = (1.0f - y) * 0.5f * Hudptr->WindowHeight; // Inversion for Y
-		Graphics::RenderText(Hudptr->font,Hudptr->fontVAO,Hudptr->fontVBO ,Text, screenX - 100.0f, Hudptr->WindowHeight - screenY, 1.0f, glm::vec3(0.0, 0.0f, 0.0f), Hudptr->Characters);
+		float screenX = (x + 1.0f) * 0.5f * Hudptr->GetWindowSize().first;
+		float screenY = (1.0f - y) * 0.5f * Hudptr->GetWindowSize().second; // Inversion for Y
+		Graphics::RenderText(Hudptr->GetFontShader(), Hudptr->GetFontData().first, Hudptr->GetFontData().second, Text, screenX - 100.0f, Hudptr->GetWindowSize().second - screenY, 1.0f, glm::vec3(0.0, 0.0f, 0.0f), Hudptr->GetCharacters());
 	}
 
 };

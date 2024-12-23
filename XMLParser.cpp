@@ -7,39 +7,34 @@ GridConfig XMLParser::ParseGridDataFromXML(const std::string& InFileName)
 {
     GridConfig OutConfig;
     // Load XML file
-    tinyxml2::XMLDocument doc;
-    if (doc.LoadFile(InFileName.c_str()) != tinyxml2::XML_SUCCESS) {
+    XMLDocument doc;
+    if (doc.LoadFile(InFileName.c_str()) != XML_SUCCESS) {
         std::cerr << "Error loading XML file: " << InFileName << std::endl;
         return OutConfig;
     }
-
     // Parse dimensions
     auto* root = doc.FirstChildElement("grid");
     if (!root) {
         std::cerr << "Invalid XML structure: No <grid> element." << std::endl;
         return OutConfig;
     }
-
     auto* dimensions = root->FirstChildElement("dimensions");
     if (dimensions) {
         dimensions->FirstChildElement("width")->QueryIntText(&OutConfig.width);
         dimensions->FirstChildElement("height")->QueryIntText(&OutConfig.height);
     }
-
     // Parse tile size
     auto* tile = root->FirstChildElement("tile");
     if (tile) {
         tile->FirstChildElement("width")->QueryFloatText(&OutConfig.tileWidth);
         tile->FirstChildElement("height")->QueryFloatText(&OutConfig.tileHeight);
     }
-
     // Parse Offset
     auto* offset = root->FirstChildElement("offset");
     if (offset) {
         offset->FirstChildElement("x")->QueryFloatText(&OutConfig.StartOffsetX);
         offset->FirstChildElement("y")->QueryFloatText(&OutConfig.StartOffsetY);
     }
-
     // Parse tiles
     auto* tilesElement = root->FirstChildElement("tiles");
     if (tilesElement) {
@@ -54,39 +49,40 @@ GridConfig XMLParser::ParseGridDataFromXML(const std::string& InFileName)
             OutConfig.tiles.push_back(tileRow);
         }
     }
-
     return OutConfig;
 }
 
 StartUpData XMLParser::LoadLeveL(const std::string& InFileName)
 {
-    StartUpData Data;
-    tinyxml2::XMLDocument doc;
-    if (doc.LoadFile(InFileName.c_str()) != tinyxml2::XML_SUCCESS) {
+    XMLDocument doc;
+    if (doc.LoadFile(InFileName.c_str()) != XML_SUCCESS) {
         std::cerr << "Error loading XML file: " << InFileName << std::endl;
-        return Data;
+        return StartUpData();
     }
     auto* root = doc.FirstChildElement("level");
     if (!root) {
         std::cerr << "Invalid XML structure: No <level> element." << std::endl;
-        return Data;
+        return StartUpData();
     }
-
+    StartUpData Data;
+    auto* asset = root->FirstChildElement("asset");
+    if (asset) {
+        Data.LevelFileName = asset->GetText();
+    }
+    // for loading level\bg size
     auto* dimensions = root->FirstChildElement("dimensions");
     if (dimensions) {
         dimensions->FirstChildElement("width")->QueryIntText(&Data.LevelWidth);
         dimensions->FirstChildElement("height")->QueryIntText(&Data.LevelHeight);
     }
-
     auto* GridFile = root->FirstChildElement("gridfilename");
     if (GridFile) {
         Data.GridFileName= GridFile->GetText();
     }
-
     auto* WindowScale = root->FirstChildElement("WindowScale");
     if (WindowScale) {
         float scaleValue = 0.0f;
-        if (WindowScale->QueryFloatText(&scaleValue) == tinyxml2::XML_SUCCESS) {
+        if (WindowScale->QueryFloatText(&scaleValue) == XML_SUCCESS) {
             Data.WindowScale = scaleValue; // Assign only on success
         }
         else {
@@ -99,8 +95,8 @@ StartUpData XMLParser::LoadLeveL(const std::string& InFileName)
 std::vector<WorkshopData> XMLParser::LoadWorkShops(const std::string& InFileName, const std::string& InCategoryName)
 {
     std::vector<WorkshopData> OutData;
-    tinyxml2::XMLDocument doc;
-    if (doc.LoadFile(InFileName.c_str()) != tinyxml2::XML_SUCCESS) {
+   XMLDocument doc;
+    if (doc.LoadFile(InFileName.c_str()) != XML_SUCCESS) {
         std::cerr << "Error loading XML file: " << InFileName << std::endl;
         return OutData;
     }
@@ -319,30 +315,30 @@ std::vector<DecorationData> XMLParser::LoadDecorations(const std::string& InFile
 
 void XMLParser::UpdateGridValue(const std::string& filename, int gridX, int gridY, const char* newValue)
 {
-    tinyxml2::XMLDocument doc;
+    XMLDocument doc;
 
     // Load the XML file
-    if (doc.LoadFile(filename.c_str()) != tinyxml2::XML_SUCCESS) {
+    if (doc.LoadFile(filename.c_str()) != XML_SUCCESS) {
         std::cerr << "Error: Unable to load XML file: " << filename << std::endl;
         return;
     }
 
     // Locate the <grid> element
-    tinyxml2::XMLElement* root = doc.FirstChildElement("grid");
+    XMLElement* root = doc.FirstChildElement("grid");
     if (!root) {
         std::cerr << "Error: No <grid> element found in XML." << std::endl;
         return;
     }
 
     // Locate the <tiles> element
-    tinyxml2::XMLElement* tiles = root->FirstChildElement("tiles");
+    XMLElement* tiles = root->FirstChildElement("tiles");
     if (!tiles) {
         std::cerr << "Error: No <tiles> element found in XML." << std::endl;
         return;
     }
 
     // Navigate to the correct row
-    tinyxml2::XMLElement* rowElement = tiles->FirstChildElement("row");
+    XMLElement* rowElement = tiles->FirstChildElement("row");
     for (int i = 0; i < gridY; ++i) {
         if (rowElement) {
             rowElement = rowElement->NextSiblingElement("row");
@@ -394,7 +390,7 @@ void XMLParser::UpdateGridValue(const std::string& filename, int gridX, int grid
     rowElement->SetText(newRowText.str().c_str());
 
     // Save the updated XML back to the file
-    if (doc.SaveFile(filename.c_str()) != tinyxml2::XML_SUCCESS) {
+    if (doc.SaveFile(filename.c_str()) != XML_SUCCESS) {
         std::cerr << "Error: Unable to save XML file." << std::endl;
     }
     else {

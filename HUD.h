@@ -25,19 +25,27 @@ struct Character;
 class HUD
 {
 private:
+	unsigned int fontVAO, fontVBO;
+	float WindowWidth, WindowHeight;
+	World* Worldptr;
+	Shader FontShader;
+	std::map<GLchar, Character> Characters;
+	std::shared_ptr<Shader> UIShader;
 
 	std::vector<std::shared_ptr<class UIElement>> UIElements;
 public:
 	std::shared_ptr<class UIPaginatedWindow> shopWindow;
 	std::shared_ptr<class MouseObject> mous;
-	 World* Worldptr;
-	std::map<GLchar, Character> Characters;
-	Shader font;
-	unsigned int fontVAO, fontVBO;
-	std::shared_ptr<Shader> UIE;
-	float WindowWidth, WindowHeight;
+
 	HUD(float inWindowWidth, float inWindowHeight, World* InWorld);
 	void Update();
 	void onHoverFunction(int gridX, int gridY, float screenX, float screenY);
 	void onClickFunction(int gridX, int gridY, float screenX, float screenY);
+	std::pair<unsigned int, unsigned int > GetFontData() { return{ fontVAO ,fontVBO }; };
+	std::pair< float, float > GetWindowSize() { return{ WindowWidth ,WindowHeight }; };
+	World* GetWorldPtr() { return Worldptr; };
+	Shader& GetFontShader() { return FontShader; };
+	std::shared_ptr<Shader> GetUIShader() { return UIShader; };
+	std::map<GLchar, Character>& GetCharacters() { return Characters; };
+
 };

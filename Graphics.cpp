@@ -12,7 +12,7 @@
 
 GLFWwindow* Graphics::InitWindow(const unsigned int Width, const unsigned int Height)
 {
-	// glfw: initialize and configure
+// glfw: initialize and configure
 // ------------------------------
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -25,7 +25,7 @@ GLFWwindow* Graphics::InitWindow(const unsigned int Width, const unsigned int He
 
 	// glfw window creation
 	// --------------------
-	GLFWwindow* Window = glfwCreateWindow(Width, Height, "Ast", NULL, NULL);
+	GLFWwindow* Window = glfwCreateWindow(Width, Height, "Castle", NULL, NULL);
 	if (Window == NULL)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;

@@ -10,6 +10,8 @@ struct StartUpData
 	int LevelHeight;
 	float WindowScale;
 	std::string GridFileName;
+	std::string LevelFileName;
+
 };
 
 struct WorkshopData;

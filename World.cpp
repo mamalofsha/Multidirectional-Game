@@ -16,30 +16,19 @@
 
 #include FT_FREETYPE_H
 
-std::pair<int, int> World::GetWindowSize()
-{
-	int windowWidth, windowHeight;
-	glfwGetWindowSize(Window, &windowWidth, &windowHeight);
-	return { windowWidth ,windowHeight };
-}
+
 
 
 
 World::World(const std::string& InFileName)
 {
-	StartUpData Temp = XMLParser::LoadLeveL(InFileName);
-	Window = Graphics::InitWindow(Temp.LevelWidth * Temp.WindowScale, Temp.LevelHeight * Temp.WindowScale);
+	StartUp = XMLParser::LoadLeveL(InFileName);
+	Window = Graphics::InitWindow(StartUp.LevelWidth * StartUp.WindowScale, StartUp.LevelHeight * StartUp.WindowScale);
+	// shader for buildings and hovered items
 	Buildingshader = std::make_shared<Shader>("TempItem.vert", "TempItem.frag");
-
 	InitBackground();
-
-
-	//.push_back(shader);
-	//objectRenderMap[shader->ID].push_back(mous);
-
-	//
+	InitGrid(StartUp.GridFileName);
 	InitHUD();
-	InitGrid(Temp.GridFileName);
 	SetupMouseCallbacks();
 	LoadSave();
 	//XMLParser::ResetSave("grid_config.xml");
@@ -55,8 +44,12 @@ World::~World()
 		delete api; // Free the dynamically allocated memory
 	}
 	GameObjects.clear();
-	Player = nullptr;
 	glfwTerminate();
+}
+
+bool World::IsRunning()
+{
+	return !glfwWindowShouldClose(Window);
 }
 
 void World::InitBackground()
@@ -75,14 +68,13 @@ void World::InitBackground()
 		1, 2, 3  // second triangle
 	};
 	VertexAttribute OutVertexData = { 8,{3,3,2} };
-	std::shared_ptr<TexturedObject> texturedObject = std::make_shared<TexturedObject>(shader, vertices, indices, "Map1.jpg", OutVertexData,true,this);
+	std::shared_ptr<TexturedObject> texturedObject = std::make_shared<TexturedObject>(shader, vertices, indices, StartUp.LevelFileName.c_str(), OutVertexData, this);
 	objectRenderMap[shader->ID].push_back(texturedObject);
 }
 
 void World::InitHUD()
 {
-	int windowWidth, windowHeight;
-	glfwGetWindowSize(Window, &windowWidth, &windowHeight);
+	auto [windowWidth, windowHeight] = GetWindowSize();
 	GameHUD = std::make_unique<HUD>(windowWidth,windowHeight,this);
 }
 
@@ -131,8 +123,8 @@ void World::ProcessInputGL(GLFWwindow* window)
 	float halfVisibleHeight = (windowHeight / Zoom) / 2.0f;
 
 	// Background dimensions (2000x1404 assumed)
-	float bgHalfWidth = 2000.0f / 2.0f;
-	float bgHalfHeight = 1404.0f / 2.0f;
+	float bgHalfWidth = StartUp.LevelWidth / 2.0f;
+	float bgHalfHeight = StartUp.LevelHeight/ 2.0f;
 
 	// Calculate panning bounds
 	float minPanX = (- bgHalfWidth + halfVisibleWidth)/1000.0f;
@@ -156,7 +148,7 @@ void World::GarbageCollection()
 {
 	for (auto it = GameObjects.begin(); it != GameObjects.end(); )
 	{
-		if ((*it)->MarkedForDelete)
+		if ((*it)->GetMarkedForDelete())
 		{
 			it = GameObjects.erase(it);
 		}
@@ -272,11 +264,22 @@ void World::Update(float DeltaSeconds)
 
 }
 
-bool World::IsRunning()
+
+
+std::pair<int, int> World::GetWindowSize()
 {
-	return !glfwWindowShouldClose(Window);
+	int windowWidth, windowHeight;
+	glfwGetWindowSize(Window, &windowWidth, &windowHeight);
+	return { windowWidth ,windowHeight };
 }
 
-
+std::pair<float, float> World::GetPan()
+{
+	return { panX ,panY };
+}
+std::pair<float, float> World::GetLevelSize()
+{
+	return {static_cast<float>(StartUp.LevelWidth),static_cast<float>(StartUp.LevelHeight) };
+}
 ///////// todo
 // one shader cna be used with multiple purposes and different places , -> 1 shader for texture can draw multiple textures , shoyld 

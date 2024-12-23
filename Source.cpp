@@ -10,7 +10,7 @@ int main() {
 	{
 		float CurrentFrame = glfwGetTime();
 		DeltaTime = CurrentFrame - LastFrame;
-		LastFrame = glfwGetTime();
+		LastFrame = CurrentFrame;
 		CurrentWorld->Update(DeltaTime);
 	}
 	delete CurrentWorld;
