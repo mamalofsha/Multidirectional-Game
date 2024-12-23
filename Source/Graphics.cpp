@@ -127,7 +127,7 @@ Shader Graphics::InitTextRender(std::map<GLchar, Character>& InMap, float InWind
 	}
 
 	FT_Face Face;
-	if (FT_New_Face(FreeTypeLibrary, "C:/Users/A/Desktop/PVE/autobahn.ttf", 0, &Face))
+	if (FT_New_Face(FreeTypeLibrary, "Assets/Fonts/autobahn.ttf", 0, &Face))
 	{
 		std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
 		return Shader();
@@ -198,8 +198,6 @@ std::pair<int, int> Graphics::GridToWorldPosition(int InGridX, int InGridY, floa
 
 	float OffsetY = (ScreenY - ScreenYY) * 3 / 2;
 	ScreenY -= OffsetY;
-
-	std::cout << ScreenY - ScreenYY << "??" << std::endl;
 
 	return { ScreenX, ScreenY };
 }

@@ -3,6 +3,26 @@
   "WorkspaceRootPath": "J:\\Ast\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\Source\\Graphics.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:Source\\Graphics.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\Source\\HUD.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:Source\\HUD.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\Source\\TexturedObject.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:Source\\TexturedObject.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\Source\\Building.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:Source\\Building.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\Source\\Building.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:Source\\Building.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\Source\\MouseObject.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:Source\\MouseObject.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
@@ -15,16 +35,8 @@
       "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:Source\\Shader.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\Source\\HUD.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:Source\\HUD.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\Source\\HUD.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:Source\\HUD.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\Source\\Building.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:Source\\Building.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\Source\\Shaders\\Shader.frag||{8B382828-6202-11D1-8870-0000F87579D2}",
@@ -63,10 +75,6 @@
       "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:Source\\Shaders\\UI.vert||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\Source\\Graphics.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:Source\\Graphics.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\Source\\Shaders\\Grid.vert||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:Source\\Shaders\\Grid.vert||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
@@ -91,10 +99,6 @@
       "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:Source\\Decoration.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\Source\\Building.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:Source\\Building.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\Source\\MouseInteraction.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:Source\\MouseInteraction.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
@@ -109,10 +113,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\Source\\Source.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:Source\\Source.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\Source\\TexturedObject.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:Source\\TexturedObject.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\Source\\UIButton.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -207,35 +207,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 15,
+          "SelectedChildIndex": 17,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "MouseInteraction.h",
-              "DocumentMoniker": "J:\\Ast\\Source\\MouseInteraction.h",
-              "RelativeDocumentMoniker": "Source\\MouseInteraction.h",
-              "ToolTip": "J:\\Ast\\Source\\MouseInteraction.h",
-              "RelativeToolTip": "Source\\MouseInteraction.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-23T18:14:30.088Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "MouseInteraction.cpp",
-              "DocumentMoniker": "J:\\Ast\\Source\\MouseInteraction.cpp",
-              "RelativeDocumentMoniker": "Source\\MouseInteraction.cpp",
-              "ToolTip": "J:\\Ast\\Source\\MouseInteraction.cpp",
-              "RelativeToolTip": "Source\\MouseInteraction.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGEAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-12-23T18:22:16.861Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
               "Title": "HUD.h",
               "DocumentMoniker": "J:\\Ast\\Source\\HUD.h",
               "RelativeDocumentMoniker": "Source\\HUD.h",
@@ -243,25 +219,24 @@
               "RelativeToolTip": "Source\\HUD.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-23T18:07:27.221Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T18:07:27.221Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "HUD.cpp",
               "DocumentMoniker": "J:\\Ast\\Source\\HUD.cpp",
               "RelativeDocumentMoniker": "Source\\HUD.cpp",
               "ToolTip": "J:\\Ast\\Source\\HUD.cpp",
               "RelativeToolTip": "Source\\HUD.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAH4AAAACAAAAAAAAAA==",
+              "ViewState": "AgIAADYAAAAAAAAAAAAAAH4AAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-12-23T16:18:52.72Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 22,
               "Title": "Graphics.h",
               "DocumentMoniker": "J:\\Ast\\Source\\Graphics.h",
               "RelativeDocumentMoniker": "Source\\Graphics.h",
@@ -269,12 +244,11 @@
               "RelativeToolTip": "Source\\Graphics.h",
               "ViewState": "AgIAABUAAAAAAAAAAAAAAC0AAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-23T18:20:44.186Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T18:20:44.186Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 23,
               "Title": "Decoration.h",
               "DocumentMoniker": "J:\\Ast\\Source\\Decoration.h",
               "RelativeDocumentMoniker": "Source\\Decoration.h",
@@ -282,25 +256,24 @@
               "RelativeToolTip": "Source\\Decoration.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-23T18:29:59.14Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T18:29:59.14Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 3,
               "Title": "Building.h",
               "DocumentMoniker": "J:\\Ast\\Source\\Building.h",
               "RelativeDocumentMoniker": "Source\\Building.h",
               "ToolTip": "J:\\Ast\\Source\\Building.h",
               "RelativeToolTip": "Source\\Building.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2024-12-23T18:27:02.084Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "Building.cpp",
               "DocumentMoniker": "J:\\Ast\\Source\\Building.cpp",
               "RelativeDocumentMoniker": "Source\\Building.cpp",
@@ -313,7 +286,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 21,
               "Title": "GridObject.h",
               "DocumentMoniker": "J:\\Ast\\Source\\GridObject.h",
               "RelativeDocumentMoniker": "Source\\GridObject.h",
@@ -321,12 +294,11 @@
               "RelativeToolTip": "Source\\GridObject.h",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAABsAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-23T18:21:16.739Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T18:21:16.739Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 20,
               "Title": "GridObject.cpp",
               "DocumentMoniker": "J:\\Ast\\Source\\GridObject.cpp",
               "RelativeDocumentMoniker": "Source\\GridObject.cpp",
@@ -334,12 +306,11 @@
               "RelativeToolTip": "Source\\GridObject.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAIwA0AAABNAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-12-23T20:53:48.049Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T20:53:48.049Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 17,
               "Title": "UI.vert",
               "DocumentMoniker": "J:\\Ast\\Source\\Shaders\\UI.vert",
               "RelativeDocumentMoniker": "Source\\Shaders\\UI.vert",
@@ -347,12 +318,11 @@
               "RelativeToolTip": "Source\\Shaders\\UI.vert",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-12-23T19:26:30.55Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T19:26:30.55Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 16,
               "Title": "UI.frag",
               "DocumentMoniker": "J:\\Ast\\Source\\Shaders\\UI.frag",
               "RelativeDocumentMoniker": "Source\\Shaders\\UI.frag",
@@ -360,12 +330,11 @@
               "RelativeToolTip": "Source\\Shaders\\UI.frag",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-12-23T19:26:34.482Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T19:26:34.482Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 15,
               "Title": "Texture.vert",
               "DocumentMoniker": "J:\\Ast\\Source\\Shaders\\Texture.vert",
               "RelativeDocumentMoniker": "Source\\Shaders\\Texture.vert",
@@ -373,12 +342,11 @@
               "RelativeToolTip": "Source\\Shaders\\Texture.vert",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-12-23T20:15:06.323Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T20:15:06.323Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 14,
               "Title": "Texture.frag",
               "DocumentMoniker": "J:\\Ast\\Source\\Shaders\\Texture.frag",
               "RelativeDocumentMoniker": "Source\\Shaders\\Texture.frag",
@@ -386,12 +354,11 @@
               "RelativeToolTip": "Source\\Shaders\\Texture.frag",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-12-23T20:15:06.839Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T20:15:06.839Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 11,
               "Title": "TempItem.vert",
               "DocumentMoniker": "J:\\Ast\\Source\\Shaders\\TempItem.vert",
               "RelativeDocumentMoniker": "Source\\Shaders\\TempItem.vert",
@@ -399,12 +366,11 @@
               "RelativeToolTip": "Source\\Shaders\\TempItem.vert",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-12-23T20:03:46.18Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T20:03:46.18Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "MouseObject.cpp",
               "DocumentMoniker": "J:\\Ast\\Source\\MouseObject.cpp",
               "RelativeDocumentMoniker": "Source\\MouseObject.cpp",
@@ -417,7 +383,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "Shader.frag",
               "DocumentMoniker": "J:\\Ast\\Source\\Shaders\\Shader.frag",
               "RelativeDocumentMoniker": "Source\\Shaders\\Shader.frag",
@@ -425,12 +391,11 @@
               "RelativeToolTip": "Source\\Shaders\\Shader.frag",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-12-23T21:17:40.217Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T21:17:40.217Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 10,
               "Title": "Shader.vert",
               "DocumentMoniker": "J:\\Ast\\Source\\Shaders\\Shader.vert",
               "RelativeDocumentMoniker": "Source\\Shaders\\Shader.vert",
@@ -438,12 +403,61 @@
               "RelativeToolTip": "Source\\Shaders\\Shader.vert",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-12-23T21:13:06.445Z",
+              "WhenOpened": "2024-12-23T21:13:06.445Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TexturedObject.h",
+              "DocumentMoniker": "J:\\Ast\\Source\\TexturedObject.h",
+              "RelativeDocumentMoniker": "Source\\TexturedObject.h",
+              "ToolTip": "J:\\Ast\\Source\\TexturedObject.h",
+              "RelativeToolTip": "Source\\TexturedObject.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-23T16:18:47.938Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 0,
+              "Title": "Graphics.cpp",
+              "DocumentMoniker": "J:\\Ast\\Source\\Graphics.cpp",
+              "RelativeDocumentMoniker": "Source\\Graphics.cpp",
+              "ToolTip": "J:\\Ast\\Source\\Graphics.cpp",
+              "RelativeToolTip": "Source\\Graphics.cpp",
+              "ViewState": "AgIAAG0AAAAAAAAAAAAnwIEAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-23T16:19:02.907Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "MouseInteraction.cpp",
+              "DocumentMoniker": "J:\\Ast\\Source\\MouseInteraction.cpp",
+              "RelativeDocumentMoniker": "Source\\MouseInteraction.cpp",
+              "ToolTip": "J:\\Ast\\Source\\MouseInteraction.cpp",
+              "RelativeToolTip": "Source\\MouseInteraction.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-23T18:22:16.861Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "MouseInteraction.h",
+              "DocumentMoniker": "J:\\Ast\\Source\\MouseInteraction.h",
+              "RelativeDocumentMoniker": "Source\\MouseInteraction.h",
+              "ToolTip": "J:\\Ast\\Source\\MouseInteraction.h",
+              "RelativeToolTip": "Source\\MouseInteraction.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-23T18:14:30.088Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "Text.frag",
               "DocumentMoniker": "J:\\Ast\\Source\\Shaders\\Text.frag",
               "RelativeDocumentMoniker": "Source\\Shaders\\Text.frag",
@@ -451,12 +465,11 @@
               "RelativeToolTip": "Source\\Shaders\\Text.frag",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-12-23T21:15:33.657Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T21:15:33.657Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 13,
               "Title": "Text.vert",
               "DocumentMoniker": "J:\\Ast\\Source\\Shaders\\Text.vert",
               "RelativeDocumentMoniker": "Source\\Shaders\\Text.vert",
@@ -464,12 +477,11 @@
               "RelativeToolTip": "Source\\Shaders\\Text.vert",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-12-23T20:15:13.166Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T20:15:13.166Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "Shader.h",
               "DocumentMoniker": "J:\\Ast\\Source\\Shader.h",
               "RelativeDocumentMoniker": "Source\\Shader.h",
@@ -477,12 +489,11 @@
               "RelativeToolTip": "Source\\Shader.h",
               "ViewState": "AgIAALIAAAAAAAAAAIAwwG0AAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-23T15:58:11.203Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T15:58:11.203Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "MouseObject.h",
               "DocumentMoniker": "J:\\Ast\\Source\\MouseObject.h",
               "RelativeDocumentMoniker": "Source\\MouseObject.h",
@@ -490,25 +501,11 @@
               "RelativeToolTip": "Source\\MouseObject.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-23T18:20:21.919Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T18:20:21.919Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "Graphics.cpp",
-              "DocumentMoniker": "J:\\Ast\\Source\\Graphics.cpp",
-              "RelativeDocumentMoniker": "Source\\Graphics.cpp",
-              "ToolTip": "J:\\Ast\\Source\\Graphics.cpp",
-              "RelativeToolTip": "Source\\Graphics.cpp",
-              "ViewState": "AgIAAGsAAAAAAAAAAAAnwHYAAAA6AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-12-23T16:19:02.907Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 18,
               "Title": "Grid.vert",
               "DocumentMoniker": "J:\\Ast\\Source\\Shaders\\Grid.vert",
               "RelativeDocumentMoniker": "Source\\Shaders\\Grid.vert",
@@ -516,8 +513,7 @@
               "RelativeToolTip": "Source\\Shaders\\Grid.vert",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-12-23T21:11:51.154Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T21:11:51.154Z"
             },
             {
               "$type": "Document",
@@ -533,7 +529,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "Source.cpp",
               "DocumentMoniker": "J:\\Ast\\Source\\Source.cpp",
               "RelativeDocumentMoniker": "Source\\Source.cpp",
@@ -545,7 +541,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 19,
               "Title": "Grid.frag",
               "DocumentMoniker": "J:\\Ast\\Source\\Shaders\\Grid.frag",
               "RelativeDocumentMoniker": "Source\\Shaders\\Grid.frag",
@@ -553,24 +549,11 @@
               "RelativeToolTip": "Source\\Shaders\\Grid.frag",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-12-23T21:10:54.22Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-23T21:10:54.22Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
-              "Title": "TexturedObject.h",
-              "DocumentMoniker": "J:\\Ast\\Source\\TexturedObject.h",
-              "RelativeDocumentMoniker": "Source\\TexturedObject.h",
-              "ToolTip": "J:\\Ast\\Source\\TexturedObject.h",
-              "RelativeToolTip": "Source\\TexturedObject.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-23T16:18:47.938Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "Object.h",
               "DocumentMoniker": "J:\\Ast\\Source\\Object.h",
               "RelativeDocumentMoniker": "Source\\Object.h",
