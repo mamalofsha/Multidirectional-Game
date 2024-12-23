@@ -53,21 +53,20 @@ World::World(const std::string& InFileName)
 World::~World()
 {
 	// check to see if it actually clears ( eg there are not other objects pointing to this shared ptr 
-	NewShaders.clear();
+	Shaders.clear();
 	MouseInteractionAPI* api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(Window));
 	if (api) {
 		delete api; // Free the dynamically allocated memory
 	}
 	GameObjects.clear();
 	Player = nullptr;
-	Shaders.clear();
 	glfwTerminate();
 }
 
 void World::InitBackground()
 {
 	std::shared_ptr<Shader> shader = std::make_shared<Shader>("Texture.vert", "Texture.frag");
-	NewShaders.push_back(shader);
+	Shaders.push_back(shader);
 	std::vector<float> vertices = {
 		// positions          // colors           // texture coords
 		 1.0f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
@@ -94,7 +93,7 @@ void World::InitHUD()
 void World::InitGrid(const std::string& InFileName)
 {
 	std::shared_ptr<Shader> shader = std::make_shared<Shader>("Grid.vert", "Grid.frag");
-	NewShaders.push_back(shader);
+	Shaders.push_back(shader);
 	gridConfig = XMLParser::ParseGridDataFromXML(InFileName);
 	std::shared_ptr<GridObject> gridObject = std::make_shared<GridObject>(shader, gridConfig, this);
 	objectRenderMap[shader->ID].push_back(gridObject);
@@ -193,7 +192,7 @@ void World::RenderUpdate()
 	//
 	glClearColor(0.2f, 0.3f, 0.76f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
-	for (auto it = NewShaders.begin(); it < NewShaders.end(); it++)
+	for (auto it = Shaders.begin(); it < Shaders.end(); it++)
 	{
 		(*it)->use();
 		unsigned int shaderID = (*it)->ID;

@@ -10,14 +10,6 @@
 #include "UIButton.h"
 #include "HUD.h"
 
-struct WindowContext {
-	MouseInteractionAPI* mouseAPI;
-	float tileWidth;
-	float tileHeight;
-	// Add other APIs or data as needed
-};
-
-
 class World
 {
 private:
@@ -34,8 +26,7 @@ private:
 	std::map<unsigned int, std::vector<std::shared_ptr<Object>>> objectRenderMap;
 	std::shared_ptr<class PlayerObject> Player;
 	//
-	std::vector<std::shared_ptr<Shader>> NewShaders;
-	std::vector<ShaderEntry> Shaders;
+	std::vector<std::shared_ptr<Shader>> Shaders;
 	Shader GridShader;
 	Shader BackGround;
 	Shader floating;
