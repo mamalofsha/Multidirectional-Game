@@ -154,8 +154,8 @@ std::vector<WorkshopData> XMLParser::LoadWorkShops(const std::string& InFileName
 std::vector<Decoration> XMLParser::LoadDecorations(const std::string& InFileName, const std::string& InCategoryName)
 {
     std::vector<Decoration> OutData;
-    tinyxml2::XMLDocument doc;
-    if (doc.LoadFile(InFileName.c_str()) != tinyxml2::XML_SUCCESS) {
+    XMLDocument doc;
+    if (doc.LoadFile(InFileName.c_str()) != XML_SUCCESS) {
         std::cerr << "Error loading XML file: " << InFileName << std::endl;
         return OutData;
     }
@@ -204,6 +204,220 @@ std::vector<Decoration> XMLParser::LoadDecorations(const std::string& InFileName
     }
 
     return OutData;
+}
+
+void XMLParser::UpdateGridValue(const std::string& filename, int gridX, int gridY, int newValue)
+{
+    tinyxml2::XMLDocument doc;
+
+    // Load the XML file
+    if (doc.LoadFile(filename.c_str()) != XML_SUCCESS) {
+        std::cerr << "Error: Unable to load XML file: " << filename << std::endl;
+        return;
+    }
+
+    // Locate the <grid> element
+    XMLElement* root = doc.FirstChildElement("grid");
+    if (!root) {
+        std::cerr << "Error: No <grid> element found in XML." << std::endl;
+        return;
+    }
+
+    // Locate the <tiles> element
+    XMLElement* tiles = root->FirstChildElement("tiles");
+    if (!tiles) {
+        std::cerr << "Error: No <tiles> element found in XML." << std::endl;
+        return;
+    }
+
+    // Navigate to the correct row
+    XMLElement* rowElement = tiles->FirstChildElement("row");
+    for (int i = 0; i < gridY; ++i) {
+        if (rowElement) {
+            rowElement = rowElement->NextSiblingElement("row");
+        }
+        else {
+            std::cerr << "Error: Row index out of range." << std::endl;
+            return;
+        }
+    }
+
+    if (!rowElement) {
+        std::cerr << "Error: Row not found." << std::endl;
+        return;
+    }
+
+    // Parse the row into a vector
+    const char* rowText = rowElement->GetText();
+    if (!rowText) {
+        std::cerr << "Error: Row is empty." << std::endl;
+        return;
+    }
+
+    std::stringstream ss(rowText);
+    std::vector<int> rowValues;
+    int value;
+    while (ss >> value) {
+        rowValues.push_back(value);
+    }
+
+    // Check if the column index is valid
+    if (gridX < 0 || gridX >= static_cast<int>(rowValues.size())) {
+        std::cerr << "Error: Column index out of range." << std::endl;
+        return;
+    }
+
+    // Update the value at the specified column
+    rowValues[gridX] = newValue;
+
+    // Convert the updated row back to a string
+    std::ostringstream newRowText;
+    for (size_t i = 0; i < rowValues.size(); ++i) {
+        newRowText << rowValues[i];
+        if (i < rowValues.size() - 1) {
+            newRowText << " ";
+        }
+    }
+
+    // Update the row text in the XML
+    rowElement->SetText(newRowText.str().c_str());
+
+    // Save the updated XML back to the file
+    if (doc.SaveFile(filename.c_str()) != XML_SUCCESS) {
+        std::cerr << "Error: Unable to save XML file." << std::endl;
+    }
+    else {
+        std::cout << "Grid updated successfully." << std::endl;
+    }
+}
+
+void XMLParser::ResetSave(const std::string& filename)
+{
+    {
+        XMLDocument doc;
+
+        // Load the XML file
+        if (doc.LoadFile(filename.c_str()) != XML_SUCCESS) {
+            std::cerr << "Error: Unable to load XML file: " << filename << std::endl;
+            return;
+        }
+
+        // Locate the <tiles> element
+        XMLElement* root = doc.FirstChildElement("grid");
+        if (!root) {
+            std::cerr << "Error: No <grid> element found in XML." << std::endl;
+            return;
+        }
+
+        XMLElement* tiles = root->FirstChildElement("tiles");
+        if (!tiles) {
+            std::cerr << "Error: No <tiles> element found in XML." << std::endl;
+            return;
+        }
+
+        // Iterate over each <row> element
+        XMLElement* rowElement = tiles->FirstChildElement("row");
+        while (rowElement) {
+            const char* rowText = rowElement->GetText();
+            if (rowText) {
+                // Replace 1s with 0s
+                std::stringstream ss(rowText);
+                std::ostringstream newRow;
+                int value;
+                while (ss >> value) {
+
+                    value = 0;
+
+                    newRow << value << " ";
+                }
+
+                // Remove the trailing space
+                std::string updatedRow = newRow.str();
+                if (!updatedRow.empty() && updatedRow.back() == ' ') {
+                    updatedRow.pop_back();
+                }
+
+                // Update the row text in XML
+                rowElement->SetText(updatedRow.c_str());
+            }
+
+            // Move to the next row
+            rowElement = rowElement->NextSiblingElement("row");
+        }
+
+        // Save the updated XML back to the file
+        if (doc.SaveFile(filename.c_str()) != XML_SUCCESS) {
+            std::cerr << "Error: Unable to save XML file." << std::endl;
+        }
+        else {
+            std::cout << "All 1s have been replaced with 0s successfully." << std::endl;
+        }
+    }
+}
+
+int XMLParser::GetGridValue(const std::string& filename, int gridX, int gridY)
+{
+   XMLDocument doc;
+
+    // Load the XML file
+    if (doc.LoadFile(filename.c_str()) != XML_SUCCESS) {
+        std::cerr << "Error: Unable to load XML file: " << filename << std::endl;
+        return -1; // Return an invalid value to indicate an error
+    }
+
+    // Locate the <grid> element
+    XMLElement* root = doc.FirstChildElement("grid");
+    if (!root) {
+        std::cerr << "Error: No <grid> element found in XML." << std::endl;
+        return -1;
+    }
+
+    // Locate the <tiles> element
+    XMLElement* tiles = root->FirstChildElement("tiles");
+    if (!tiles) {
+        std::cerr << "Error: No <tiles> element found in XML." << std::endl;
+        return -1;
+    }
+
+    // Navigate to the correct row
+    XMLElement* rowElement = tiles->FirstChildElement("row");
+    for (int i = 0; i < gridY; ++i) {
+        if (rowElement) {
+            rowElement = rowElement->NextSiblingElement("row");
+        }
+        else {
+            std::cerr << "Error: Row index out of range." << std::endl;
+            return -1;
+        }
+    }
+
+    if (!rowElement) {
+        std::cerr << "Error: Row not found." << std::endl;
+        return -1;
+    }
+
+    // Parse the row into a vector
+    const char* rowText = rowElement->GetText();
+    if (!rowText) {
+        std::cerr << "Error: Row is empty." << std::endl;
+        return -1;
+    }
+
+    std::stringstream ss(rowText);
+    std::vector<int> rowValues;
+    int value;
+    while (ss >> value) {
+        rowValues.push_back(value);
+    }
+
+    // Check if the column index is valid
+    if (gridX < 0 || gridX >= static_cast<int>(rowValues.size())) {
+        std::cerr << "Error: Column index out of range." << std::endl;
+        return -1;
+    }
+
+    // Return the value at the specified column
+    return rowValues[gridX];
 }
 
 

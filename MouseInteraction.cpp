@@ -124,8 +124,8 @@ std::pair<int, int> MouseInteractionAPI::ScreenToGrid(double screenX, double scr
    // std::cout << "Approx Grid Coordinates: (" << approxGridX << ", " << approxGridY << ")" << std::endl;
 
     // Step 3: Round to the nearest integer grid index
-    int gridX = static_cast<int>(std::ceil(approxGridX));
-    int gridY = static_cast<int>(std::ceil(approxGridY));
+    int gridX = static_cast<int>(std::floor(approxGridX));
+    int gridY = static_cast<int>(std::floor(approxGridY));
 
     // Debugging final grid indices
     //std::cout << "Final Grid Coordinates: (" << gridX << ", " << gridY << ")" << std::endl;

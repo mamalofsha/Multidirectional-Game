@@ -7,20 +7,15 @@
         <width>0.22</width>
         <height>0.11</height>
     </tile>
-	<offset>
+    <offset>
         <x>-1.2</x>
-        <y>0</y>
+        <y>0.0</y>
     </offset>
     <tiles>
-        <row>0 0 0 0 0 0 0 0 0 0</row>
-        <row>0 1 1 1 1 1 1 1 1 0</row>
-        <row>0 0 0 0 0 0 0 0 0 0</row>
-		<row>0 1 1 1 1 1 1 1 1 0</row>
-        <row>0 1 1 1 1 1 1 1 1 0</row>
-		<row>0 1 1 1 1 1 1 1 1 0</row>
-		<row>0 0 0 0 0 0 0 0 0 0</row>
-		<row>0 1 1 1 1 1 1 1 1 0</row>
-        <row>0 1 1 1 1 1 1 1 1 0</row>
-		<row>0 1 1 1 1 1 1 1 1 0</row>
+        <row>1 1 0 0 0</row>
+        <row>1 0 1 0 0</row>
+        <row>0 0 0 0 0</row>
+        <row>0 1 1 0 0</row>
+        <row>0 0 0 1 0</row>
     </tiles>
 </grid>

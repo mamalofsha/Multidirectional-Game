@@ -31,25 +31,41 @@ public:
 		float screenY = 0.0f;
 		auto [winX, winY] = WorldPtr->GetWindowSize();
 		MouseInteractionAPI* api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(WorldPtr->GetWindow()));
-		if (api->GetMouseState().GridX >= 1 && api->GetMouseState().GridX <= WorldPtr->GetGridConfig().width &&
-			api->GetMouseState().GridY >= 1 && api->GetMouseState().GridY <= WorldPtr->GetGridConfig().height)
+		if (api->GetMouseState().GridX >= 0 && api->GetMouseState().GridX < WorldPtr->GetGridConfig().width &&
+			api->GetMouseState().GridY >= 0 && api->GetMouseState().GridY < WorldPtr->GetGridConfig().height)
 		{
-			setSize(0.15f);
-			auto [winX, winY] = WorldPtr->GetWindowSize();
+			int gridvalue = XMLParser::GetGridValue("grid_config.xml", api->GetMouseState().GridX, api->GetMouseState().GridY);
+			if (gridvalue != 0)
+			{
+				setSize(0.05f);
+				std::tie(ndcX, ndcY) = api->screenToNDC(api->GetMouseState().x, api->GetMouseState().y, winX, winY);
+				isAttachedToGrid = false;
+				ObjectShader->setBool("isOverlapping", true);
 
-			std::tie(screenX, screenY) = Graphics::GridToWorldPosition(api->GetMouseState().GridX, api->GetMouseState().GridY,
-				WorldPtr->GetGridConfig().tileWidth, WorldPtr->GetGridConfig().tileHeight,
-				WorldPtr->GetGridConfig().StartOffsetX, WorldPtr->GetGridConfig().StartOffsetY, WorldPtr->GetPanX(), WorldPtr->GetPanY(), size, WorldPtr->GetZoom(), winX, winY);
-			std::tie(ndcX, ndcY) = api->screenToNDC(screenX, screenY, winX, winY);
-			isAttachedToGrid = true;
+			}
+			else
+			{
+				ObjectShader->setBool("isOverlapping", false);
+
+				setSize(0.15f);
+				auto [winX, winY] = WorldPtr->GetWindowSize();
+
+				std::tie(screenX, screenY) = Graphics::GridToWorldPosition(api->GetMouseState().GridX, api->GetMouseState().GridY,
+					WorldPtr->GetGridConfig().tileWidth, WorldPtr->GetGridConfig().tileHeight,
+					WorldPtr->GetGridConfig().StartOffsetX, WorldPtr->GetGridConfig().StartOffsetY, WorldPtr->GetPanX(), WorldPtr->GetPanY(), size, WorldPtr->GetZoom(), winX, winY);
+				std::tie(ndcX, ndcY) = api->screenToNDC(screenX, screenY, winX, winY);
+				isAttachedToGrid = true;
+			}
+
 		}
 		else
 		{
+			ObjectShader->setBool("isOverlapping", false);
+
 			setSize(0.05f);
 			std::tie(ndcX, ndcY) = api->screenToNDC(api->GetMouseState().x, api->GetMouseState().y, winX, winY);
 			isAttachedToGrid = false;
 		}
-
 
 		float scaleX = 2000.0f / winX;
 		float scaleY = 1404.0f / winY;
@@ -57,9 +73,9 @@ public:
 		GLuint  transformLoc;
 		transform = glm::translate(transform, glm::vec3(ndcX, ndcY, 0.0f));
 		transform = glm::scale(transform, glm::vec3(scaleX * WorldPtr->GetZoom()*size, scaleY * WorldPtr->GetZoom() * size, 1.0f));
-
-		transformLoc = glGetUniformLocation(ObjectShader->ID, "transform");
-		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
+		ObjectShader->setMat4("transform", transform);
+		//transformLoc = glGetUniformLocation(ObjectShader->ID, "transform");
+		//glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
 		// Set uniform values
 		//std::cout << ndcY << std::endl;
 		// Bind texture

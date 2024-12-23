@@ -1,6 +1,5 @@
 #pragma once
-#include"TexturedObject.h"
-
+#include "TexturedObject.h"
 
 class Building : public TexturedObject
 {
@@ -18,12 +17,15 @@ public:
 		: TexturedObject(shaderProgram, vertices, indices, texturePath, vertexData, false, InWorldPtr), GridX(InGridX), GridY(InGridY) {
 		// Additional MouseObject-specific initialization here
 		setSize(0.15f);
+		/// fix it , it breaks the ui but everyone here counts from 0
+		XMLParser::UpdateGridValue("grid_config.xml", GridX, GridY, 1);
 	}
 	void draw() override {
 
 		
 		if (isHidden)return;
 		ObjectShader->use();
+		ObjectShader->setBool("isOverlapping", false);
 
 		float ndcX = 0.0f;
 		float ndcY = 0.0f;

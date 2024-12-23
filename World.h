@@ -49,6 +49,7 @@ private:
 	void SetupMouseCallbacks();
 	void RenderUpdate();
 public:
+
 	 std::vector<std::unique_ptr<class Building>> builds;
 	std::unique_ptr<HUD> GameHUD;
 	float GetZoom() { return Zoom; };

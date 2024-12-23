@@ -331,14 +331,12 @@ void Graphics::InitDrawObject(GameObject& InObject)
 std::pair<int, int> Graphics::GridToWorldPosition(int gridX, int gridY, float tileWidth, float tileHeight, float offsetX, float offsetY, float panX,float panY,float itemscale,float zoom ,float windowWidth,float windowHeight)
 {
 	// Step 1: Calculate isometric coordinates for the center of the tile
-	float isoScreenX = (gridX  - gridY + offsetX) * (tileWidth / 2.0f);
+	float isoScreenX = (gridX  - gridY + offsetX - offsetY) * (tileWidth / 2.0f);
 	float isoScreenY = (gridX  + gridY + offsetY+ offsetX) * (tileHeight / 2.0f);
 
 
 
-	float isoScreenXX = (gridX - gridY + 1 + offsetX) * (tileWidth / 2.0f);
-	float adjustedScreenXX = (isoScreenXX + panX) * (zoom * (2000.0f / windowWidth));
-	float screenXX = (adjustedScreenXX + 1.0f) / 2.0f * windowWidth;
+
 	float isoScreenYY = (gridX + gridY + 1 + offsetY + offsetX) * (tileHeight / 2.0f);
 	float adjustedScreenYY = (isoScreenYY + panY) * (zoom * (1404.0f / windowHeight));
 	float screenYY = (1.0f - adjustedScreenYY) / 2.0f * windowHeight;
@@ -353,12 +351,13 @@ std::pair<int, int> Graphics::GridToWorldPosition(int gridX, int gridY, float ti
 	// Step 3: Convert to actual screen space coordinates
 	float screenX = (adjustedScreenX + 1.0f) / 2.0f * windowWidth;
 	float screenY = (1.0f - adjustedScreenY) / 2.0f * windowHeight;
-	float offsetYn = (screenY - screenYY)/2;
-	float offsetXn = (screenX- screenXX) ;
+	/// all images had this offset when scaled up 
+	float offsetYn = (screenY - screenYY)*3/2;
+	//float offsetXn = (screenX- screenXX) ;
 
-//	std::cout << screenY - screenYY << "??" << std::endl;
+	std::cout << screenY - screenYY << "??" << std::endl;
 	//screenX -=90.f/8.f;
-	screenY += offsetYn;
+	screenY -= offsetYn;
 	return { screenX, screenY };
 }
 /*

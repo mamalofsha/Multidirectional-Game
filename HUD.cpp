@@ -32,7 +32,7 @@ HUD::HUD(float inWindowWidth, float inWindowHeight,World* InWorld)
 	};
 	VertexAttribute OutVertexData = { 4,{2,2} };
 	mous = std::make_shared<MouseObject>(shader, vertices, indices, "bridge.png", OutVertexData, Worldptr);
-	mous->setSize(0.15f);
+	mous->setSize(0.05f);
 
 	/// callmuse
 	shopWindow = std::make_shared<UIPaginatedWindow>(UIE,0.0f, 0.0f, 1.5f, 1.5f, "ShopItems.xml","grass.png", this);
