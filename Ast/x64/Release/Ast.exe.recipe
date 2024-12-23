@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>J:\Ast\OpenGL\OpenGL\x64\Release\Ast.exe</FullPath>
+      <FullPath>J:\Ast\x64\Release\Ast.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />
