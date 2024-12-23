@@ -5,11 +5,12 @@ void UIPaginatedWindow::Draw()
     if (IsHidden) return;
 
     // Render the window background
-    ObjectShader->use();
-    ObjectShader->setBool("IsHidden", IsHidden);
-    ObjectShader->setBool("IsHovered", false);
+
     glBindTexture(GL_TEXTURE_2D, Texture);
     glBindVertexArray(VAO);
+    ObjectShader->use();
+    ObjectShader->setBool("IsHidden", IsHidden);
+     ObjectShader->setBool("IsHovered", false);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);

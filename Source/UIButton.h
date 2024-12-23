@@ -25,11 +25,12 @@ public:
 	}
 
 	void Draw() {
-		ObjectShader->use();
-		ObjectShader->setBool("isHovered", IsHovered);
-		ObjectShader->setBool("isHidden", IsHidden);
+
 		glBindTexture(GL_TEXTURE_2D, Texture);
 		glBindVertexArray(VAO);
+		ObjectShader->use();
+		ObjectShader->setBool("IsHovered", IsHovered);
+		ObjectShader->setBool("IsHidden", IsHidden);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 

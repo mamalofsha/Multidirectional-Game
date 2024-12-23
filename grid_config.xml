@@ -12,7 +12,7 @@
         <y>0.0</y>
     </offset>
     <tiles>
-        <row>0 0 0 0 workshop5</row>
+        <row>0 decoration1 0 0 workshop5</row>
         <row>decoration3 0 decoration2 0 0</row>
         <row>0 decoration4 workshop1 0 0</row>
         <row>0 0 0 0 0</row>
