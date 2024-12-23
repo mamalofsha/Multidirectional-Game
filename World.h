@@ -49,7 +49,7 @@ private:
 	void SetupMouseCallbacks();
 	void RenderUpdate();
 public:
-
+	 std::vector<std::unique_ptr<class Building>> builds;
 	std::unique_ptr<HUD> GameHUD;
 	float GetZoom() { return Zoom; };
 	float GetPanX() { return panX; };
@@ -57,7 +57,7 @@ public:
 	GridConfig GetGridConfig() { return gridConfig; };
 	MouseState GetMouserState() { return mouseState; };
 	GLFWwindow* GetWindow() { return Window; };
-	std::vector<int> GetWindowSize();
+	std::pair<int, int> GetWindowSize();
 	World(std::vector<std::shared_ptr<GameObject>>& GameObjects);
 	World(const std::string& InFileName);
 	~World();

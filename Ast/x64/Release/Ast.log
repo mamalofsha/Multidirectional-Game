@@ -1,0 +1,226 @@
+﻿  GameObject.cpp
+  Graphics.cpp
+J:\Ast\UIButton.h(20,32): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'Graphics.cpp')
+  
+J:\Ast\UIButton.h(20,24): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'Graphics.cpp')
+  
+J:\Ast\Graphics.cpp(73,25): warning C4267: 'argument': conversion from 'size_t' to 'GLuint', possible loss of data
+J:\Ast\Graphics.cpp(74,29): warning C4267: 'argument': conversion from 'size_t' to 'GLuint', possible loss of data
+J:\Ast\Graphics.cpp(136,87): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+J:\Ast\Graphics.cpp(136,67): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+J:\Ast\Graphics.cpp(156,48): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+J:\Ast\Graphics.cpp(156,34): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+J:\Ast\Graphics.cpp(482,39): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
+J:\Ast\Graphics.cpp(482,39): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+J:\Ast\Graphics.cpp(482,167): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
+J:\Ast\Graphics.cpp(482,167): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+J:\Ast\Graphics.cpp(483,39): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
+J:\Ast\Graphics.cpp(483,39): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+J:\Ast\Graphics.cpp(483,167): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
+J:\Ast\Graphics.cpp(483,167): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\utility(250,16): warning C4244: 'initializing': conversion from 'float' to '_Ty1', possible loss of data
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\utility(250,16): warning C4244:         with
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\utility(250,16): warning C4244:         [
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\utility(250,16): warning C4244:             _Ty1=int
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\utility(250,16): warning C4244:         ]
+  (compiling source file 'Graphics.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\utility(250,16):
+      the template instantiation context (the oldest one first) is
+          J:\Ast\Graphics.cpp(361,2):
+          see reference to function template instantiation 'std::pair<int,int>::pair<float&,float&,0>(_Other1,_Other2) noexcept' being compiled
+          with
+          [
+              _Other1=float &,
+              _Other2=float &
+          ]
+              J:\Ast\Graphics.cpp(361,2):
+              see the first reference to 'std::pair<int,int>::pair' in 'Graphics::GridToWorldPosition'
+  
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\utility(250,54): warning C4244: 'initializing': conversion from 'float' to '_Ty2', possible loss of data
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\utility(250,54): warning C4244:         with
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\utility(250,54): warning C4244:         [
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\utility(250,54): warning C4244:             _Ty2=int
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\utility(250,54): warning C4244:         ]
+  (compiling source file 'Graphics.cpp')
+  
+  GridObject.cpp
+  HUD.cpp
+J:\Ast\UIButton.h(20,32): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'HUD.cpp')
+  
+J:\Ast\UIButton.h(20,24): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'HUD.cpp')
+  
+J:\Ast\MouseObject.h(34,211): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+J:\Ast\MouseObject.h(34,211): warning C4244:         with
+J:\Ast\MouseObject.h(34,211): warning C4244:         [
+J:\Ast\MouseObject.h(34,211): warning C4244:             _Ty=int
+J:\Ast\MouseObject.h(34,211): warning C4244:         ]
+  (compiling source file 'HUD.cpp')
+  
+J:\Ast\MouseObject.h(34,181): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+J:\Ast\MouseObject.h(34,181): warning C4244:         with
+J:\Ast\MouseObject.h(34,181): warning C4244:         [
+J:\Ast\MouseObject.h(34,181): warning C4244:             _Ty=int
+J:\Ast\MouseObject.h(34,181): warning C4244:         ]
+  (compiling source file 'HUD.cpp')
+  
+J:\Ast\MouseObject.h(40,88): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'HUD.cpp')
+  
+J:\Ast\MouseObject.h(40,64): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'HUD.cpp')
+  
+J:\Ast\UIPaginatedWindow.h(89,36): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'HUD.cpp')
+  
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\tuple(678,57): warning C4244: '=': conversion from '_Ty' to 'float', possible loss of data
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\tuple(678,57): warning C4244:         with
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\tuple(678,57): warning C4244:         [
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\tuple(678,57): warning C4244:             _Ty=int
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\tuple(678,57): warning C4244:         ]
+  (compiling source file 'HUD.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\tuple(678,57):
+      the template instantiation context (the oldest one first) is
+          J:\Ast\MouseObject.h(32,31):
+          see reference to function template instantiation 'std::tuple<float &,float &> &std::tuple<float &,float &>::operator =<int,int,0>(std::pair<int,int> &&) noexcept' being compiled
+              J:\Ast\MouseObject.h(32,31):
+              see the first reference to 'std::tuple<float &,float &>::operator =' in 'MouseObject::draw'
+  
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\tuple(679,58): warning C4244: '=': conversion from '_Ty' to 'float', possible loss of data
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\tuple(679,58): warning C4244:         with
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\tuple(679,58): warning C4244:         [
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\tuple(679,58): warning C4244:             _Ty=int
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\tuple(679,58): warning C4244:         ]
+  (compiling source file 'HUD.cpp')
+  
+J:\Ast\UIPaginatedWindow.h(135,11): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  (compiling source file 'HUD.cpp')
+      J:\Ast\UIPaginatedWindow.h(135,11):
+      the template instantiation context (the oldest one first) is
+          J:\Ast\HUD.cpp(62,12):
+          see reference to function template instantiation 'void UIPaginatedWindow::addTab<WorkshopData>(const std::string &,const std::string &)' being compiled
+  
+J:\Ast\UIPaginatedWindow.h(155,11): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  (compiling source file 'HUD.cpp')
+      J:\Ast\UIPaginatedWindow.h(155,11):
+      the template instantiation context (the oldest one first) is
+          J:\Ast\HUD.cpp(63,12):
+          see reference to function template instantiation 'void UIPaginatedWindow::addTab<Decoration>(const std::string &,const std::string &)' being compiled
+  
+  Math.cpp
+  MouseInteraction.cpp
+J:\Ast\UIButton.h(20,32): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'MouseInteraction.cpp')
+  
+J:\Ast\UIButton.h(20,24): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'MouseInteraction.cpp')
+  
+J:\Ast\MouseInteraction.cpp(64,37): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+J:\Ast\MouseInteraction.cpp(64,31): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+J:\Ast\MouseInteraction.cpp(78,35): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+J:\Ast\MouseInteraction.cpp(78,30): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+J:\Ast\MouseInteraction.cpp(110,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+J:\Ast\MouseInteraction.cpp(111,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  PlayerObject.cpp
+  Object.cpp
+  Source.cpp
+J:\Ast\UIButton.h(20,32): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'Source.cpp')
+  
+J:\Ast\UIButton.h(20,24): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'Source.cpp')
+  
+J:\Ast\Source.cpp(11,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+J:\Ast\Source.cpp(13,26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  stb_image.cpp
+  World.cpp
+J:\Ast\UIButton.h(20,32): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'World.cpp')
+  
+J:\Ast\UIButton.h(20,24): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'World.cpp')
+  
+J:\Ast\MouseObject.h(34,211): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+J:\Ast\MouseObject.h(34,211): warning C4244:         with
+J:\Ast\MouseObject.h(34,211): warning C4244:         [
+J:\Ast\MouseObject.h(34,211): warning C4244:             _Ty=int
+J:\Ast\MouseObject.h(34,211): warning C4244:         ]
+  (compiling source file 'World.cpp')
+  
+J:\Ast\MouseObject.h(34,181): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+J:\Ast\MouseObject.h(34,181): warning C4244:         with
+J:\Ast\MouseObject.h(34,181): warning C4244:         [
+J:\Ast\MouseObject.h(34,181): warning C4244:             _Ty=int
+J:\Ast\MouseObject.h(34,181): warning C4244:         ]
+  (compiling source file 'World.cpp')
+  
+J:\Ast\MouseObject.h(40,88): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'World.cpp')
+  
+J:\Ast\MouseObject.h(40,64): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'World.cpp')
+  
+J:\Ast\UIPaginatedWindow.h(89,36): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'World.cpp')
+  
+J:\Ast\GridObject.h(23,98): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'World.cpp')
+  
+J:\Ast\GridObject.h(23,78): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'World.cpp')
+  
+J:\Ast\GridObject.h(41,62): warning C4244: 'argument': conversion from '_Ty' to 'GLfloat', possible loss of data
+J:\Ast\GridObject.h(41,62): warning C4244:         with
+J:\Ast\GridObject.h(41,62): warning C4244:         [
+J:\Ast\GridObject.h(41,62): warning C4244:             _Ty=int
+J:\Ast\GridObject.h(41,62): warning C4244:         ]
+  (compiling source file 'World.cpp')
+  
+J:\Ast\GridObject.h(41,47): warning C4244: 'argument': conversion from '_Ty' to 'GLfloat', possible loss of data
+J:\Ast\GridObject.h(41,47): warning C4244:         with
+J:\Ast\GridObject.h(41,47): warning C4244:         [
+J:\Ast\GridObject.h(41,47): warning C4244:             _Ty=int
+J:\Ast\GridObject.h(41,47): warning C4244:         ]
+  (compiling source file 'World.cpp')
+  
+J:\Ast\GridObject.h(65,46): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+  (compiling source file 'World.cpp')
+  
+J:\Ast\World.cpp(35,85): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+J:\Ast\World.cpp(35,48): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\tuple(678,57): warning C4244: '=': conversion from '_Ty' to 'float', possible loss of data
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\tuple(678,57): warning C4244:         with
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\tuple(678,57): warning C4244:         [
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\tuple(678,57): warning C4244:             _Ty=int
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\tuple(678,57): warning C4244:         ]
+  (compiling source file 'World.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\tuple(678,57):
+      the template instantiation context (the oldest one first) is
+          J:\Ast\MouseObject.h(32,31):
+          see reference to function template instantiation 'std::tuple<float &,float &> &std::tuple<float &,float &>::operator =<int,int,0>(std::pair<int,int> &&) noexcept' being compiled
+              J:\Ast\MouseObject.h(32,31):
+              see the first reference to 'std::tuple<float &,float &>::operator =' in 'MouseObject::draw'
+  
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\tuple(679,58): warning C4244: '=': conversion from '_Ty' to 'float', possible loss of data
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\tuple(679,58): warning C4244:         with
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\tuple(679,58): warning C4244:         [
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\tuple(679,58): warning C4244:             _Ty=int
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\tuple(679,58): warning C4244:         ]
+  (compiling source file 'World.cpp')
+  
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\memory(3465,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'World.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\memory(3465,56):
+      the template instantiation context (the oldest one first) is
+          J:\Ast\World.cpp(86,17):
+          see reference to function template instantiation 'std::unique_ptr<HUD,std::default_delete<HUD>> std::make_unique<HUD,int&,int&,World*,0>(int &,int &,World *&&)' being compiled
+  
+  XMLParser.cpp
+tinyxml2_static.lib(tinyxml2.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in GameObject.obj
+tinyxml2_static.lib(tinyxml2.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MD_DynamicRelease' in GameObject.obj
+tinyxml2_static.lib(tinyxml2.obj) : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:ICF' specification
+LINK : warning LNK4098: defaultlib 'MSVCRTD' conflicts with use of other libs; use /NODEFAULTLIB:library
+J:\Ast\x64\Release\Ast.exe : fatal error LNK1319: 2 mismatches detected

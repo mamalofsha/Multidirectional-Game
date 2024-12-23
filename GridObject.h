@@ -37,8 +37,8 @@ public:
 		GLint tileSizeLocation = glGetUniformLocation(ObjectShader->ID, "tileSize");
 		glUniform2f(tileSizeLocation, InGridConfig.tileWidth, InGridConfig.tileHeight);
 		GLint screenSizeLocation = glGetUniformLocation(ObjectShader->ID, "screenSize");
-		std::vector<int> WindowSize = WorldPtr->GetWindowSize();
-		glUniform2f(screenSizeLocation, WindowSize[0], WindowSize[1]);
+		auto [winX,winY]= WorldPtr->GetWindowSize();
+		glUniform2f(screenSizeLocation, winX, winY);
     }
 
     ~GridObject() {
@@ -47,9 +47,9 @@ public:
     }
 
     void draw() override {
-        std::vector<int> WindowSize = WorldPtr->GetWindowSize();
-        float scaleX = 2000.0f / WindowSize[0];
-        float scaleY = 1404.0f / WindowSize[1];
+		auto [winX, winY] = WorldPtr->GetWindowSize();
+        float scaleX = 2000.0f / winX;
+        float scaleY = 1404.0f / winY;
 		glm::mat4 transform = glm::mat4(1.0f);
 		GLuint  transformLoc;
 		ObjectShader->setUniform2i("tileCoor", WorldPtr->GetMouserState().GridX, WorldPtr->GetMouserState().GridY);

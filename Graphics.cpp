@@ -46,7 +46,7 @@ GLFWwindow* Graphics::InitWindow(const unsigned int Width, const unsigned int He
 	return Window;
 }
 
-RenderData Graphics::DrawTexture( std::vector<float> vertices, std::vector<unsigned int> indices,VertexAttribute InAttribute, const char* InFileName, bool isRGB)
+RenderData Graphics::DrawTexture( std::vector<float> vertices, std::vector<unsigned int> indices,VertexAttribute InAttribute, const char* InFileName)
 {
 	//Shader ourShader("Texture.vert", "Texture.frag");
 
@@ -116,7 +116,8 @@ RenderData Graphics::DrawTexture( std::vector<float> vertices, std::vector<unsig
 	stbi_set_flip_vertically_on_load(true);
 	unsigned char* data = stbi_load(InFileName, &width, &height, &nrChannels, 0);
 	if (data) {
-		glTexImage2D(GL_TEXTURE_2D, 0, isRGB? GL_RGB: GL_RGBA, width, height, 0, isRGB ? GL_RGB : GL_RGBA, GL_UNSIGNED_BYTE, data);
+		GLenum format = (nrChannels == 4) ? GL_RGBA : GL_RGB; // Detect if image has alpha
+		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
 		//glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else {
@@ -352,10 +353,10 @@ std::pair<int, int> Graphics::GridToWorldPosition(int gridX, int gridY, float ti
 	// Step 3: Convert to actual screen space coordinates
 	float screenX = (adjustedScreenX + 1.0f) / 2.0f * windowWidth;
 	float screenY = (1.0f - adjustedScreenY) / 2.0f * windowHeight;
-	float offsetYn = (screenY - screenYY);
+	float offsetYn = (screenY - screenYY)/2;
 	float offsetXn = (screenX- screenXX) ;
 
-	std::cout << screenY - screenYY << "??" << std::endl;
+//	std::cout << screenY - screenYY << "??" << std::endl;
 	//screenX -=90.f/8.f;
 	screenY += offsetYn;
 	return { screenX, screenY };

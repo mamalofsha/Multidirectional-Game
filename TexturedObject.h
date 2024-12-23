@@ -19,7 +19,7 @@ public:
     TexturedObject(std::shared_ptr<Shader> shaderProgram, const std::vector<float>& vertices, const std::vector<unsigned int>& indices, const char* texturePath, VertexAttribute InAttribute,bool isRGB,World* InWorldptr)
         : Object(shaderProgram) {
         WorldPtr = InWorldptr;
-        RenderData NewData = Graphics::DrawTexture(vertices,indices, InAttribute,texturePath, isRGB);
+        RenderData NewData = Graphics::DrawTexture(vertices,indices, InAttribute,texturePath);
         VAO = NewData.VAO;
         VBO = NewData.VBO;
         EBO = NewData.EBO;
@@ -42,11 +42,11 @@ public:
     }
 
     void draw() override {
-        std::vector<int> WindowSize = WorldPtr->GetWindowSize();
+        auto [winX,winY] = WorldPtr->GetWindowSize();
         ObjectShader->use();
         // todo dont forget to read from xmll
-        float scaleX = 2000.0f / WindowSize[0];
-        float scaleY = 1404.0f / WindowSize[1];
+        float scaleX = 2000.0f / winX;
+        float scaleY = 1404.0f / winY;
         glm::mat4 transform = glm::mat4(1.0f);
         GLuint  transformLoc;
         glBindTexture(GL_TEXTURE_2D, Texture);

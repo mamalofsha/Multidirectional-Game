@@ -12,16 +12,15 @@
 #include "TexturedObject.h"
 #include "GridObject.h"
 #include "MouseObject.h"
+#include "Building.h"
+
 #include FT_FREETYPE_H
 
-std::vector<int> World::GetWindowSize()
+std::pair<int, int> World::GetWindowSize()
 {
-	std::vector<int> Output;
 	int windowWidth, windowHeight;
 	glfwGetWindowSize(Window, &windowWidth, &windowHeight);
-	Output.push_back(windowWidth);
-	Output.push_back(windowHeight);
-	return Output;
+	return { windowWidth ,windowHeight };
 }
 
 World::World(std::vector<std::shared_ptr<GameObject>>& GameObjects)
@@ -205,7 +204,11 @@ void World::RenderUpdate()
 			std::cerr << "No objects found for shader ID: " << shaderID << std::endl;
 		}
 	}
-
+	if(!builds.empty())
+		for (auto it = builds.begin(); it < builds.end(); it++)
+		{
+			(*it)->draw();
+		}
 
 	GameHUD->Update();
 	glfwSwapBuffers(Window);

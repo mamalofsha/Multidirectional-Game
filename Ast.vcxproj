@@ -157,6 +157,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\OpenGL-Lib\glad.c" />
+    <ClCompile Include="Building.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="GridObject.cpp" />
@@ -185,6 +186,7 @@
     <None Include="UI.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Building.h" />
     <ClInclude Include="GridObject.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="MouseObject.h" />

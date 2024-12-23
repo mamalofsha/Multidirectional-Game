@@ -117,6 +117,15 @@ void HUD::onHoverFunction(int gridX, int gridY, float screenX, float screenY)
 
 void HUD::onClickFunction(int gridX, int gridY, float screenX, float screenY)
 {
+	if (!mous->isHidden)
+	{
+		mous->ExecuteAction();
+		std::cout << "decdi";
+		//if (mous->GetIsAttachedtoGrid())
+		//{
+		//	mous->SetHidden(true);
+		//}
+	}
 	for (auto& element : UIElements)
 	{
 		if (auto button = std::dynamic_pointer_cast<UIButton>(element)) {
@@ -145,4 +154,6 @@ void HUD::onClickFunction(int gridX, int gridY, float screenX, float screenY)
 			}
 		}
 	}
+
 }
+ 
