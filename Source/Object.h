@@ -17,6 +17,7 @@ public:
     virtual void SetHidden(bool NewHidden){ IsHidden = NewHidden;}
     bool GetHidden() { return IsHidden; };
     bool GetMarkedForDelete() { return IsMarkedForDelete; };
+    virtual void MarkForDelete() {};
     virtual void Draw() = 0;
     void SetSize(float s) {Size = s;}
     std::shared_ptr<Shader> GetShader() { return ObjectShader; };

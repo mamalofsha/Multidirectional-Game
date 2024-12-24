@@ -3,9 +3,16 @@
 
 void Building::Draw()
 {
+	if (IsMarkedForDelete)
+	{
+		std::cout << GridY << std::endl;
+		return;
+	}
 	if (IsHidden)return;
 	ObjectShader->use();
 	ObjectShader->setBool("IsOverlapping", false);
+	ObjectShader->setBool("IsHidden", false);
+
 	float NdcX = 0.0f;
 	float NdcY = 0.0f;
 	float ScreenX = 0.0f;
@@ -27,4 +34,24 @@ void Building::Draw()
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+std::pair<int, int> Building::GetGridCoord()
+{
+	return {GridX,GridY};
+}
+
+void Building::MarkForDelete()
+{
+	ObjectShader->use();
+	ObjectShader->setBool("IsOverlapping", false);
+	ObjectShader->setBool("IsHidden", true);
+	IsHidden = true;
+	glBindTexture(GL_TEXTURE_2D, Texture);
+	glBindVertexArray(VAO);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	glBindVertexArray(0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	IsMarkedForDelete = true;
+	//ObjectShader->setBool("IsHidden", false);
 }

@@ -43,6 +43,7 @@
     <ClCompile Include="Source\Source.cpp" />
     <ClCompile Include="Source\TexturedObject.cpp" />
     <ClCompile Include="Source\UIButton.cpp" />
+    <ClCompile Include="Source\UIDetailsWindow.cpp" />
     <ClCompile Include="Source\UIElement.cpp" />
     <ClCompile Include="Source\UIPaginatedWindow.cpp" />
     <ClCompile Include="Source\UIWindow.cpp" />
@@ -63,6 +64,7 @@
     <ClInclude Include="Source\Shader.h" />
     <ClInclude Include="Source\TexturedObject.h" />
     <ClInclude Include="Source\UIButton.h" />
+    <ClInclude Include="Source\UIDetailsWindow.h" />
     <ClInclude Include="Source\UIElement.h" />
     <ClInclude Include="Source\UIPaginatedWindow.h" />
     <ClInclude Include="Source\UIWindow.h" />

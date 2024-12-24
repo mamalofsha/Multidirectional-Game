@@ -17,4 +17,7 @@ public:
         SetSize(0.15f);
     }
 	void Draw() override;
+    std::pair<int, int> GetGridCoord();
+    virtual void MarkForDelete() override;
+   // virtual int 
 };

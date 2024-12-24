@@ -1,5 +1,15 @@
 #pragma once
 #include "Object.h"
+
+struct UIText
+{
+    float OffSetX = 0.0f;
+    float OffSetY = 0.0f;
+    std::string ActualText = "";
+    float Scale = 1.0f;
+    glm::vec3 TextColor = glm::vec3(0, 0, 0);
+};
+
 class UIElement : public Object {
 public:
     float PosX, PosY; // Center position

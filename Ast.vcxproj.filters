@@ -120,6 +120,9 @@
     <ClCompile Include="Source\MouseObject.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\UIDetailsWindow.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Building.h">
@@ -388,6 +391,9 @@
     </ClInclude>
     <ClInclude Include="ThirdParty\Freetype\Include\tttags.h">
       <Filter>ThirdParty\Freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UIDetailsWindow.h">
+      <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

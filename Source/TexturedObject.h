@@ -18,10 +18,15 @@ public:
         InitializeFromRenderData(Graphics::DrawTexture(InVertices, InIndices, InAttribute, InTexturePath));
     }
     ~TexturedObject() {
+       // ObjectShader->use();
+       // ObjectShader->setBool("IsHidden", true); // Mark as hidden
+       // ObjectShader = nullptr;
+       // WorldPtr = nullptr;
         glDeleteVertexArrays(1, &VAO);
         glDeleteBuffers(1, &VBO);
         glDeleteBuffers(1, &EBO);
         glDeleteTextures(1, &Texture);
+
     }
     void Draw() override;
     void InitializeFromRenderData(const RenderData& InData) override;

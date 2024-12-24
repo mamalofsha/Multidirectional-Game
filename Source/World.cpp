@@ -36,7 +36,7 @@ World::~World()
 	Shaders.clear();
 	MouseInteractionAPI* Api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(Window));
 	if (Api) {
-		delete Api; 
+		delete Api;
 	}
 	GameObjects.clear();
 	glfwTerminate();
@@ -136,9 +136,9 @@ void World::ProcessInputGL(GLFWwindow* InWindow)
 
 void World::GarbageCollection()
 {
-	for (auto It = GameObjects.begin(); It != GameObjects.end();) {
+	for (auto It = Buildings.begin(); It != Buildings.end();) {
 		if ((*It)->GetMarkedForDelete()) {
-			It = GameObjects.erase(It);
+			It = Buildings.erase(It);
 		}
 		else {
 			++It;
@@ -150,10 +150,10 @@ void World::SetupMouseCallbacks()
 {
 	MouseAPI = new MouseInteractionAPI(Window, GridConfigData, StartUp.LevelWidth, StartUp.LevelHeight);
 	MouseAPI->SetClickCallback([this](int InGridX, int InGridY, float InScreenX, float InScreenY) {
-		this->GameHUD->onClickFunction(InGridX, InGridY, InScreenX, InScreenY);
+		this->GameHUD->OnClickFunction(InGridX, InGridY, InScreenX, InScreenY);
 		});
 	MouseAPI->SetHoverCallback([this](int InGridX, int InGridY, float InScreenX, float InScreenY) {
-		this->GameHUD->onHoverFunction(InGridX, InGridY, InScreenX, InScreenY);
+		this->GameHUD->OnHoverFunction(InGridX, InGridY, InScreenX, InScreenY);
 		});
 }
 
@@ -184,7 +184,7 @@ void World::RenderUpdate()
 
 void World::LoadSave()
 {
-	// make the rows in the xml file if this was initial launch 
+	// make the rows (based on grid config e.g 2x2 , 4x2 )in the xml file if this was initial launch 
 	XMLParser::CheckInitEmptySave(StartUp.GridFileName, GridConfigData.Width, GridConfigData.Height);
 	for (size_t i = 0; i < GridConfigData.Width; i++) {
 		for (size_t j = 0; j < GridConfigData.Height; j++) {
@@ -229,4 +229,17 @@ std::pair<float, float> World::GetPan()
 std::pair<float, float> World::GetLevelSize()
 {
 	return { static_cast<float>(StartUp.LevelWidth), static_cast<float>(StartUp.LevelHeight) };
+}
+
+void World::DeleteBuilding(int InGridX, int InGridY)
+{
+	for (auto It = Buildings.begin(); It < Buildings.end(); ++It)
+	{
+		auto [TempX, TempY] = (*It)->GetGridCoord();
+		if (TempX == InGridX && TempY == InGridY)
+		{
+			(*It)->MarkForDelete();
+			break;
+		}
+	}
 }

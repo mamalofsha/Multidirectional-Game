@@ -28,9 +28,8 @@ public:
 		HudPtr = InHud;
 		InitializeFromRenderData(Graphics::DrawUIElement(std::vector<float>{InPosX, InPosY}, std::vector<float>{InWidth, InHeight}, InAssetPath.c_str()));
 	}
-
+	 void UpdateChildrenButtons(float InX, float InY)override;
 	void Draw() override;
-	void UpdateChildrenButtons(float InX, float InY);
 	void AddButton(std::shared_ptr<UIButton> InChild) { PageControls.push_back(InChild); };
 	void NextPage();
 	void PreviousPage();
@@ -56,8 +55,8 @@ inline void UIPaginatedWindow::AddTab(const std::string& InUITabName, const std:
 			std::shared_ptr<UIButton> Button = std::make_shared<UIButton>(HudPtr->GetUIShader(), -0.3f + (X * 0.6f), 0.4f + (Y * -0.4f), 0.2f, 0.1f, [&, Item]() {
 				std::cout << "Spawned item: " << Item.Name << " and attached to the mouse." << std::endl;
 				this->SetHidden(true);
-				HudPtr->mous->SetItemID(Item.ItemID);
-				HudPtr->mous->ReloadTexture(Item.ImageFile.c_str());
+				HudPtr->GetMouseObjectPtr()->SetItemID(Item.ItemID);
+				HudPtr->GetMouseObjectPtr()->ReloadTexture(Item.ImageFile.c_str());
 				}, Item.Name, Item.ImageFile, HudPtr);
 			UIElements.push_back(Button);
 
@@ -74,8 +73,8 @@ inline void UIPaginatedWindow::AddTab(const std::string& InUITabName, const std:
 
 			std::shared_ptr<UIButton> Button = std::make_shared<UIButton>(HudPtr->GetUIShader(), -0.3f + (X * 0.6f), 0.4f + (Y * -0.4f), 0.2f, 0.1f, [&, Item]() {
 				this->SetHidden(true);
-				HudPtr->mous->SetItemID(Item.ItemID);
-				HudPtr->mous->ReloadTexture(Item.ImageFile.c_str());
+				HudPtr->GetMouseObjectPtr()->SetItemID(Item.ItemID);
+				HudPtr->GetMouseObjectPtr()->ReloadTexture(Item.ImageFile.c_str());
 				}, Item.Name, Item.ImageFile, HudPtr);
 			UIElements.push_back(Button);
 		}

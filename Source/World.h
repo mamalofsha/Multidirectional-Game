@@ -31,6 +31,8 @@ private:
 	Shader FloatingShader;
 	//
 	MouseInteractionAPI* MouseAPI;
+	using GridBroadcastDelegate = std::function<void(int, int)>;
+	std::vector<GridBroadcastDelegate> Listeners;
 
 	void InitBackground();
 	void InitHUD();
@@ -57,4 +59,5 @@ public:
 	MouseState GetMouseState() { return MouseAPI->GetMouseState(); };
 	GridConfig GetGridConfig() { return GridConfigData; };
 	StartUpData GetStartupData() { return StartUp; };
+	void DeleteBuilding(int InGridX, int InGridY);
 };
