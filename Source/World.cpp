@@ -184,6 +184,7 @@ void World::RenderUpdate()
 {
 	glClearColor(0.2f, 0.3f, 0.76f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
+	// to reduce shader use calls 
 	for (auto It = Shaders.begin(); It < Shaders.end(); It++) {
 		(*It)->use();
 		unsigned int ShaderID = (*It)->ID;
@@ -198,9 +199,24 @@ void World::RenderUpdate()
 		}
 	}
 	if (!Buildings.empty())
-		for (auto It = Buildings.begin(); It < Buildings.end(); It++) {
-			(*It)->Draw();
+	{
+		// quick dirty way to get depth for buildings...
+		for (int j = GridConfigData.Height - 1; j >= 0; j--)
+		{
+			for (int i = GridConfigData.Width - 1; i >= 0; i--)
+			{
+				// does the save indicate there's something here ?
+				if (XMLParser::GetGridValue(StartUp.GridFileName, i, j) == "0")continue;
+				for (auto It = Buildings.begin(); It < Buildings.end(); It++) {
+					if ((*It)->GetGridCoord().first == i && (*It)->GetGridCoord().second == j)
+					{
+						(*It)->Draw();
+						break;
+					}
+				}
+			}
 		}
+	}
 	GameHUD->Update();
 	glfwSwapBuffers(Window);
 }
