@@ -8,9 +8,11 @@ void Building::Draw()
 		return;
 	}
 	if (IsHidden)return;
-	ObjectShader->use();
-	ObjectShader->setBool("IsOverlapping", false);
-	ObjectShader->setBool("IsHidden", false);
+	auto SharedObjectShader = ObjectShader.lock();
+	if (!SharedObjectShader)return;
+	SharedObjectShader->use();
+	SharedObjectShader->setBool("IsOverlapping", false);
+	SharedObjectShader->setBool("IsHidden", false);
 	float NdcX = 0.0f;
 	float NdcY = 0.0f;
 	float ScreenX = 0.0f;
@@ -26,7 +28,7 @@ void Building::Draw()
 	glm::mat4 Transform = glm::mat4(1.0f);
 	Transform = glm::translate(Transform, glm::vec3(NdcX, NdcY, 0.0f));
 	Transform = glm::scale(Transform, glm::vec3(ScaleX * WorldPtr->GetZoom() * Size, ScaleY * WorldPtr->GetZoom() * Size, 1.0f));
-	ObjectShader->setMat4("Transform", Transform);
+	SharedObjectShader->setMat4("Transform", Transform);
 	glBindTexture(GL_TEXTURE_2D, Texture);
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -36,19 +38,22 @@ void Building::Draw()
 
 std::pair<int, int> Building::GetGridCoord()
 {
-	return {GridX,GridY};
+	return { GridX,GridY };
 }
 
 void Building::MarkForDelete()
 {
-	ObjectShader->use();
-	ObjectShader->setBool("IsOverlapping", false);
-	ObjectShader->setBool("IsHidden", true);
-	IsHidden = true;
-	glBindTexture(GL_TEXTURE_2D, Texture);
-	glBindVertexArray(VAO);
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-	glBindVertexArray(0);
-	glBindTexture(GL_TEXTURE_2D, 0);
+	auto SharedObjectShader = ObjectShader.lock();
+	if (SharedObjectShader) {
+		SharedObjectShader->use();
+		SharedObjectShader->setBool("IsOverlapping", false);
+		SharedObjectShader->setBool("IsHidden", true);
+		IsHidden = true;
+		glBindTexture(GL_TEXTURE_2D, Texture);
+		glBindVertexArray(VAO);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glBindVertexArray(0);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
 	IsMarkedForDelete = true;
 }

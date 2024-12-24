@@ -5,7 +5,7 @@ class Workshop : public Building {
 private:
     WorkshopData Data;
 public:
-    Workshop(std::shared_ptr<Shader> InShader,
+    Workshop(std::weak_ptr<Shader> InShader,
         const std::vector<float>& InVertices,
         const std::vector<unsigned int>& InIndices,
         const VertexAttribute& InVertexData,

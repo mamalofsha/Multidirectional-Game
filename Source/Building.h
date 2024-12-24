@@ -6,7 +6,7 @@ class Building : public TexturedObject
 protected:
     int GridX,GridY;
 public:
-    Building(std::shared_ptr<Shader> InShaderProgram,
+    Building(std::weak_ptr<Shader> InShaderProgram,
         const std::vector<float>& InVertices,
         const std::vector<unsigned int>& InIndices,
         const char* InTexturePath,

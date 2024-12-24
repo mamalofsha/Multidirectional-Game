@@ -6,7 +6,7 @@ class Decoration : public Building {
 private:
     DecorationData Data;
 public:
-    Decoration(std::shared_ptr<Shader> InShader,
+    Decoration(std::weak_ptr<Shader> InShader,
         const std::vector<float>& InVertices,
         const std::vector<unsigned int>& InIndices,
         const VertexAttribute& InVertexData,

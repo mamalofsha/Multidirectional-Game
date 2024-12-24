@@ -6,14 +6,18 @@
 void UIDetailsWindow::Draw()
 {
 	if (IsHidden) return;
-	ObjectShader->use();
-	ObjectShader->setBool("IsHidden", IsHidden);
-	ObjectShader->setBool("IsHovered", false);
+	auto SharedObjectShader = ObjectShader.lock();
+	if (SharedObjectShader) 
+	{
+	SharedObjectShader->use();
+	SharedObjectShader->setBool("IsHidden", IsHidden);
+	SharedObjectShader->setBool("IsHovered", false);
 	glBindTexture(GL_TEXTURE_2D, Texture);
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 	glBindTexture(GL_TEXTURE_2D, 0);
+	}
 	for (auto It = PageControls.begin(); It != PageControls.end(); ++It) {
 		(*It)->Draw();
 	}

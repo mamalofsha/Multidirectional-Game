@@ -12,7 +12,7 @@ protected:
     unsigned int Texture;       // Texture handle
 
 public:
-    TexturedObject(std::shared_ptr<Shader> InShaderProgram, const std::vector<float>& InVertices, const std::vector<unsigned int>& InIndices, const char* InTexturePath, VertexAttribute InAttribute,World* InWorldptr)
+    TexturedObject(std::weak_ptr<Shader> InShaderProgram, const std::vector<float>& InVertices, const std::vector<unsigned int>& InIndices, const char* InTexturePath, VertexAttribute InAttribute,World* InWorldptr)
         : Object(InShaderProgram) {
         WorldPtr = InWorldptr;
         InitializeFromRenderData(Graphics::DrawTexture(InVertices, InIndices, InAttribute, InTexturePath));

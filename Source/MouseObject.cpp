@@ -7,7 +7,9 @@
 void MouseObject::Draw()
 {
 	if (IsHidden) return;
-	ObjectShader->use();
+	auto SharedObjectShader = ObjectShader.lock();
+		if (!SharedObjectShader) return;
+	SharedObjectShader->use();
 	float NdcX = 0.0f;
 	float NdcY = 0.0f;
 	float ScreenX = 0.0f;
@@ -25,12 +27,12 @@ void MouseObject::Draw()
 			SetSize(0.05f);
 			std::tie(NdcX, NdcY) = Api->ScreenToNDC(Api->GetMouseState().X, Api->GetMouseState().Y, WinX, WinY);
 			IsAttachedToGrid = false;
-			ObjectShader->setBool("IsOverlapping", true);
+			SharedObjectShader->setBool("IsOverlapping", true);
 			IsOverlapping = true;
 		}
 		else
 		{
-			ObjectShader->setBool("IsOverlapping", false);
+			SharedObjectShader->setBool("IsOverlapping", false);
 			IsOverlapping = false;
 			SetSize(0.15f);
 			std::tie(ScreenX, ScreenY) = Graphics::GridToWorldPosition(Api->GetMouseState().GridX, Api->GetMouseState().GridY,
@@ -44,7 +46,7 @@ void MouseObject::Draw()
 	}
 	else
 	{
-		ObjectShader->setBool("IsOverlapping", false);
+		SharedObjectShader->setBool("IsOverlapping", false);
 		IsOverlapping = false;
 		SetSize(0.05f);
 		std::tie(NdcX, NdcY) = Api->ScreenToNDC(Api->GetMouseState().X, Api->GetMouseState().Y, WinX, WinY);
@@ -55,7 +57,7 @@ void MouseObject::Draw()
 	glm::mat4 Transform = glm::mat4(1.0f);
 	Transform = glm::translate(Transform, glm::vec3(NdcX, NdcY, 0.0f));
 	Transform = glm::scale(Transform, glm::vec3(ScaleX * WorldPtr->GetZoom() * Size, ScaleY * WorldPtr->GetZoom() * Size, 1.0f));
-	ObjectShader->setMat4("Transform", Transform);
+	SharedObjectShader->setMat4("Transform", Transform);
 	glBindTexture(GL_TEXTURE_2D, Texture);
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

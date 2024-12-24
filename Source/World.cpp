@@ -38,7 +38,6 @@ World::~World()
 	if (Api) {
 		delete Api;
 	}
-	GameObjects.clear();
 	glfwTerminate();
 }
 
@@ -71,8 +70,9 @@ void World::InitBackground()
 		1, 2, 3  // second triangle
 	};
 	VertexAttribute OutVertexData = { 8,{3,3,2} };
-	std::shared_ptr<TexturedObject> TexturedObj = std::make_shared<TexturedObject>(ShaderProgram, Vertices, Indices, StartUp.LevelFileName.c_str(), OutVertexData, this);
-	ObjectRenderMap[ShaderProgram->ID].push_back(TexturedObj);
+	std::weak_ptr WeakShaderPtr = ShaderProgram;
+	std::unique_ptr<TexturedObject> TexturedObj = std::make_unique<TexturedObject>(WeakShaderPtr, Vertices, Indices, StartUp.LevelFileName.c_str(), OutVertexData, this);
+	ObjectRenderMap[ShaderProgram->ID].push_back(std::move(TexturedObj));
 }
 
 void World::InitHUD()
@@ -86,8 +86,9 @@ void World::InitGrid(const std::string& InFileName)
 	std::shared_ptr<Shader> ShaderProgram = std::make_shared<Shader>("Source/Shaders/Grid.vert", "Source/Shaders/Grid.frag");
 	Shaders.push_back(ShaderProgram);
 	GridConfigData = XMLParser::ParseGridDataFromXML(InFileName);
-	std::shared_ptr<GridObject> GridObj = std::make_shared<GridObject>(ShaderProgram, GridConfigData, this);
-	ObjectRenderMap[ShaderProgram->ID].push_back(GridObj);
+	std::weak_ptr<Shader> ShaderWeakPtr = ShaderProgram;
+	std::unique_ptr<GridObject> GridObj = std::make_unique<GridObject>(ShaderWeakPtr, GridConfigData, this);
+	ObjectRenderMap[ShaderProgram->ID].push_back(std::move(GridObj));
 }
 
 void World::ProcessInputGL(GLFWwindow* InWindow)
@@ -246,14 +247,15 @@ void World::LoadSave()
 					0, 1, 2,
 					2, 3, 0
 				};
+				std::weak_ptr<Shader> WeakBuildingShaderPtr = BuildingShader;
 				VertexAttribute OutVertexData = { 4,{2,2} };
 				WorkshopData TempWorkShopData = XMLParser::LoadWorkshop("ShopItems.xml", "workshops", Value);
 				if (!TempWorkShopData.Name.empty()) {
-					Buildings.emplace_back(std::make_unique<Workshop>(BuildingShader, Vertices, Indices, OutVertexData, this, i, j, TempWorkShopData));
+					Buildings.emplace_back(std::make_unique<Workshop>(WeakBuildingShaderPtr, Vertices, Indices, OutVertexData, this, i, j, TempWorkShopData));
 				}
 				DecorationData TempDecorationData = XMLParser::LoadDecoration("ShopItems.xml", "decorations", Value);
 				if (!TempDecorationData.Name.empty()) {
-					Buildings.emplace_back(std::make_unique<Decoration>(BuildingShader, Vertices, Indices, OutVertexData, this, i, j, TempDecorationData));
+					Buildings.emplace_back(std::make_unique<Decoration>(WeakBuildingShaderPtr, Vertices, Indices, OutVertexData, this, i, j, TempDecorationData));
 				}
 			}
 		}

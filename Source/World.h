@@ -26,13 +26,9 @@ private:
 	// used with magnifier buttons
 	int MagnifierZoomLevel = 1;
 	//
-	std::vector<std::shared_ptr<Object>> GameObjects;
-	std::map<unsigned int, std::vector<std::shared_ptr<Object>>> ObjectRenderMap;
+	std::map<unsigned int, std::vector<std::unique_ptr<Object>>> ObjectRenderMap;
 	//
 	std::vector<std::shared_ptr<Shader>> Shaders;
-	Shader GridShader;
-	Shader BackgroundShader;
-	Shader FloatingShader;
 	//
 	MouseInteractionAPI* MouseAPI;
 
