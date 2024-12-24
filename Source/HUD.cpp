@@ -19,6 +19,8 @@ HUD::HUD(float InWindowWidth, float InWindowHeight, World* InWorldPtr)
 	FontShader = Graphics::InitTextRender(Characters, InWindowWidth, InWindowHeight, FontVAO, FontVBO);
 	UIShader = std::make_shared<Shader>("Source/Shaders/UI.vert", "Source/Shaders/UI.frag");
 	// loading up windows and ui stuff 
+	FriendWindow = std::make_shared<UIPaginatedWindow>(UIShader, 0.0f, -.5f, 2.f, 0.2f, "ShopItems.xml", "Assets/Images/friendbg.png", this, "Work Shops");
+	UIElements.push_back(FriendWindow);
 	////////////////////////////////////////
 	// Vertex data with texture coordinates
 	std::vector<float> Vertices = {
@@ -158,6 +160,8 @@ HUD::HUD(float InWindowWidth, float InWindowHeight, World* InWorldPtr)
 		}
 		}, "Assets/Images/grid.png", this);
 	UIElements.push_back(GridToggle);
+	//
+
 }
 
 void HUD::Update()

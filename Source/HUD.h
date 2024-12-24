@@ -34,6 +34,7 @@ private:
     std::vector<std::shared_ptr<class UIElement>> UIElements;
 public:
     std::shared_ptr<class UIPaginatedWindow> ShopWindow;
+    std::shared_ptr<class UIPaginatedWindow> FriendWindow;
     std::shared_ptr<class UIDetailsWindow> ItemInfoPopUP;
 
     HUD(float InWindowWidth, float InWindowHeight, World* InWorld);

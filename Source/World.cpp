@@ -149,8 +149,15 @@ void World::ProcessInputGL(GLFWwindow* InWindow)
 	float MaxPanX = (BgHalfWidth - HalfVisibleWidth) / 1000.0f;
 	float MinPanY = (-BgHalfHeight + HalfVisibleHeight) / 1000.0f;
 	float MaxPanY = (BgHalfHeight - HalfVisibleHeight) / 1000.0f;
-	PanX = std::clamp(PanX, MinPanX, MaxPanX);
-	PanY = std::clamp(PanY, MinPanY * (LevelWidth / LevelHeight), MaxPanY * (LevelWidth / LevelHeight));
+	// to prevent clamp from crashing 
+	if (std::abs(BgHalfWidth - HalfVisibleWidth) < 0.001f)
+		PanX = 0.0f;
+	else
+		PanX = std::clamp(PanX, MinPanX, MaxPanX);
+	if (std::abs(BgHalfHeight - HalfVisibleHeight) < 0.001f)
+		PanY = 0.0f;
+	else
+		PanY = std::clamp(PanY, MinPanY * (LevelWidth / LevelHeight), MaxPanY * (LevelWidth / LevelHeight));
 	MouseInteractionAPI* Api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(InWindow));
 	if (Api) {
 		Api->SetPanZoom(PanX, PanY, ZoomLevel);
