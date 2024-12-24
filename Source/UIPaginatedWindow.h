@@ -80,7 +80,7 @@ inline void UIPaginatedWindow::AddTab(const std::string& InUITabName, const std:
 			Texts.push_back(OutText);
 			int X = UIElements.size() % Columns;
 			int Y = std::floor((UIElements.size() / Columns) % Rows);
-			std::shared_ptr<UIButton> Button = std::make_shared<UIButton>(HudPtr->GetUIShader(), -0.3f + (X * SlotSpaceX), 0.4f + (Y * SlotSpaceY), 0.2f, 0.2f, [&, Item]() {
+			std::shared_ptr<UIButton> Button = std::make_shared<UIButton>(HudPtr->GetUIShader(), -0.3f + (X * SlotSpaceX), 0.4f + (Y * SlotSpaceY), 0.25f, 0.25f, [&, Item]() {
 				this->SetHidden(true);
 				HudPtr->GetMouseObjectPtr()->SetItemID(Item.ItemID);
 				HudPtr->GetMouseObjectPtr()->ReloadTexture(Item.ImageFile.c_str());
