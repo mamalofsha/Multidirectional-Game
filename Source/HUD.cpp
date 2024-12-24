@@ -150,7 +150,6 @@ void HUD::OnClickFunction(int InGridX, int InGridY, float InScreenX, float InScr
                 UIText Happy = { 600.0f,100.0f,"Happiness : " + std::to_string(TempDecorationData.Happiness),1.0f,glm::vec3(0,0,0) };
                 OutTextData.push_back(Happy);
                 ItemInfoPopUP->Override(OutTextData, TempDecorationData.ImageFile.c_str(), WorldPtr->GetMouseState().GridX, WorldPtr->GetMouseState().GridY);
-
             }
         }
         
