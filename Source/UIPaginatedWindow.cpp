@@ -73,3 +73,31 @@ void UIPaginatedWindow::PreviousPage()
         CurrentPage--;
     }
 }
+
+void UIPaginatedWindow::AddStaticTab(const std::string& InUITabName)
+{
+    UIText TextData;
+    TextData.ActualText = "Hacky";
+    TextData.OffSetX = 80.0f;
+    TextData.OffSetY = 95.f;
+    TextData.Scale = 0.7f;
+    std::vector<UIText> OutTextData;
+    OutTextData.push_back(TextData);
+    TextData.ActualText = "Level "+ std::to_string(Tabs[InUITabName].size()+1);
+    TextData.OffSetX = 80.0f;
+    TextData.OffSetY = 115.f;
+    TextData.Scale = 0.5f;
+    OutTextData.push_back(TextData);
+
+    int X = Tabs[InUITabName].size() % Columns;
+    int Y = std::floor((Tabs[InUITabName].size() / Columns) % Rows);
+    std::shared_ptr<UIButton> Button = std::make_shared<UIButton>(HudPtr->GetUIShader(), -0.7f + (X * SlotSpaceX/1.2), -0.775f + (Y * SlotSpaceY), 0.2f, 0.2f, []() {
+        }, "Assets/Images/profile.png", HudPtr, OutTextData);
+    Tabs[InUITabName].push_back(Button);
+}
+
+void UIPaginatedWindow::SetContentSize(std::pair<int, int> InIntPair)
+{
+    Rows = InIntPair.first;
+    Columns = InIntPair.second;
+}

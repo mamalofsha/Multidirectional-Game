@@ -38,7 +38,9 @@ public:
 	void PreviousPage();
 	template<typename T>
 	inline void AddTab(const std::string& InUITabName, const std::string& InXMLCategory);
+	void AddStaticTab(const std::string& InUITabName);
 	std::vector<std::shared_ptr<UIButton>> GetCatButtons() { return Tabs[ActiveTab]; };
+	void SetContentSize(std::pair<int, int> InIntPair);
 };
 
 template<typename T>

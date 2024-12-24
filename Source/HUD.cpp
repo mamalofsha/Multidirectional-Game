@@ -19,8 +19,23 @@ HUD::HUD(float InWindowWidth, float InWindowHeight, World* InWorldPtr)
 	FontShader = Graphics::InitTextRender(Characters, InWindowWidth, InWindowHeight, FontVAO, FontVBO);
 	UIShader = std::make_shared<Shader>("Source/Shaders/UI.vert", "Source/Shaders/UI.frag");
 	// loading up windows and ui stuff 
-	FriendWindow = std::make_shared<UIPaginatedWindow>(UIShader, 0.0f, -.5f, 2.f, 0.2f, "ShopItems.xml", "Assets/Images/friendbg.png", this, "Work Shops");
+	FriendWindow = std::make_shared<UIPaginatedWindow>(UIShader, 0.0f, -.85f, 2.f, 0.35f, "", "Assets/Images/friendbg.png", this, "Default");
 	UIElements.push_back(FriendWindow);
+	// the window content size so it's 1 rows and 3 columns 
+	FriendWindow->SetContentSize({ 1,3 });
+	for (size_t i = 0; i < 14; i++)
+	{
+		FriendWindow->AddStaticTab("Default");
+
+	}
+	std::shared_ptr<UIButton> FriendPrevButton = std::make_shared<UIButton>(UIShader, -0.95f, -0.85f, 0.075f, 0.075, [&]() {
+		FriendWindow->PreviousPage();
+		}, "Assets/Images/previous.png", this);
+	FriendWindow->PageControls.push_back(FriendPrevButton);
+	std::shared_ptr<UIButton> FriendNextButton = std::make_shared<UIButton>(UIShader, 0.55f, -0.85f, 0.075f, 0.075, [&]() {
+		FriendWindow->NextPage();
+		}, "Assets/Images/next.png", this);
+	FriendWindow->PageControls.push_back(FriendNextButton);
 	////////////////////////////////////////
 	// Vertex data with texture coordinates
 	std::vector<float> Vertices = {
