@@ -27,6 +27,7 @@ private:
     float WindowWidth, WindowHeight;
     World* WorldPtr;
     Shader FontShader;
+    bool ExtraLayerActive = false;
     std::map<GLchar, Character> Characters;
     std::shared_ptr<Shader> UIShader;
     std::shared_ptr<class MouseObject> MouseObjectPtr;
@@ -46,4 +47,5 @@ public:
     std::shared_ptr<Shader> GetUIShader() { return UIShader; };
     std::map<GLchar, Character>& GetCharacters() { return Characters; };
     std::shared_ptr<class MouseObject> GetMouseObjectPtr() { return MouseObjectPtr; };
+    void ChangeExtraLayerActivity(bool InActivity) { ExtraLayerActive = InActivity; };
 };

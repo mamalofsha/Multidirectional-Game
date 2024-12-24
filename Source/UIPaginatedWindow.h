@@ -54,7 +54,8 @@ inline void UIPaginatedWindow::AddTab(const std::string& InUITabName, const std:
 				this->SetHidden(true);
 				HudPtr->GetMouseObjectPtr()->SetItemID(Item.ItemID);
 				HudPtr->GetMouseObjectPtr()->ReloadTexture(Item.ImageFile.c_str());
-				}, Item.Name, Item.ImageFile, HudPtr);
+				HudPtr->ChangeExtraLayerActivity(false);
+				},Item.ImageFile, HudPtr);
 			UIElements.push_back(Button);
 		}
 	}
@@ -68,7 +69,8 @@ inline void UIPaginatedWindow::AddTab(const std::string& InUITabName, const std:
 				this->SetHidden(true);
 				HudPtr->GetMouseObjectPtr()->SetItemID(Item.ItemID);
 				HudPtr->GetMouseObjectPtr()->ReloadTexture(Item.ImageFile.c_str());
-				}, Item.Name, Item.ImageFile, HudPtr);
+				HudPtr->ChangeExtraLayerActivity(false);
+				},Item.ImageFile, HudPtr);
 			UIElements.push_back(Button);
 		}
 	}

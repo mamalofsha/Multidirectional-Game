@@ -21,6 +21,7 @@ private:
 	float PanX = 0.0f;
 	float PanY = 0.0f;
 	float ZoomLevel = 0.25f;
+	int MagnifierZoomLevel = 1;
 	//
 	std::vector<std::shared_ptr<Object>> GameObjects;
 	std::map<unsigned int, std::vector<std::shared_ptr<Object>>> ObjectRenderMap;
@@ -58,4 +59,5 @@ public:
 	GridConfig GetGridConfig() { return GridConfigData; };
 	StartUpData GetStartupData() { return StartUp; };
 	void DeleteBuilding(int InGridX, int InGridY);
+	void ChangeMagnifierZoom(int InDelta);
 };

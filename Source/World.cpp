@@ -111,13 +111,19 @@ void World::ProcessInputGL(GLFWwindow* InWindow)
 	if (glfwGetKey(InWindow, GLFW_KEY_W) == GLFW_PRESS) {
 		if (ZoomLevel < 3.5f)
 			ZoomLevel += 0.05f;
+		MagnifierZoomLevel = 0;
 	}
 	if (glfwGetKey(InWindow, GLFW_KEY_S) == GLFW_PRESS) {
 		ZoomLevel -= 0.05f;
+		MagnifierZoomLevel = 0;
 	}
 	float LevelWidth = StartUp.LevelWidth;
 	float LevelHeight = StartUp.LevelHeight;
-	ZoomLevel = std::clamp(ZoomLevel, WindowWidth / LevelWidth, (WindowWidth / LevelWidth) * 3.5f);
+	if(MagnifierZoomLevel !=0)
+	ZoomLevel = std::clamp(static_cast<float>(MagnifierZoomLevel), WindowWidth / LevelWidth, (WindowWidth / LevelWidth) * 4.5f);
+	else
+	ZoomLevel = std::clamp(ZoomLevel, WindowWidth / LevelWidth, (WindowWidth / LevelWidth) * 4.5f);
+
 	float HalfVisibleWidth = (WindowWidth / ZoomLevel) / 2.0f;
 	float HalfVisibleHeight = (WindowHeight / ZoomLevel) / 2.0f;
 	float BgHalfWidth = StartUp.LevelWidth / 2.0f;
@@ -242,4 +248,9 @@ void World::DeleteBuilding(int InGridX, int InGridY)
 			break;
 		}
 	}
+}
+
+void World::ChangeMagnifierZoom(int InDelta)
+{
+	MagnifierZoomLevel = std::clamp(MagnifierZoomLevel+InDelta, 1, 3);
 }
