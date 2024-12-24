@@ -3,26 +3,26 @@
 		<workshop1>
 			<name>Drug Store</name>
 			<image>Assets/Images/drugstore.png</image>
-			<goldcost>1404</goldcost>
-			<goldgenrate>1404</goldgenrate>
+			<goldcost>500</goldcost>
+			<goldgenrate>1104</goldgenrate>
 		</workshop1>
 		<workshop2>
 			<name>Government</name>
 			<image>Assets/Images/government.png</image>
-			<goldcost>1404</goldcost>
-			<goldgenrate>1404</goldgenrate>
+			<goldcost>404</goldcost>
+			<goldgenrate>2</goldgenrate>
 		</workshop2>
 		<workshop3>
 			<name>Museum</name>
 			<image>Assets/Images/museum.png</image>
-			<goldcost>1404</goldcost>
-			<goldgenrate>1404</goldgenrate>
+			<goldcost>4404</goldcost>
+			<goldgenrate>1234</goldgenrate>
 		</workshop3>
 		<workshop4>
 			<name>Property</name>
 			<image>Assets/Images/property.png</image>
-			<goldcost>1404</goldcost>
-			<goldgenrate>1404</goldgenrate>
+			<goldcost>1441</goldcost>
+			<goldgenrate>4114</goldgenrate>
 		</workshop4>
 		<workshop5>
 			<name>Temple</name>
@@ -35,32 +35,32 @@
 		<decoration1>
 			<name>Bridge</name>
 			<image>Assets/Images/bridge.png</image>
-			<goldcost>1404</goldcost>
-			<happiness>1404</happiness>
+			<goldcost>3456</goldcost>
+			<happiness>2328</happiness>
 		</decoration1>
 		<decoration2>
 			<name>Hangar</name>
 			<image>Assets/Images/hangar.png</image>
-			<goldcost>1404</goldcost>
-			<happiness>1404</happiness>
+			<goldcost>1204</goldcost>
+			<happiness>1414</happiness>
 		</decoration2>
 		<decoration3>
 			<name>Building 1</name>
 			<image>Assets/Images/building14.png</image>
-			<goldcost>1404</goldcost>
-			<happiness>1404</happiness>
+			<goldcost>1401</goldcost>
+			<happiness>111</happiness>
 		</decoration3>
 		<decoration4>
 			<name>Building 2</name>
 			<image>Assets/Images/building15.png</image>
-			<goldcost>1404</goldcost>
-			<happiness>1404</happiness>
+			<goldcost>114</goldcost>
+			<happiness>144</happiness>
 		</decoration4>
 		<decoration5>
 			<name>Building 3</name>
 			<image>Assets/Images/building18.png</image>
-			<goldcost>1404</goldcost>
-			<happiness>1404</happiness>
+			<goldcost>104</goldcost>
+			<happiness>1304</happiness>
 		</decoration5>
     </decorations>
 </items>

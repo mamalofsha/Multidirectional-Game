@@ -3,8 +3,16 @@
   "WorkspaceRootPath": "J:\\Ast\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\Source\\UIPaginatedWindow.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:Source\\UIPaginatedWindow.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\Source\\HUD.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:Source\\HUD.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\Source\\UIElement.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:Source\\UIElement.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\Source\\UIButton.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -13,14 +21,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\Source\\UIButton.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:Source\\UIButton.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\Source\\UIElement.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:Source\\UIElement.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\Source\\UIPaginatedWindow.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|solutionrelative:Source\\UIPaginatedWindow.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A5BE9FAA-2976-475B-B596-C76A23ECE055}|Ast.vcxproj|J:\\Ast\\Source\\World.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -149,17 +149,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 13,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "HUD.cpp",
               "DocumentMoniker": "J:\\Ast\\Source\\HUD.cpp",
               "RelativeDocumentMoniker": "Source\\HUD.cpp",
-              "ToolTip": "J:\\Ast\\Source\\HUD.cpp*",
-              "RelativeToolTip": "Source\\HUD.cpp*",
-              "ViewState": "AgIAAD0AAAAAAAAAAAAvwEYAAAA2AAAAAAAAAA==",
+              "ToolTip": "J:\\Ast\\Source\\HUD.cpp",
+              "RelativeToolTip": "Source\\HUD.cpp",
+              "ViewState": "AgIAABMAAAAAAAAAAAAvwCYAAACRAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-12-24T01:36:21.533Z",
               "EditorCaption": ""
@@ -191,7 +191,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "UIButton.cpp",
               "DocumentMoniker": "J:\\Ast\\Source\\UIButton.cpp",
               "RelativeDocumentMoniker": "Source\\UIButton.cpp",
@@ -204,7 +204,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "UIButton.h",
               "DocumentMoniker": "J:\\Ast\\Source\\UIButton.h",
               "RelativeDocumentMoniker": "Source\\UIButton.h",
@@ -319,13 +319,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "UIPaginatedWindow.h",
               "DocumentMoniker": "J:\\Ast\\Source\\UIPaginatedWindow.h",
               "RelativeDocumentMoniker": "Source\\UIPaginatedWindow.h",
-              "ToolTip": "J:\\Ast\\Source\\UIPaginatedWindow.h",
-              "RelativeToolTip": "Source\\UIPaginatedWindow.h",
-              "ViewState": "AgIAADEAAAAAAAAAAAAcwDkAAAAGAAAAAAAAAA==",
+              "ToolTip": "J:\\Ast\\Source\\UIPaginatedWindow.h*",
+              "RelativeToolTip": "Source\\UIPaginatedWindow.h*",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAowE8AAABhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2024-12-24T01:34:36.421Z",
               "EditorCaption": ""
@@ -356,13 +356,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "UIElement.h",
               "DocumentMoniker": "J:\\Ast\\Source\\UIElement.h",
               "RelativeDocumentMoniker": "Source\\UIElement.h",
               "ToolTip": "J:\\Ast\\Source\\UIElement.h",
               "RelativeToolTip": "Source\\UIElement.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAPAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2024-12-24T01:37:40.523Z",
               "EditorCaption": ""

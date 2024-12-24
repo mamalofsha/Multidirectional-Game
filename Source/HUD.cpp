@@ -36,7 +36,7 @@ HUD::HUD(float InWindowWidth, float InWindowHeight, World* InWorldPtr)
 	MouseObjectPtr = std::make_shared<MouseObject>(WorldPtr->BuildingShader, Vertices, Indices, "Assets/Images/bridge.png", OutVertexData, WorldPtr);
 	MouseObjectPtr->SetSize(0.05f);
 	///
-	ShopWindow = std::make_shared<UIPaginatedWindow>(UIShader, 0.0f, 0.0f, 1.5f, 1.5f, "ShopItems.xml", "Assets/Images/grass.png", this, "Decorations");
+	ShopWindow = std::make_shared<UIPaginatedWindow>(UIShader, 0.0f, 0.0f, 1.5f, 1.5f, "ShopItems.xml", "Assets/Images/grass.png", this, "Work Shops");
 	std::shared_ptr<UIButton> NextButton = std::make_shared<UIButton>(UIShader, 0.6f, -0.64f, 0.15f, 0.15f, [&]() {
 		ShopWindow->NextPage();
 		}, "Assets/Images/next.png", this);
