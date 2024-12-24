@@ -76,9 +76,10 @@ HUD::HUD(float InWindowWidth, float InWindowHeight, World* InWorldPtr)
 	std::weak_ptr<UIElement> WeakShopWindow = ShopWindow;
 	std::shared_ptr<UIButton> ShopClose = std::make_shared<UIButton>(UIShader, 0.65f, 0.65f, 0.15f, 0.15f, [WeakShopWindow, this]() {
 		if (auto SharedShopWindow = WeakShopWindow.lock()) {
-			if(!SharedShopWindow->GetHidden()){
-			SharedShopWindow->SetHidden(!SharedShopWindow->GetHidden());
-			ExtraLayerActive = false;}
+			if (!SharedShopWindow->GetHidden()) {
+				SharedShopWindow->SetHidden(!SharedShopWindow->GetHidden());
+				ExtraLayerActive = false;
+			}
 		}
 		}, "Assets/Images/close.png", this);
 	ShopWindow->AddTab<WorkshopData>("Work Shops", "workshops");
@@ -195,8 +196,10 @@ void HUD::OnClickFunction(int InGridX, int InGridY, float InScreenX, float InScr
 	{
 		if (!ExtraLayerActive)
 		{
-			// clicking on item popup 
-			std::string GridValue = XMLParser::GetGridValue(WorldPtr->GetStartupData().GridFileName, WorldPtr->GetMouseState().GridX, WorldPtr->GetMouseState().GridY);
+			// clicking on grid object
+			std::string GridValue = "0";
+			if (WorldPtr->GetMouseState().GridX >= 0 && WorldPtr->GetMouseState().GridY >= 0)
+				 GridValue = XMLParser::GetGridValue(WorldPtr->GetStartupData().GridFileName, WorldPtr->GetMouseState().GridX, WorldPtr->GetMouseState().GridY);
 			if (GridValue != "0")
 			{
 				WorkshopData TempWorkShopData = XMLParser::LoadWorkshop("ShopItems.xml", "workshops", GridValue);

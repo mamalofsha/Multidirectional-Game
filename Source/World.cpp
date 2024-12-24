@@ -111,6 +111,7 @@ void World::ProcessInputGL(GLFWwindow* InWindow)
 	if (glfwGetKey(InWindow, GLFW_KEY_W) == GLFW_PRESS) {
 		if (ZoomLevel < 3.5f)
 			ZoomLevel += 0.05f;
+		// so it snaps out of the other zoom type 
 		MagnifierZoomLevel = 0;
 	}
 	if (glfwGetKey(InWindow, GLFW_KEY_S) == GLFW_PRESS) {
@@ -119,11 +120,27 @@ void World::ProcessInputGL(GLFWwindow* InWindow)
 	}
 	float LevelWidth = StartUp.LevelWidth;
 	float LevelHeight = StartUp.LevelHeight;
-	if(MagnifierZoomLevel !=0)
-	ZoomLevel = std::clamp(static_cast<float>(MagnifierZoomLevel), WindowWidth / LevelWidth, (WindowWidth / LevelWidth) * 4.5f);
+	if (MagnifierZoomLevel != 0)
+	{
+		if (WindowWidth < WindowHeight) {
+			ZoomLevel = std::clamp(static_cast<float>(MagnifierZoomLevel * (WindowHeight / LevelHeight)), WindowHeight / LevelHeight, (WindowHeight / LevelHeight) * 4.5f);
+		}
+		else
+		{
+			ZoomLevel = std::clamp(static_cast<float>(MagnifierZoomLevel * (WindowWidth / LevelWidth)), WindowWidth / LevelWidth, (WindowWidth / LevelWidth) * 4.5f);
+		}
+	}
 	else
-	ZoomLevel = std::clamp(ZoomLevel, WindowWidth / LevelWidth, (WindowWidth / LevelWidth) * 4.5f);
-
+	{
+		// adjust the caps for zoom based on this condition so it know which dimension to look at for clamping 
+		if (WindowWidth < WindowHeight) {
+			ZoomLevel = std::clamp(ZoomLevel, WindowHeight / LevelHeight, (WindowHeight / LevelHeight) * 4.5f);
+		}
+		else
+		{
+			ZoomLevel = std::clamp(ZoomLevel, WindowWidth / LevelWidth, (WindowWidth / LevelWidth) * 4.5f);
+		}
+	}
 	float HalfVisibleWidth = (WindowWidth / ZoomLevel) / 2.0f;
 	float HalfVisibleHeight = (WindowHeight / ZoomLevel) / 2.0f;
 	float BgHalfWidth = StartUp.LevelWidth / 2.0f;
@@ -252,5 +269,5 @@ void World::DeleteBuilding(int InGridX, int InGridY)
 
 void World::ChangeMagnifierZoom(int InDelta)
 {
-	MagnifierZoomLevel = std::clamp(MagnifierZoomLevel+InDelta, 1, 3);
+	MagnifierZoomLevel = std::clamp(MagnifierZoomLevel + InDelta, 1, 3);
 }
