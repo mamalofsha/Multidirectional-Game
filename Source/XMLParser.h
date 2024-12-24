@@ -28,6 +28,12 @@ public:
     static void UpdateGridValue(const std::string& InFileName, int InGridX, int InGridY, const char* InNewValue);
     static void ResetSave(const std::string& InFileName);
     static std::string GetGridValue(const std::string& InFileName, int InGridX, int InGridY);
+     // checks to see if rows are empty so it makes an edit to the save file and init rows 
+    //- for when generating the level with a new grid format ( it's width and length ) (2x2 example)
+   //    <tiles>     -->     <tiles>
+  //     </tiles>                  <row>0 0</row>
+ //                                <row>0 0</row>
+//                           </tiles>
     static void CheckInitEmptySave(const std::string& InFileName, int InGridX, int InGridY);
 };
 
