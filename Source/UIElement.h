@@ -19,7 +19,7 @@ public:
     std::vector<UIText> TextComps;
     class HUD* HudPtr;
 
-    UIElement(std::shared_ptr<Shader> InShaderProgram, float InX, float InY, float InWidth, float InHeight)
+    UIElement(std::weak_ptr<Shader> InShaderProgram, float InX, float InY, float InWidth, float InHeight)
         : Object(InShaderProgram), PosX(InX), PosY(InY), Width(InWidth), Height(InHeight) {
     }
     virtual void Draw() = 0;

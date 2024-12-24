@@ -100,6 +100,16 @@ void UIPaginatedWindow::AddStaticTab(const std::string& InUITabName)
 	Tabs[InUITabName].push_back(Button);
 }
 
+std::vector<std::weak_ptr<UIButton>> UIPaginatedWindow::GetCatButtons()
+{
+	std::vector<std::weak_ptr<UIButton>> OutWeakPtrVector;
+	for (auto  It = Tabs[ActiveTab].begin(); It < Tabs[ActiveTab].end(); It++)
+	{
+		OutWeakPtrVector.push_back(*It);
+	}
+	return OutWeakPtrVector;
+}
+
 void UIPaginatedWindow::SetContentSize(std::pair<int, int> InIntPair)
 {
 	Rows = InIntPair.first;

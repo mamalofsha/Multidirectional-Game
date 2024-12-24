@@ -28,14 +28,14 @@ HUD::HUD(float InWindowWidth, float InWindowHeight, World* InWorldPtr)
 		FriendWindow->AddStaticTab("Default");
 
 	}
-	std::shared_ptr<UIButton> FriendPrevButton = std::make_shared<UIButton>(UIShader, -0.95f, -0.85f, 0.075f, 0.075, [&]() {
+	std::unique_ptr<UIButton> FriendPrevButton = std::make_unique<UIButton>(UIShader, -0.95f, -0.85f, 0.075f, 0.075, [&]() {
 		FriendWindow->PreviousPage();
 		}, "Assets/Images/previous.png", this);
-	FriendWindow->PageControls.push_back(FriendPrevButton);
-	std::shared_ptr<UIButton> FriendNextButton = std::make_shared<UIButton>(UIShader, 0.55f, -0.85f, 0.075f, 0.075, [&]() {
+	FriendWindow->PageControls.push_back(std::move(FriendPrevButton));
+	std::unique_ptr<UIButton> FriendNextButton = std::make_unique<UIButton>(UIShader, 0.55f, -0.85f, 0.075f, 0.075, [&]() {
 		FriendWindow->NextPage();
 		}, "Assets/Images/next.png", this);
-	FriendWindow->PageControls.push_back(FriendNextButton);
+	FriendWindow->PageControls.push_back(std::move(FriendNextButton));
 	////////////////////////////////////////
 	// Vertex data with texture coordinates
 	std::vector<float> Vertices = {
@@ -57,11 +57,11 @@ HUD::HUD(float InWindowWidth, float InWindowHeight, World* InWorldPtr)
 	////////////////////////////////////////
 	/// shop window and it's buttons (prev,next,close) and tabs(decorations,workshops) 
 	ShopWindow = std::make_shared<UIPaginatedWindow>(UIShader, 0.0f, 0.0f, 1.5f, 1.5f, "ShopItems.xml", "Assets/Images/grass.png", this, "Work Shops");
-	std::shared_ptr<UIButton> NextButton = std::make_shared<UIButton>(UIShader, 0.6f, -0.64f, 0.15f, 0.15f, [&]() {
+	std::unique_ptr<UIButton> NextButton = std::make_unique<UIButton>(UIShader, 0.6f, -0.64f, 0.15f, 0.15f, [&]() {
 		ShopWindow->NextPage();
 		}, "Assets/Images/next.png", this);
 
-	std::shared_ptr<UIButton> PrevButton = std::make_shared<UIButton>(UIShader, -0.6f, -0.64f, 0.15f, 0.15f, [&]() {
+	std::unique_ptr<UIButton> PrevButton = std::make_unique<UIButton>(UIShader, -0.6f, -0.64f, 0.15f, 0.15f, [&]() {
 		ShopWindow->PreviousPage();
 		}, "Assets/Images/previous.png", this);
 	// adjusting the text 
@@ -73,7 +73,7 @@ HUD::HUD(float InWindowWidth, float InWindowHeight, World* InWorldPtr)
 	std::vector<UIText> OutTextData;
 	OutTextData.push_back(TextData);
 	// for switching categories of the shop 
-	std::shared_ptr<UIButton> Cat1Button = std::make_shared<UIButton>(UIShader, -0.55f, 0.65f, 0.3f, 0.1f, [&]() {
+	std::unique_ptr<UIButton> Cat1Button = std::make_unique<UIButton>(UIShader, -0.55f, 0.65f, 0.3f, 0.1f, [&]() {
 		if (ShopWindow->ActiveTab == "Work Shops") return;
 		ShopWindow->CurrentPage = 0;
 		ShopWindow->ActiveTab = "Work Shops";
@@ -84,14 +84,14 @@ HUD::HUD(float InWindowWidth, float InWindowHeight, World* InWorldPtr)
 	TextData.OffSetY = 12.5f;
 	TextData.Scale = 0.7f;
 	OutTextData.push_back(TextData);
-	std::shared_ptr<UIButton> Cat2Button = std::make_shared<UIButton>(UIShader, -0.05f, 0.65f, 0.3f, 0.1f, [&]() {
+	std::unique_ptr<UIButton> Cat2Button = std::make_unique<UIButton>(UIShader, -0.05f, 0.65f, 0.3f, 0.1f, [&]() {
 		if (ShopWindow->ActiveTab == "Decorations") return;
 		ShopWindow->CurrentPage = 0;
 		ShopWindow->ActiveTab = "Decorations";
 		}, "Assets/Images/buttonBG.png", this, OutTextData);
 	// so referencing it doesn't change it's ref counter
 	std::weak_ptr<UIElement> WeakShopWindow = ShopWindow;
-	std::shared_ptr<UIButton> ShopClose = std::make_shared<UIButton>(UIShader, 0.65f, 0.65f, 0.15f, 0.15f, [WeakShopWindow, this]() {
+	std::unique_ptr<UIButton> ShopClose = std::make_unique<UIButton>(UIShader, 0.65f, 0.65f, 0.15f, 0.15f, [WeakShopWindow, this]() {
 		if (auto SharedShopWindow = WeakShopWindow.lock()) {
 			if (!SharedShopWindow->GetHidden()) {
 				SharedShopWindow->SetHidden(!SharedShopWindow->GetHidden());
@@ -101,11 +101,11 @@ HUD::HUD(float InWindowWidth, float InWindowHeight, World* InWorldPtr)
 		}, "Assets/Images/close.png", this);
 	ShopWindow->AddTab<WorkshopData>("Work Shops", "workshops");
 	ShopWindow->AddTab<DecorationData>("Decorations", "decorations");
-	ShopWindow->PageControls.push_back(NextButton);
-	ShopWindow->PageControls.push_back(PrevButton);
-	ShopWindow->PageControls.push_back(Cat1Button);
-	ShopWindow->PageControls.push_back(Cat2Button);
-	ShopWindow->PageControls.push_back(ShopClose);
+	ShopWindow->PageControls.push_back(std::move(NextButton));
+	ShopWindow->PageControls.push_back(std::move(PrevButton));
+	ShopWindow->PageControls.push_back(std::move(Cat1Button));
+	ShopWindow->PageControls.push_back(std::move(Cat2Button));
+	ShopWindow->PageControls.push_back(std::move(ShopClose));
 	ShopWindow->SetHidden(true);
 	/// the child buttons chould be added to the page controls 
 	////////////////////////////////////////
@@ -216,9 +216,9 @@ void HUD::OnClickFunction(int InGridX, int InGridY, float InScreenX, float InScr
 		{
 			// clicking on grid object
 			std::string GridValue = "0";
-			if ((WorldPtr->GetMouseState().GridX >= 0 && WorldPtr->GetMouseState().GridY >= 0)&&
+			if ((WorldPtr->GetMouseState().GridX >= 0 && WorldPtr->GetMouseState().GridY >= 0) &&
 				(WorldPtr->GetMouseState().GridX < WorldPtr->GetGridConfig().Width && WorldPtr->GetMouseState().GridY < WorldPtr->GetGridConfig().Height))
-				 GridValue = XMLParser::GetGridValue(WorldPtr->GetStartupData().GridFileName, WorldPtr->GetMouseState().GridX, WorldPtr->GetMouseState().GridY);
+				GridValue = XMLParser::GetGridValue(WorldPtr->GetStartupData().GridFileName, WorldPtr->GetMouseState().GridX, WorldPtr->GetMouseState().GridY);
 			if (GridValue != "0")
 			{
 				WorkshopData TempWorkShopData = XMLParser::LoadWorkshop("ShopItems.xml", "workshops", GridValue);
@@ -269,9 +269,12 @@ void HUD::OnClickFunction(int InGridX, int InGridY, float InScreenX, float InScr
 			}
 			for (auto& Button : Window->GetCatButtons())
 			{
-				if (Button->IsHovered) {
-					Button->Clicked();
-					Button->OnClick();
+				if (auto SharedPtr = Button.lock())
+				{
+					if (SharedPtr->IsHovered) {
+						SharedPtr->Clicked();
+						SharedPtr->OnClick();
+					}
 				}
 			}
 		}

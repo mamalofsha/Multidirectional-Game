@@ -3,9 +3,9 @@
 
 class UIWindow : public UIElement {
 public:
-    std::vector<std::shared_ptr<UIElement>> Children;
+    std::vector<std::unique_ptr<UIElement>> Children;
 
-    UIWindow(std::shared_ptr<Shader> InShaderProgram, float InPosX, float InPosY, float InWidth, float InHeight)
+    UIWindow(std::weak_ptr<Shader> InShaderProgram, float InPosX, float InPosY, float InWidth, float InHeight)
         : UIElement(InShaderProgram, InPosX, InPosY, InWidth, InHeight) {
     }
     virtual void UpdateChildrenButtons(float InX, float InY) {};

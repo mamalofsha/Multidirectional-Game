@@ -20,12 +20,12 @@ public:
 	// - since it goes down
 	float SlotSpaceY = -0.5f;
 	int CurrentPage = 0;
-	std::vector<std::shared_ptr<UIButton>> PageControls; // Controls next/previous page
+	std::vector<std::unique_ptr<UIButton>> PageControls; // Controls next/previous page
 	std::map<std::string, std::vector<std::shared_ptr<UIButton>>> Tabs;
 	std::string XMLName;
 	std::string ActiveTab = "Decorations";
 	HUD* HudPtr;
-	UIPaginatedWindow(std::shared_ptr<Shader> InShaderProgram, float InPosX, float InPosY, float InWidth, float InHeight, std::string InXML, const std::string& InAssetPath, HUD* InHud,std::string InActiveTab)
+	UIPaginatedWindow(std::weak_ptr<Shader> InShaderProgram, float InPosX, float InPosY, float InWidth, float InHeight, std::string InXML, const std::string& InAssetPath, HUD* InHud,std::string InActiveTab)
 		: UIWindow(InShaderProgram, InPosX, InPosY, InWidth, InHeight) , ActiveTab(InActiveTab) {
 		XMLName = InXML;
 		HudPtr = InHud;
@@ -33,13 +33,13 @@ public:
 	}
 	 void UpdateChildrenButtons(float InX, float InY)override;
 	void Draw() override;
-	void AddButton(std::shared_ptr<UIButton> InChild) { PageControls.push_back(InChild); };
+	void AddButton(std::unique_ptr<UIButton> InChild) { PageControls.push_back(std::move(InChild)); };
 	void NextPage();
 	void PreviousPage();
 	template<typename T>
 	inline void AddTab(const std::string& InUITabName, const std::string& InXMLCategory);
 	void AddStaticTab(const std::string& InUITabName);
-	std::vector<std::shared_ptr<UIButton>> GetCatButtons() { return Tabs[ActiveTab]; };
+	std::vector<std::weak_ptr<UIButton>> GetCatButtons();
 	void SetContentSize(std::pair<int, int> InIntPair);
 };
 
