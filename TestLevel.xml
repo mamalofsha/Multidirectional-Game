@@ -1,10 +1,10 @@
 <level>
 	<asset>Assets/Images/Map1.jpg</asset>
     <dimensions>
-        <width>2000</width>
+        <width>1500</width>
         <height>14</height>
     </dimensions>
-	<WindowScale>0.7</WindowScale>
+	<WindowScale>0.1</WindowScale>
     <gridfilename>grid_config.xml</gridfilename>
 </level>
 
