@@ -17,10 +17,8 @@ public:
         const VertexAttribute& InVertexData,
         World* InWorldPtr)
         : TexturedObject(InShaderProgram, InVertices, InIndices, InTexturePath, InVertexData, InWorldPtr) {
-        // Additional MouseObject-specific initialization here
         IsHidden = true;
     }
-
     void Draw() override;
     void SetItemID(const std::string& InItemID) { ItemID = InItemID; }
     void ReloadTexture(const char* InFilePath);

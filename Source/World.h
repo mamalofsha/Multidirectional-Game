@@ -31,8 +31,6 @@ private:
 	Shader FloatingShader;
 	//
 	MouseInteractionAPI* MouseAPI;
-	using GridBroadcastDelegate = std::function<void(int, int)>;
-	std::vector<GridBroadcastDelegate> Listeners;
 
 	void InitBackground();
 	void InitHUD();

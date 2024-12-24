@@ -18,7 +18,7 @@ HUD::HUD(float InWindowWidth, float InWindowHeight, World* InWorldPtr)
     WorldPtr = InWorldPtr;
     FontShader = Graphics::InitTextRender(Characters, InWindowWidth, InWindowHeight, FontVAO, FontVBO);
     UIShader = std::make_shared<Shader>("Source/Shaders/UI.vert", "Source/Shaders/UI.frag");
-
+    // loading up windows and ui stuff 
     // Vertex data with texture coordinates
     std::vector<float> Vertices = {
         // Positions      // Texture Coords
@@ -36,7 +36,7 @@ HUD::HUD(float InWindowWidth, float InWindowHeight, World* InWorldPtr)
     MouseObjectPtr = std::make_shared<MouseObject>(WorldPtr->BuildingShader, Vertices, Indices, "Assets/Images/bridge.png", OutVertexData, WorldPtr);
     MouseObjectPtr->SetSize(0.05f);
     ///
-    ShopWindow = std::make_shared<UIPaginatedWindow>(UIShader, 0.0f, 0.0f, 1.5f, 1.5f, "ShopItems.xml", "Assets/Images/grass.png", this);
+    ShopWindow = std::make_shared<UIPaginatedWindow>(UIShader, 0.0f, 0.0f, 1.5f, 1.5f, "ShopItems.xml", "Assets/Images/grass.png", this,"Decorations");
     std::shared_ptr<UIButton> NextButton = std::make_shared<UIButton>(UIShader, 0.6f, -0.7f, 0.2f, 0.1f, [&]() {
         ShopWindow->NextPage();
         }, "", "Assets/Images/shop.png", this);
@@ -127,6 +127,7 @@ void HUD::OnClickFunction(int InGridX, int InGridY, float InScreenX, float InScr
     }
     else
     {
+        // clicking on item popup 
         std::string GridValue = XMLParser::GetGridValue(WorldPtr->GetStartupData().GridFileName, WorldPtr->GetMouseState().GridX, WorldPtr->GetMouseState().GridY);
         if (GridValue != "0")
         {

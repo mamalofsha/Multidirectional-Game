@@ -3,8 +3,7 @@
 
 void UIPaginatedWindow::Draw()
 {
-    if (IsHidden) return;
-
+    if (IsHidden) return; 
     // Render the window background
     ObjectShader->use();
     ObjectShader->setBool("IsHidden", IsHidden);
@@ -14,14 +13,11 @@ void UIPaginatedWindow::Draw()
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
-
     int StartIndex = CurrentPage * Rows * Columns;
     int EndIndex = StartIndex + (Rows * Columns);
-
     for (auto It = PageControls.begin(); It != PageControls.end(); ++It) {
-        (*It)->Draw(); // Access the UIButton via the dereferenced iterator
+        (*It)->Draw();
     }
-
     for (const auto& [TabName, Buttons] : Tabs) {
         if (TabName != ActiveTab) continue;
         for (int i = StartIndex; i < EndIndex; ++i) {
@@ -45,14 +41,12 @@ void UIPaginatedWindow::UpdateChildrenButtons(float InX, float InY)
             Child->UpdateHoverState(InX, InY);
         }
     }
-
     int StartIndex = CurrentPage * Rows * Columns;
     int EndIndex;
     if (static_cast<int>((Tabs[ActiveTab].size()) - StartIndex >= (Rows * Columns)))
         EndIndex = StartIndex + (Rows * Columns);
     else
         EndIndex = (Tabs[ActiveTab].size());
-
     for (const auto& [TabName, Buttons] : Tabs) {
         if (TabName != ActiveTab) continue;
         for (int i = StartIndex; i < EndIndex; ++i) {

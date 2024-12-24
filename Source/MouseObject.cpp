@@ -14,9 +14,11 @@ void MouseObject::Draw()
 	float ScreenY = 0.0f;
 	auto [WinX, WinY] = WorldPtr->GetWindowSize();
 	MouseInteractionAPI* Api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(WorldPtr->GetWindow()));
+	// checking if we're in grid
 	if (Api->GetMouseState().GridX >= 0 && Api->GetMouseState().GridX < WorldPtr->GetGridConfig().Width &&
 		Api->GetMouseState().GridY >= 0 && Api->GetMouseState().GridY < WorldPtr->GetGridConfig().Height)
 	{
+		// checking if  grid is occupied
 		std::string GridValue = XMLParser::GetGridValue(WorldPtr->GetStartupData().GridFileName, Api->GetMouseState().GridX, Api->GetMouseState().GridY);
 		if (GridValue != "0")
 		{
@@ -90,6 +92,7 @@ void MouseObject::ReloadTexture(const char* InFilePath)
 
 void MouseObject::ExecuteAction()
 {
+	// spawn building 
 	if (GetIsAttachedToGrid())
 	{
 		std::vector<float> Vertices = {
@@ -122,5 +125,4 @@ void MouseObject::ExecuteAction()
 	}
 	if (!IsOverlapping)
 		SetHidden(true);
-
 }

@@ -19,6 +19,10 @@ public:
         std::vector<float> GridVertices = Graphics::CreateGridVertices(InGridConfig.Width, InGridConfig.Height, 
                                                                        InGridConfig.StartOffsetX, InGridConfig.StartOffsetY);
         GridVerticesSize = GridVertices.size();
+        ObjectShader->use();
+        ObjectShader->setUniform2f("TileSize", InGridConfig.TileWidth, InGridConfig.TileHeight);
+        auto [WindowWidth, WindowHeight] = WorldPtr->GetWindowSize();
+        ObjectShader->setUniform2f("ScreenSize", WindowWidth, WindowHeight);
         glGenBuffers(1, &VBO);
         glGenVertexArrays(1, &VAO);
         glBindVertexArray(VAO);
@@ -26,11 +30,6 @@ public:
         glBufferData(GL_ARRAY_BUFFER, GridVerticesSize * sizeof(float), GridVertices.data(), GL_STATIC_DRAW);
         glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
         glEnableVertexAttribArray(0);
-        ObjectShader->use();
-        // Set uniform values
-        ObjectShader->setUniform2f("TileSize", InGridConfig.TileWidth, InGridConfig.TileHeight);
-        auto [WindowWidth, WindowHeight] = WorldPtr->GetWindowSize();
-        ObjectShader->setUniform2f("ScreenSize", WindowWidth, WindowHeight);
     }
 
     ~GridObject() {

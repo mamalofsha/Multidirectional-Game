@@ -6,8 +6,6 @@
 void UIDetailsWindow::Draw()
 {
     if (IsHidden) return;
-
-    // Render the window background
     ObjectShader->use();
     ObjectShader->setBool("IsHidden", IsHidden);
     ObjectShader->setBool("IsHovered", false);
@@ -16,12 +14,9 @@ void UIDetailsWindow::Draw()
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
-
-
     for (auto It = PageControls.begin(); It != PageControls.end(); ++It) {
-        (*It)->Draw(); // Access the UIButton via the dereferenced iterator
+        (*It)->Draw(); 
     }
-
     for (auto It = TextComps.begin(); It != TextComps.end(); ++It) {
         
         float ScreenX = (PosX + 1.0f) * 0.5f * HudPtr->GetWindowSize().first;
@@ -29,7 +24,6 @@ void UIDetailsWindow::Draw()
         Graphics::RenderText(HudPtr->GetFontShader(), HudPtr->GetFontData().first, HudPtr->GetFontData().second,
             (*It).ActualText, ScreenX - (*It).OffSetX, HudPtr->GetWindowSize().second - ScreenY - (*It).OffSetY, (*It).Scale,
             (*It).TextColor, HudPtr->GetCharacters());
-        
     }
 }
 
@@ -49,9 +43,7 @@ void UIDetailsWindow::Override(std::vector<UIText> InText, const char* InFilePat
 
 void UIDetailsWindow::ItemDelete()
 {
-    std::cout << GridX << ":" << GridY << std::endl;
      XMLParser::UpdateGridValue(HudPtr->GetWorldPtr()->GetStartupData().GridFileName,GridX,GridY,"0");
-    // WorldPtr->DeleteBuilding(GridX, GridY);
      HudPtr->GetWorldPtr()->DeleteBuilding(GridX, GridY);
 }
 

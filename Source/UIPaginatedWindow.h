@@ -13,17 +13,18 @@ enum TabType
 
 class UIPaginatedWindow : public UIWindow {
 public:
+	// config for page item count
 	int Columns = 2;
 	int Rows = 2;
 	int CurrentPage = 0;
-	std::vector<std::shared_ptr<UIButton>> PageControls; // Controls for navigation (next/previous page)
+	std::vector<std::shared_ptr<UIButton>> PageControls; // Controls next/previous page
 	std::map<std::string, std::vector<std::shared_ptr<UIButton>>> Tabs;
 	std::string XMLName;
 	std::string ActiveTab = "Decorations";
 	HUD* HudPtr;
 
-	UIPaginatedWindow(std::shared_ptr<Shader> InShaderProgram, float InPosX, float InPosY, float InWidth, float InHeight, std::string InXML, const std::string& InAssetPath, HUD* InHud)
-		: UIWindow(InShaderProgram, InPosX, InPosY, InWidth, InHeight) {
+	UIPaginatedWindow(std::shared_ptr<Shader> InShaderProgram, float InPosX, float InPosY, float InWidth, float InHeight, std::string InXML, const std::string& InAssetPath, HUD* InHud,std::string InActiveTab)
+		: UIWindow(InShaderProgram, InPosX, InPosY, InWidth, InHeight) , ActiveTab(InActiveTab) {
 		XMLName = InXML;
 		HudPtr = InHud;
 		InitializeFromRenderData(Graphics::DrawUIElement(std::vector<float>{InPosX, InPosY}, std::vector<float>{InWidth, InHeight}, InAssetPath.c_str()));
@@ -41,17 +42,13 @@ public:
 template<typename T>
 inline void UIPaginatedWindow::AddTab(const std::string& InUITabName, const std::string& InXMLCategory)
 {
-
 	std::vector<std::shared_ptr<UIButton>> UIElements;
-
 	if constexpr (std::is_same<T, WorkshopData>::value) {
 		std::vector<WorkshopData> Items = XMLParser::LoadWorkshops(XMLName, InXMLCategory);
 		for (const auto& Item : Items) {
 			std::cout << Item.Name;
-
 			int X = UIElements.size() % Columns;
 			int Y = std::floor((UIElements.size() / Columns) % Rows);
-
 			std::shared_ptr<UIButton> Button = std::make_shared<UIButton>(HudPtr->GetUIShader(), -0.3f + (X * 0.6f), 0.4f + (Y * -0.4f), 0.2f, 0.1f, [&, Item]() {
 				std::cout << "Spawned item: " << Item.Name << " and attached to the mouse." << std::endl;
 				this->SetHidden(true);
@@ -59,18 +56,14 @@ inline void UIPaginatedWindow::AddTab(const std::string& InUITabName, const std:
 				HudPtr->GetMouseObjectPtr()->ReloadTexture(Item.ImageFile.c_str());
 				}, Item.Name, Item.ImageFile, HudPtr);
 			UIElements.push_back(Button);
-
 		}
-
 	}
 	else if constexpr (std::is_same<T, DecorationData>::value) {
 		std::vector<DecorationData> Items = XMLParser::LoadDecorations(XMLName, InXMLCategory);
 		for (const auto& Item : Items) {
 			std::cout << Item.Name;
-
 			int X = UIElements.size() % Columns;
 			int Y = std::floor((UIElements.size() / Columns) % Rows);
-
 			std::shared_ptr<UIButton> Button = std::make_shared<UIButton>(HudPtr->GetUIShader(), -0.3f + (X * 0.6f), 0.4f + (Y * -0.4f), 0.2f, 0.1f, [&, Item]() {
 				this->SetHidden(true);
 				HudPtr->GetMouseObjectPtr()->SetItemID(Item.ItemID);
@@ -79,7 +72,5 @@ inline void UIPaginatedWindow::AddTab(const std::string& InUITabName, const std:
 			UIElements.push_back(Button);
 		}
 	}
-
 	Tabs[InUITabName] = UIElements;
-
 }

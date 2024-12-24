@@ -43,7 +43,6 @@ void MouseInteractionAPI::ClickCallback(GLFWwindow* InWindow, int InButton, int 
         glfwGetCursorPos(InWindow, &XPos, &YPos);
         int WindowWidth, WindowHeight;
         glfwGetWindowSize(InWindow, &WindowWidth, &WindowHeight);
-
         MouseInteractionAPI* Api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(InWindow));
         if (Api) {
             Api->HandleMouseClick(XPos, YPos, WindowWidth, WindowHeight);
@@ -79,21 +78,16 @@ void MouseInteractionAPI::SetPanZoom(float InPanX, float InPanY, float InZoom) {
 std::pair<int, int> MouseInteractionAPI::ScreenToGrid(double InScreenX, double InScreenY, float InTileWidth, float InTileHeight, float InOffsetX, float InOffsetY, float InZoom, float InPanX, float InPanY, int InWindowWidth, int InWindowHeight, float InLevelWidth, float InLevelHeight) {
     float WindowAspectRatio = static_cast<float>(InWindowWidth) / static_cast<float>(InWindowHeight);
     float BgAspectRatio = InLevelWidth / InLevelHeight;
-
     float ScaleX = InLevelWidth / static_cast<float>(InWindowWidth);
     float ScaleY = InLevelHeight / static_cast<float>(InWindowHeight);
-
     float NdcX = ((((InScreenX) / InWindowWidth) * 2.0f - 1.0f) / (InZoom * ScaleX));
     float NdcY = ((1.0f - ((InScreenY) / InWindowHeight) * 2.0f) / (InZoom * ScaleY));
     NdcX -= InPanX;
     NdcY -= InPanY;
-
     float ApproxGridX = (NdcY / InTileHeight) + (NdcX / InTileWidth) - (InOffsetX);
     float ApproxGridY = (NdcY / InTileHeight) - (NdcX / InTileWidth) - (InOffsetY);
-
     int GridX = static_cast<int>(std::floor(ApproxGridX));
     int GridY = static_cast<int>(std::floor(ApproxGridY));
-
     return { GridX, GridY };
 }
 

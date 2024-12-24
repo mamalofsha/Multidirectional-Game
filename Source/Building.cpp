@@ -12,7 +12,6 @@ void Building::Draw()
 	ObjectShader->use();
 	ObjectShader->setBool("IsOverlapping", false);
 	ObjectShader->setBool("IsHidden", false);
-
 	float NdcX = 0.0f;
 	float NdcY = 0.0f;
 	float ScreenX = 0.0f;
@@ -53,5 +52,4 @@ void Building::MarkForDelete()
 	glBindVertexArray(0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	IsMarkedForDelete = true;
-	//ObjectShader->setBool("IsHidden", false);
 }

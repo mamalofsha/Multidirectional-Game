@@ -13,12 +13,10 @@ public:
         int InGridX,
         int InGridY,
         const WorkshopData& InData)
-        : Building(InShader, InVertices, InIndices, InData.ImageFile.c_str(), InVertexData, InWorld, InGridX, InGridY) // Pass to base class constructor
+        : Building(InShader, InVertices, InIndices, InData.ImageFile.c_str(), InVertexData, InWorld, InGridX, InGridY)
     {
     }
-
     void Draw() override {
-        // Draw the workshop...
         Building::Draw();
     }
 };
