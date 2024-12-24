@@ -14,8 +14,6 @@ class Shader
 public:
     unsigned int ID;
     Shader() : ID(0) { // Default constructor
-        // Optionally, create a minimal shader program or leave empty
-        std::cout << "Default Shader created" << std::endl;
     }    // constructor generates the shader on the fly
     // ------------------------------------------------------------------------
     Shader(const char* vertexPath, const char* fragmentPath, const char* geometryPath = nullptr)

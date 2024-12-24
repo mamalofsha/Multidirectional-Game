@@ -5,7 +5,6 @@ void Building::Draw()
 {
 	if (IsMarkedForDelete)
 	{
-		std::cout << GridY << std::endl;
 		return;
 	}
 	if (IsHidden)return;

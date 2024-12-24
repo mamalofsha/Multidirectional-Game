@@ -56,8 +56,6 @@ void UIPaginatedWindow::UpdateChildrenButtons(float InX, float InY)
                 continue;
             }
             Buttons[i]->UpdateHoverState(InX, InY);
-            if (Buttons[i]->IsHovered)
-                std::cout << i << std::endl;
         }
     }
 }

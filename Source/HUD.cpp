@@ -134,7 +134,8 @@ HUD::HUD(float InWindowWidth, float InWindowHeight, World* InWorldPtr)
 	ItemInfoPopUP->PageControls.push_back(DeletePage);
 	UIElements.push_back(ItemInfoPopUP);
 	ItemInfoPopUP->SetHidden(true);
-	//
+	///
+	// magnifier buttons 
 	std::shared_ptr<UIButton> ZoomOut = std::make_shared<UIButton>(UIShader, 0.90f, 0.7f, .1f, .12f, [this]() {
 		if (GetWorldPtr())
 		{
@@ -166,13 +167,11 @@ void HUD::Update()
 	{
 		Element->Draw();
 	}
-	//ShopWindow->Draw();
-	//ItemInfoPopUP->Draw();
 }
 
 void HUD::OnHoverFunction(int InGridX, int InGridY, float InScreenX, float InScreenY)
 {
-	std::cout << "Hovered over tile: (" << InGridX << ", " << InGridY << ")" << std::endl;
+	//std::cout << "Hovered over tile: (" << InGridX << ", " << InGridY << ")" << std::endl;
 	if (UIElements.empty()) return;
 	for (auto& Element : UIElements)
 	{
@@ -189,8 +188,8 @@ void HUD::OnClickFunction(int InGridX, int InGridY, float InScreenX, float InScr
 {
 	if (!MouseObjectPtr->GetHidden())
 	{
+		// doing something with the hovered mouse object 
 		MouseObjectPtr->ExecuteAction();
-		std::cout << "Mouse object action executed!" << std::endl;
 	}
 	else
 	{
@@ -198,7 +197,8 @@ void HUD::OnClickFunction(int InGridX, int InGridY, float InScreenX, float InScr
 		{
 			// clicking on grid object
 			std::string GridValue = "0";
-			if (WorldPtr->GetMouseState().GridX >= 0 && WorldPtr->GetMouseState().GridY >= 0)
+			if ((WorldPtr->GetMouseState().GridX >= 0 && WorldPtr->GetMouseState().GridY >= 0)&&
+				(WorldPtr->GetMouseState().GridX < WorldPtr->GetGridConfig().Width && WorldPtr->GetMouseState().GridY < WorldPtr->GetGridConfig().Height))
 				 GridValue = XMLParser::GetGridValue(WorldPtr->GetStartupData().GridFileName, WorldPtr->GetMouseState().GridX, WorldPtr->GetMouseState().GridY);
 			if (GridValue != "0")
 			{

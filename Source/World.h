@@ -18,10 +18,12 @@ private:
 	StartUpData StartUp;
 	GridConfig GridConfigData;
 	bool IsGridDrawn = true;
-	// 
+	// use arrow keys to pan around 
 	float PanX = 0.0f;
 	float PanY = 0.0f;
+	// works with W/S keys
 	float ZoomLevel = 0.25f;
+	// used with magnifier buttons
 	int MagnifierZoomLevel = 1;
 	//
 	std::vector<std::shared_ptr<Object>> GameObjects;

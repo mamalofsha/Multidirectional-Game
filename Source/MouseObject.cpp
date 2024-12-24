@@ -79,7 +79,6 @@ void MouseObject::ReloadTexture(const char* InFilePath)
 		GLenum Format = (NrChannels == 4) ? GL_RGBA : GL_RGB; // Detect if image has alpha
 		glTexImage2D(GL_TEXTURE_2D, 0, Format, Width, Height, 0, Format, GL_UNSIGNED_BYTE, Data);
 		glGenerateMipmap(GL_TEXTURE_2D);
-		std::cout << "Loaded texture: " << InFilePath << std::endl;
 	}
 	else {
 		std::cerr << "Failed to load texture: " << InFilePath << std::endl;
