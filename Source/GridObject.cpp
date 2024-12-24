@@ -2,6 +2,7 @@
 
 void GridObject::Draw()
 {
+    if (!WorldPtr->GetGridDraw())return;
     auto [WindowWidth, WindowHeight] = WorldPtr->GetWindowSize();
     float ScaleX = (WorldPtr->GetLevelSize().first) / WindowWidth;
     float ScaleY = (WorldPtr->GetLevelSize().second) / WindowHeight;

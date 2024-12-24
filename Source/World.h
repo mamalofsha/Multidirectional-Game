@@ -17,6 +17,7 @@ private:
 	GLFWwindow* Window;
 	StartUpData StartUp;
 	GridConfig GridConfigData;
+	bool IsGridDrawn = true;
 	// 
 	float PanX = 0.0f;
 	float PanY = 0.0f;
@@ -60,4 +61,6 @@ public:
 	StartUpData GetStartupData() { return StartUp; };
 	void DeleteBuilding(int InGridX, int InGridY);
 	void ChangeMagnifierZoom(int InDelta);
+	void ToggleGridDraw() { IsGridDrawn = !IsGridDrawn; };
+	bool GetGridDraw() { return IsGridDrawn; };
 };
