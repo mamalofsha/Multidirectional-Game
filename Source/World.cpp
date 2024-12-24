@@ -43,6 +43,7 @@ World::~World()
 
 void World::Update(float InDeltaSeconds)
 {
+	DeltaSeconds = InDeltaSeconds;
 	GarbageCollection();
 	ProcessInputGL(Window);
 	RenderUpdate();

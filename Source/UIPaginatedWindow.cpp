@@ -11,11 +11,15 @@ void UIPaginatedWindow::Draw()
 		SharedObjectShader->use();
 		SharedObjectShader->setBool("IsHidden", IsHidden);
 		SharedObjectShader->setBool("IsHovered", false);
+		SharedObjectShader->setFloat("Alpha", Alpha);
+
 		glBindTexture(GL_TEXTURE_2D, Texture);
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 		glBindTexture(GL_TEXTURE_2D, 0);
+		SharedObjectShader->setFloat("Alpha", 1.0f);
+
 	}
 	int StartIndex = CurrentPage * Rows * Columns;
 	int EndIndex = StartIndex + (Rows * Columns);
@@ -78,6 +82,11 @@ void UIPaginatedWindow::PreviousPage()
 	}
 }
 
+void UIPaginatedWindow::UpdateAlpha(float InNewValue)
+{
+	Alpha += InNewValue ;
+}
+
 void UIPaginatedWindow::AddStaticTab(const std::string& InUITabName)
 {
 	UIText TextData;
@@ -92,26 +101,35 @@ void UIPaginatedWindow::AddStaticTab(const std::string& InUITabName)
 	TextData.OffSetY = 115.f;
 	TextData.Scale = 0.5f;
 	OutTextData.push_back(TextData);
-
 	int X = Tabs[InUITabName].size() % Columns;
 	int Y = std::floor((Tabs[InUITabName].size() / Columns) % Rows);
-	std::shared_ptr<UIButton> Button = std::make_shared<UIButton>(HudPtr->GetUIShader(), -0.7f + (X * SlotSpaceX / 1.2), -0.775f + (Y * SlotSpaceY), 0.2f, 0.2f, []() {
+	std::unique_ptr<UIButton> Button = std::make_unique<UIButton>(HudPtr->GetUIShader(), -0.7f + (X * SlotSpaceX / 1.2), -0.775f + (Y * SlotSpaceY), 0.2f, 0.2f, []() {
 		}, "Assets/Images/profile.png", HudPtr, OutTextData);
-	Tabs[InUITabName].push_back(Button);
+	Tabs[InUITabName].push_back(std::move(Button));
 }
 
-std::vector<std::weak_ptr<UIButton>> UIPaginatedWindow::GetCatButtons()
+std::vector<UIButton*>UIPaginatedWindow::GetCatButtons()
 {
-	std::vector<std::weak_ptr<UIButton>> OutWeakPtrVector;
-	for (auto  It = Tabs[ActiveTab].begin(); It < Tabs[ActiveTab].end(); It++)
+	std::vector<UIButton*> OutRawPtrVector;
+	for (const auto& ButtonPtr : Tabs[ActiveTab])
 	{
-		OutWeakPtrVector.push_back(*It);
+		OutRawPtrVector.push_back(ButtonPtr.get()); // Retrieve raw pointer from unique_ptr
 	}
-	return OutWeakPtrVector;
+	return OutRawPtrVector;
 }
 
 void UIPaginatedWindow::SetContentSize(std::pair<int, int> InIntPair)
 {
 	Rows = InIntPair.first;
 	Columns = InIntPair.second;
+}
+
+void UIPaginatedWindow::SetHidden(bool NewHidden)
+{
+	if (!NewHidden)
+		IsChanging = true;
+	else{
+		IsChanging = false;
+		Alpha = 0.f;
+	}Object::SetHidden(NewHidden);
 }

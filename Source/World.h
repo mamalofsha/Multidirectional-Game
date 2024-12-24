@@ -44,6 +44,7 @@ public:
 	std::shared_ptr<Shader> BuildingShader;
 	std::vector<std::unique_ptr<Building>> Buildings;
 	std::unique_ptr<HUD> GameHUD;
+	float DeltaSeconds;
 
 	World(const std::string& InFileName);
 	~World();

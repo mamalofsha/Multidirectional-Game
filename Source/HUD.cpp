@@ -186,6 +186,8 @@ void HUD::Update()
 	{
 		Element->Draw();
 	}
+	if (ShopWindow->IsChanging)
+		ShopWindow->UpdateAlpha(WorldPtr->DeltaSeconds);
 }
 
 void HUD::OnHoverFunction(int InGridX, int InGridY, float InScreenX, float InScreenY)
@@ -269,13 +271,10 @@ void HUD::OnClickFunction(int InGridX, int InGridY, float InScreenX, float InScr
 			}
 			for (auto& Button : Window->GetCatButtons())
 			{
-				if (auto SharedPtr = Button.lock())
-				{
-					if (SharedPtr->IsHovered) {
-						SharedPtr->Clicked();
-						SharedPtr->OnClick();
+					if (Button->IsHovered) {
+						Button->Clicked();
+						Button->OnClick();
 					}
-				}
 			}
 		}
 		if (auto Window = std::dynamic_pointer_cast<UIDetailsWindow>(Element)) {

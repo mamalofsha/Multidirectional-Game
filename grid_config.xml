@@ -12,10 +12,10 @@
         <y>0.0</y>
     </offset>
     <tiles>
-        <row>0 0 0 0 0</row>
+        <row>0 0 workshop4 0 0</row>
         <row>workshop5 0 workshop4 0 0</row>
         <row>0 decoration6 0 workshop1 0</row>
-        <row>0 0 0 0 0</row>
+        <row>0 0 workshop5 0 0</row>
         <row>0 0 0 0 0</row>
     </tiles>
 </grid>
