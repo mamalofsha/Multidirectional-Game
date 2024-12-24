@@ -150,11 +150,11 @@ void World::ProcessInputGL(GLFWwindow* InWindow)
 	float MinPanY = (-BgHalfHeight + HalfVisibleHeight) / 1000.0f;
 	float MaxPanY = (BgHalfHeight - HalfVisibleHeight) / 1000.0f;
 	// to prevent clamp from crashing 
-	if (std::abs(BgHalfWidth - HalfVisibleWidth) < 0.001f)
+	if (std::abs(BgHalfWidth - HalfVisibleWidth) < 0.1f)
 		PanX = 0.0f;
 	else
 		PanX = std::clamp(PanX, MinPanX, MaxPanX);
-	if (std::abs(BgHalfHeight - HalfVisibleHeight) < 0.001f)
+	if (std::abs(BgHalfHeight - HalfVisibleHeight) < 0.1f)
 		PanY = 0.0f;
 	else
 		PanY = std::clamp(PanY, MinPanY * (LevelWidth / LevelHeight), MaxPanY * (LevelWidth / LevelHeight));
