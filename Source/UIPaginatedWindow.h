@@ -50,11 +50,11 @@ inline void UIPaginatedWindow::AddTab(const std::string& InUITabName, const std:
 		for (const auto& Item : Items) {
 			std::cout << Item.Name;
 			std::vector<UIText> Texts;
-			UIText OutText = {50.0f,100.0f,Item.Name,0.4f };
+			UIText OutText = {50.0f,110.0f,Item.Name,0.4f };
 			Texts.push_back(OutText);
-			OutText = { 60.0f,125.0f,"$ " + std::to_string(static_cast<int>(Item.GoldCost)),0.4f};
+			OutText = { 60.0f,135.0f,"$ " + std::to_string(static_cast<int>(Item.GoldCost)),0.4f};
 			Texts.push_back(OutText);
-			OutText = { 60.0f,150.0f,"Generates " + std::to_string(static_cast<int>(Item.GoldGenRate))+"$ per frame",0.4f};
+			OutText = { 60.0f,160.0f,"Generates " + std::to_string(static_cast<int>(Item.GoldGenRate))+"$ per frame",0.4f};
 			Texts.push_back(OutText);
 			int X = UIElements.size() % Columns;
 			int Y = std::floor((UIElements.size() / Columns) % Rows);
@@ -73,11 +73,11 @@ inline void UIPaginatedWindow::AddTab(const std::string& InUITabName, const std:
 		for (const auto& Item : Items) {
 			std::cout << Item.Name;
 			std::vector<UIText> Texts;
-			UIText OutText = { 50.0f,100.0f,Item.Name,0.4f };
+			UIText OutText = { 50.0f,110.0f,Item.Name,0.4f };
 			Texts.push_back(OutText);
-			OutText = { 60.0f,125.0f,"$ " + std::to_string(static_cast<int>(Item.GoldCost)),0.4f };
+			OutText = { 60.0f,135.0f,"$ " + std::to_string(static_cast<int>(Item.GoldCost)),0.4f };
 			Texts.push_back(OutText);
-			OutText = { 60.0f,150.0f,"Generates " + std::to_string(static_cast<int>(Item.Happiness)) + " + per frame",0.4f };
+			OutText = { 60.0f,160.0f,"Generates " + std::to_string(static_cast<int>(Item.Happiness)) + " + per frame",0.4f };
 			Texts.push_back(OutText);
 			int X = UIElements.size() % Columns;
 			int Y = std::floor((UIElements.size() / Columns) % Rows);

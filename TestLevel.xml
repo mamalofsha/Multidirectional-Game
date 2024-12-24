@@ -4,7 +4,7 @@
         <width>2000</width>
         <height>1404</height>
     </dimensions>
-	<WindowScale>0.8</WindowScale>
+	<WindowScale>1</WindowScale>
     <gridfilename>grid_config.xml</gridfilename>
 </level>
 

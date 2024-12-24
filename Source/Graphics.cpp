@@ -294,6 +294,7 @@ void Graphics::RenderText(Shader& InShader, const unsigned int InVAO, const unsi
 	glActiveTexture(GL_TEXTURE0);
 	glBindVertexArray(InVAO);
 
+	// Iterate through characters in the text
 	for (const auto& C : InText)
 	{
 		Character Ch = InMap[C];
@@ -303,6 +304,8 @@ void Graphics::RenderText(Shader& InShader, const unsigned int InVAO, const unsi
 
 		float W = Ch.Size.x * InScale;
 		float H = Ch.Size.y * InScale;
+
+		// Create vertex array for the character quad
 		float Vertices[6][4] = {
 			{ XPos,     YPos + H,   0.0f, 0.0f },
 			{ XPos,     YPos,       0.0f, 1.0f },
@@ -313,14 +316,18 @@ void Graphics::RenderText(Shader& InShader, const unsigned int InVAO, const unsi
 			{ XPos + W, YPos + H,   1.0f, 0.0f }
 		};
 
+		// Render the character
 		glBindTexture(GL_TEXTURE_2D, Ch.TextureID);
 		glBindBuffer(GL_ARRAY_BUFFER, InVBO);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Vertices), Vertices);
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		// Advance cursor to the next character
 		InX += (Ch.Advance >> 6) * InScale;
 	}
+
 	glBindVertexArray(0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
