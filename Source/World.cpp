@@ -32,7 +32,6 @@ World::World(const std::string& InFileName)
 
 World::~World()
 {
-	// check to see if it actually clears ( eg there are not other objects pointing to this shared ptr 
 	Shaders.clear();
 	MouseInteractionAPI* Api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(Window));
 	if (Api) {
@@ -168,14 +167,6 @@ void World::ProcessInputGL(GLFWwindow* InWindow)
 
 void World::GarbageCollection()
 {
-	for (auto It = Buildings.begin(); It != Buildings.end();) {
-		if ((*It)->GetMarkedForDelete()) {
-			It = Buildings.erase(It);
-		}
-		else {
-			++It;
-		}
-	}
 }
 
 void World::SetupMouseCallbacks()
@@ -207,22 +198,15 @@ void World::RenderUpdate()
 			std::cerr << "No objects found for shader ID: " << ShaderID << std::endl;
 		}
 	}
-	if (!Buildings.empty())
+	if (!BuildingsMap.empty())
 	{
-		// quick dirty way to get depth for buildings...
 		for (int j = GridConfigData.Height - 1; j >= 0; j--)
 		{
 			for (int i = GridConfigData.Width - 1; i >= 0; i--)
 			{
 				// does the save indicate there's something here ?
 				if (XMLParser::GetGridValue(StartUp.GridFileName, i, j) == "0")continue;
-				for (auto It = Buildings.begin(); It < Buildings.end(); It++) {
-					if ((*It)->GetGridCoord().first == i && (*It)->GetGridCoord().second == j)
-					{
-						(*It)->Draw();
-						break;
-					}
-				}
+				if (BuildingsMap[{i, j}])BuildingsMap[{i, j}]->Draw();
 			}
 		}
 	}
@@ -252,11 +236,13 @@ void World::LoadSave()
 				VertexAttribute OutVertexData = { 4,{2,2} };
 				WorkshopData TempWorkShopData = XMLParser::LoadWorkshop("ShopItems.xml", "workshops", Value);
 				if (!TempWorkShopData.Name.empty()) {
-					Buildings.emplace_back(std::make_unique<Workshop>(WeakBuildingShaderPtr, Vertices, Indices, OutVertexData, this, i, j, TempWorkShopData));
+					BuildingsMap[{i, j}] = 
+						std::make_unique<Workshop>(WeakBuildingShaderPtr, Vertices, Indices, OutVertexData, this, i, j, TempWorkShopData);
 				}
 				DecorationData TempDecorationData = XMLParser::LoadDecoration("ShopItems.xml", "decorations", Value);
 				if (!TempDecorationData.Name.empty()) {
-					Buildings.emplace_back(std::make_unique<Decoration>(WeakBuildingShaderPtr, Vertices, Indices, OutVertexData, this, i, j, TempDecorationData));
+					BuildingsMap[{i, j}] =
+						std::make_unique<Decoration>(WeakBuildingShaderPtr, Vertices, Indices, OutVertexData, this, i, j, TempDecorationData);
 				}
 			}
 		}
@@ -282,6 +268,9 @@ std::pair<float, float> World::GetLevelSize()
 
 void World::DeleteBuilding(int InGridX, int InGridY)
 {
+	
+	BuildingsMap[{InGridX, InGridY}] = nullptr;
+	/*
 	for (auto It = Buildings.begin(); It < Buildings.end(); ++It)
 	{
 		auto [TempX, TempY] = (*It)->GetGridCoord();
@@ -290,7 +279,7 @@ void World::DeleteBuilding(int InGridX, int InGridY)
 			(*It)->MarkForDelete();
 			break;
 		}
-	}
+	}*/
 }
 
 void World::ChangeMagnifierZoom(int InDelta)

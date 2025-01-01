@@ -4,13 +4,14 @@
 #include <TinyXML/tinyxml2.h>
 using namespace tinyxml2;
 
+// loading the level data from TestLevel.xml
 struct StartUpData
 {
-    int LevelWidth;
+    int LevelWidth;  // 4x4
     int LevelHeight;
-    float WindowScale;
-    std::string GridFileName;
-    std::string LevelFileName;
+    float WindowScale;            
+    std::string GridFileName;   // grid config xml file
+    std::string LevelFileName;  // bg asset path
 };
 
 struct WorkshopData;

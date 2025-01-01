@@ -167,7 +167,7 @@ HUD::HUD(float InWindowWidth, float InWindowHeight, World* InWorldPtr)
 		}
 		}, "Assets/Images/zoomin.png", this);
 	UIElements.push_back(ZoomIn);
-	//
+	/////
 	std::shared_ptr<UIButton> GridToggle = std::make_shared<UIButton>(UIShader, 0.90f, 0.456f, .1f, .12f, [this]() {
 		if (GetWorldPtr())
 		{

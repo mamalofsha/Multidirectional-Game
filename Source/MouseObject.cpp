@@ -8,7 +8,7 @@ void MouseObject::Draw()
 {
 	if (IsHidden) return;
 	auto SharedObjectShader = ObjectShader.lock();
-		if (!SharedObjectShader) return;
+	if (!SharedObjectShader) return;
 	SharedObjectShader->use();
 	float NdcX = 0.0f;
 	float NdcY = 0.0f;
@@ -112,14 +112,16 @@ void MouseObject::ExecuteAction()
 		WorkshopData TempWorkShopData = XMLParser::LoadWorkshop("ShopItems.xml", "workshops", ItemID);
 		if (!TempWorkShopData.Name.empty())
 		{
-			WorldPtr->Buildings.emplace_back(std::make_unique<Workshop>(ObjectShader, Vertices, Indices, OutVertexData, WorldPtr, Api->GetMouseState().GridX, Api->GetMouseState().GridY, TempWorkShopData));
+			WorldPtr->BuildingsMap[{Api->GetMouseState().GridX, Api->GetMouseState().GridY}] =
+				std::make_unique<Workshop>(ObjectShader, Vertices, Indices, OutVertexData, WorldPtr, Api->GetMouseState().GridX, Api->GetMouseState().GridY, TempWorkShopData);
 		}
 		else
 		{
 			DecorationData TempDecorationData = XMLParser::LoadDecoration("ShopItems.xml", "decorations", ItemID);
 			if (!TempDecorationData.Name.empty())
 			{
-				WorldPtr->Buildings.emplace_back(std::make_unique<Decoration>(ObjectShader, Vertices, Indices, OutVertexData, WorldPtr, Api->GetMouseState().GridX, Api->GetMouseState().GridY, TempDecorationData));
+				WorldPtr->BuildingsMap[{Api->GetMouseState().GridX, Api->GetMouseState().GridY}] =
+					std::make_unique<Decoration>(ObjectShader, Vertices, Indices, OutVertexData, WorldPtr, Api->GetMouseState().GridX, Api->GetMouseState().GridY, TempDecorationData);
 			}
 		}
 		XMLParser::UpdateGridValue(WorldPtr->GetStartupData().GridFileName, Api->GetMouseState().GridX, Api->GetMouseState().GridY, ItemID.c_str());

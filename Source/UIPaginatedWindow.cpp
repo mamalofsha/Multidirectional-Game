@@ -85,10 +85,13 @@ void UIPaginatedWindow::PreviousPage()
 void UIPaginatedWindow::UpdateAlpha(float InNewValue)
 {
 	Alpha += InNewValue ;
+	if (Alpha >= 1)
+		IsChanging = false;
 }
 
 void UIPaginatedWindow::AddStaticTab(const std::string& InUITabName)
 {
+	// adding static placeholder friends data
 	UIText TextData;
 	TextData.ActualText = "Hacky";
 	TextData.OffSetX = 80.0f;

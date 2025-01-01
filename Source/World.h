@@ -17,6 +17,7 @@ private:
 	GLFWwindow* Window;
 	StartUpData StartUp;
 	GridConfig GridConfigData;
+	// toggle for displaying grid
 	bool IsGridDrawn = true;
 	// use arrow keys to pan around 
 	float PanX = 0.0f;
@@ -31,6 +32,7 @@ private:
 	std::vector<std::shared_ptr<Shader>> Shaders;
 	//
 	MouseInteractionAPI* MouseAPI;
+	std::unique_ptr<HUD> GameHUD;
 
 	void InitBackground();
 	void InitHUD();
@@ -42,8 +44,7 @@ private:
 	void LoadSave();
 public:
 	std::shared_ptr<Shader> BuildingShader;
-	std::vector<std::unique_ptr<Building>> Buildings;
-	std::unique_ptr<HUD> GameHUD;
+	std::map<std::pair<int, int>, std::unique_ptr<Building>> BuildingsMap;
 	float DeltaSeconds;
 
 	World(const std::string& InFileName);
