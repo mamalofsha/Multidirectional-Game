@@ -34,7 +34,8 @@ class Graphics {
 public:
     static GLFWwindow* InitWindow(const unsigned int InWidth, const unsigned int InHeight);
     static RenderData DrawTexture(std::vector<float> InVertices, std::vector<unsigned int> InIndices, VertexAttribute InAttribute, const char* InFileName);
-    static Shader DrawGrid(const GridConfig InGridConfig, int InWindowWidth, int InWindowHeight);
+   // static Shader DrawGrid(const GridConfig InGridConfig, int InWindowWidth, int InWindowHeight);
+    static RenderData DrawGrid(std::weak_ptr<Shader> InShaderProgram,const GridConfig InGridConfig, int InWindowWidth, int InWindowHeight);
     static RenderData DrawUIElement(std::vector<float> InPosition, std::vector<float> InSize, const char* InTextureFilePath);
     static Shader InitTextRender(std::map<GLchar, Character>& InMap, float InWindowWidth, float InWindowHeight, unsigned int& InVAO, unsigned int& InVBO);
     static std::pair<int, int> GridToWorldPosition(int InGridX, int InGridY, float InTileWidth, float InTileHeight, float InOffsetX, float InOffsetY, float InPanX, float InPanY, float InItemScale, float InZoom, float InWindowWidth, float InWindowHeight, float InLevelWidth, float InLevelHeight);

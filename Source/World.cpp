@@ -268,18 +268,7 @@ std::pair<float, float> World::GetLevelSize()
 
 void World::DeleteBuilding(int InGridX, int InGridY)
 {
-	
 	BuildingsMap[{InGridX, InGridY}] = nullptr;
-	/*
-	for (auto It = Buildings.begin(); It < Buildings.end(); ++It)
-	{
-		auto [TempX, TempY] = (*It)->GetGridCoord();
-		if (TempX == InGridX && TempY == InGridY)
-		{
-			(*It)->MarkForDelete();
-			break;
-		}
-	}*/
 }
 
 void World::ChangeMagnifierZoom(int InDelta)

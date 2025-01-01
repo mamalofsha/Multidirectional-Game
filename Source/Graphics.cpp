@@ -86,28 +86,27 @@ RenderData Graphics::DrawTexture(std::vector<float> InVertices, std::vector<unsi
 	return OutData;
 }
 
-Shader Graphics::DrawGrid(const GridConfig InGridConfig, int InWindowWidth, int InWindowHeight)
+RenderData Graphics::DrawGrid(std::weak_ptr<Shader> InShaderProgram,const GridConfig InGridConfig, int InWindowWidth, int InWindowHeight)
 {
-	Shader GridShader("Source/Shaders/Grid.vert", "Source/Shaders/Grid.frag");
-	std::vector<float> GridVertices = CreateGridVertices(InGridConfig.Width, InGridConfig.Height, InGridConfig.StartOffsetX, InGridConfig.StartOffsetY);
-
+	std::vector<float> GridVertices = CreateGridVertices(InGridConfig.Width, InGridConfig.Height, 
+	InGridConfig.StartOffsetX, InGridConfig.StartOffsetY);
+	int GridVerticesSize = GridVertices.size();
 	GLuint VBO, VAO;
 	glGenBuffers(1, &VBO);
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
-
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, GridVertices.size() * sizeof(float), GridVertices.data(), GL_STATIC_DRAW);
-
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-
-	GridShader.use();
-	GLint TileSizeLocation = glGetUniformLocation(GridShader.ID, "tileSize");
-	glUniform2f(TileSizeLocation, InGridConfig.TileWidth, InGridConfig.TileHeight);
-	GLint ScreenSizeLocation = glGetUniformLocation(GridShader.ID, "screenSize");
-	glUniform2f(ScreenSizeLocation, InWindowWidth, InWindowHeight);
-	return GridShader;
+	if (auto SharedObjectShader = InShaderProgram.lock())
+	{
+		SharedObjectShader->use();
+		SharedObjectShader->setUniform2f("TileSize", InGridConfig.TileWidth, InGridConfig.TileHeight);
+		SharedObjectShader->setUniform2f("ScreenSize", InWindowWidth, InWindowHeight);
+	}
+	RenderData OutData = { VAO, VBO, GridVerticesSize, 0 };
+	return OutData;
 }
 
 Shader Graphics::InitTextRender(std::map<GLchar, Character>& InMap, float InWindowWidth, float InWindowHeight, unsigned int& InVAO, unsigned int& InVBO)

@@ -1,16 +1,4 @@
 ﻿  World.cpp
-J:\Ast\Source\GridObject.h(19,98): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  (compiling source file 'Source/World.cpp')
-  
-J:\Ast\Source\GridObject.h(19,78): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  (compiling source file 'Source/World.cpp')
-  
-J:\Ast\Source\GridObject.h(27,64): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  (compiling source file 'Source/World.cpp')
-  
-J:\Ast\Source\GridObject.h(27,51): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  (compiling source file 'Source/World.cpp')
-  
 J:\Ast\Source\UIButton.h(19,94): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   (compiling source file 'Source/World.cpp')
   
@@ -62,14 +50,10 @@ C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.3313
       C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\memory(3465,56):
       the template instantiation context (the oldest one first) is
           J:\Ast\Source\World.cpp(240,12):
-          see reference to function template instantiation 'std::unique_ptr<Workshop,std::default_delete<Workshop>> std::make_unique<Workshop,std::weak_ptr<_Ty>&,std::vector<float,std::allocator<float>>&,std::vector<unsigned int,std::allocator<unsigned int>>&,VertexAttribute&,World*,size_t&,size_t&,WorkshopData&,0>(std::weak_ptr<_Ty> &,std::vector<float,std::allocator<float>> &,std::vector<unsigned int,std::allocator<unsigned int>> &,VertexAttribute &,World *&&,size_t &,size_t &,WorkshopData &)' being compiled
-          with
-          [
-              _Ty=Shader
-          ]
+          see reference to function template instantiation 'std::unique_ptr<Workshop,std::default_delete<Workshop>> std::make_unique<Workshop,std::weak_ptr<Shader>&,std::vector<float,std::allocator<float>>&,std::vector<unsigned int,std::allocator<unsigned int>>&,VertexAttribute&,World*,size_t&,size_t&,WorkshopData&,0>(std::weak_ptr<Shader> &,std::vector<float,std::allocator<float>> &,std::vector<unsigned int,std::allocator<unsigned int>> &,VertexAttribute &,World *&&,size_t &,size_t &,WorkshopData &)' being compiled
   
   Generating code
-  1 of 2966 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+  2 of 2968 functions (<0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     10 functions had inline decision re-evaluated but remain unchanged
   Finished generating code

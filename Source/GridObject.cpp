@@ -19,3 +19,10 @@ void GridObject::Draw()
         glDrawArrays(GL_LINES, 0, GridVerticesSize / 2);
     }
 }
+
+void GridObject::InitializeFromRenderData(const RenderData& InData)
+{
+    VAO = InData.VAO;
+    VBO = InData.VBO;
+    GridVerticesSize = InData.EBO;
+}

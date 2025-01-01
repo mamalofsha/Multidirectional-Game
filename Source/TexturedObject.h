@@ -10,7 +10,6 @@ class TexturedObject : public Object {
 protected:
     unsigned int VAO, VBO, EBO; // OpenGL handles
     unsigned int Texture;       // Texture handle
-
 public:
     TexturedObject(std::weak_ptr<Shader> InShaderProgram, const std::vector<float>& InVertices, const std::vector<unsigned int>& InIndices, const char* InTexturePath, VertexAttribute InAttribute,World* InWorldptr)
         : Object(InShaderProgram) {

@@ -16,23 +16,7 @@ public:
 		: Object(InShaderProgram)
 	{
 		WorldPtr = InWorldPtr;
-		std::vector<float> GridVertices = Graphics::CreateGridVertices(InGridConfig.Width, InGridConfig.Height,
-			InGridConfig.StartOffsetX, InGridConfig.StartOffsetY);
-		GridVerticesSize = GridVertices.size();
-		if (auto SharedObjectShader = ObjectShader.lock())
-		{
-			SharedObjectShader->use();
-			SharedObjectShader->setUniform2f("TileSize", InGridConfig.TileWidth, InGridConfig.TileHeight);
-			auto [WindowWidth, WindowHeight] = WorldPtr->GetWindowSize();
-			SharedObjectShader->setUniform2f("ScreenSize", WindowWidth, WindowHeight);
-			glGenBuffers(1, &VBO);
-			glGenVertexArrays(1, &VAO);
-			glBindVertexArray(VAO);
-			glBindBuffer(GL_ARRAY_BUFFER, VBO);
-			glBufferData(GL_ARRAY_BUFFER, GridVerticesSize * sizeof(float), GridVertices.data(), GL_STATIC_DRAW);
-			glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-			glEnableVertexAttribArray(0);
-		}
+		InitializeFromRenderData(Graphics::DrawGrid(InShaderProgram,InGridConfig, WorldPtr->GetWindowSize().first, WorldPtr->GetWindowSize().second));
 	}
 
 	~GridObject() {
@@ -41,4 +25,5 @@ public:
 	}
 
 	void Draw() override;
+	void InitializeFromRenderData(const RenderData& InData) override;
 };
