@@ -43,7 +43,6 @@ World::~World()
 void World::Update(float InDeltaSeconds)
 {
 	DeltaSeconds = InDeltaSeconds;
-	GarbageCollection();
 	ProcessInputGL(Window);
 	RenderUpdate();
 	glfwPollEvents();
@@ -163,10 +162,6 @@ void World::ProcessInputGL(GLFWwindow* InWindow)
 	if (Api) {
 		Api->SetPanZoom(PanX, PanY, ZoomLevel);
 	}
-}
-
-void World::GarbageCollection()
-{
 }
 
 void World::SetupMouseCallbacks()

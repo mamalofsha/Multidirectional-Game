@@ -7,17 +7,17 @@ J:\Ast\Source\UIButton.h(19,84): warning C4244: 'argument': conversion from 'dou
   
 J:\Ast\Source\World.cpp(22,94): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
 J:\Ast\Source\World.cpp(22,51): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
-J:\Ast\Source\World.cpp(122,19): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-J:\Ast\Source\World.cpp(123,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-J:\Ast\Source\World.cpp(174,88): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-J:\Ast\Source\World.cpp(174,68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-J:\Ast\Source\World.cpp(223,73): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-J:\Ast\Source\World.cpp(223,70): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+J:\Ast\Source\World.cpp(121,19): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+J:\Ast\Source\World.cpp(122,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+J:\Ast\Source\World.cpp(169,88): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+J:\Ast\Source\World.cpp(169,68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+J:\Ast\Source\World.cpp(218,73): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+J:\Ast\Source\World.cpp(218,70): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\memory(3465,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Source/World.cpp')
       C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\memory(3465,56):
       the template instantiation context (the oldest one first) is
-          J:\Ast\Source\World.cpp(81,17):
+          J:\Ast\Source\World.cpp(80,17):
           see reference to function template instantiation 'std::unique_ptr<HUD,std::default_delete<HUD>> std::make_unique<HUD,int&,int&,World*,0>(int &,int &,World *&&)' being compiled
   
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\utility(250,16): warning C4267: 'initializing': conversion from 'size_t' to '_Ty1', possible loss of data
@@ -28,14 +28,14 @@ C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.3313
   (compiling source file 'Source/World.cpp')
       C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\utility(250,16):
       the template instantiation context (the oldest one first) is
-          J:\Ast\Source\World.cpp(239,19):
+          J:\Ast\Source\World.cpp(234,19):
           see reference to function template instantiation 'std::pair<int,int>::pair<size_t&,size_t&,0>(_Other1,_Other2) noexcept' being compiled
           with
           [
               _Other1=size_t &,
               _Other2=size_t &
           ]
-              J:\Ast\Source\World.cpp(239,27):
+              J:\Ast\Source\World.cpp(234,27):
               see the first reference to 'std::pair<int,int>::pair' in 'World::LoadSave'
   
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\utility(250,54): warning C4267: 'initializing': conversion from 'size_t' to '_Ty2', possible loss of data
@@ -49,12 +49,12 @@ C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.3313
   (compiling source file 'Source/World.cpp')
       C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\memory(3465,56):
       the template instantiation context (the oldest one first) is
-          J:\Ast\Source\World.cpp(240,12):
+          J:\Ast\Source\World.cpp(235,12):
           see reference to function template instantiation 'std::unique_ptr<Workshop,std::default_delete<Workshop>> std::make_unique<Workshop,std::weak_ptr<Shader>&,std::vector<float,std::allocator<float>>&,std::vector<unsigned int,std::allocator<unsigned int>>&,VertexAttribute&,World*,size_t&,size_t&,WorkshopData&,0>(std::weak_ptr<Shader> &,std::vector<float,std::allocator<float>> &,std::vector<unsigned int,std::allocator<unsigned int>> &,VertexAttribute &,World *&&,size_t &,size_t &,WorkshopData &)' being compiled
   
   Generating code
-  2 of 2968 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+  2 of 2967 functions (<0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    10 functions had inline decision re-evaluated but remain unchanged
+    9 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Ast.vcxproj -> J:\Ast\x64\Release\Ast.exe

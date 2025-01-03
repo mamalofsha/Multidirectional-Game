@@ -38,7 +38,6 @@ private:
 	void InitHUD();
 	void InitGrid(const std::string& InFileName);
 	void ProcessInputGL(GLFWwindow* InWindow);
-	void GarbageCollection();
 	void SetupMouseCallbacks();
 	void RenderUpdate();
 	void LoadSave();
