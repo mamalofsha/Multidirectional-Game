@@ -22,7 +22,9 @@ This project is a technical implementation of The Castle Builder, developed to d
 - * Workshop System: Generates in-game currency (gold) with defined properties.
 - * Decoration System: Enhances kingdom happiness with associated attributes.
 - * Shop System: Paginated UI for buying workshops and decorations, populated dynamically from XML files.
-- * Technical Challenges Addressed:
+  * 
+** Technical Challenges Addressed:
+**
 - * Developed a custom API for mouse interaction with game elements.
 - * Designed modular XML parsers for flexible data management.
 - * Implemented scalable rendering logic, including vertex buffer and texture management, to support interactive and dynamic game elements.
