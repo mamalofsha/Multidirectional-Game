@@ -24,6 +24,6 @@ Game Systems:
 - * Implemented scalable rendering logic, including vertex buffer and texture management, to support interactive and dynamic game elements.
 - * Ensured compatibility with different window sizes and scaling factors for a polished UI/UX.
 
-# Note: Some game features, such as gold generation logic and level progression, were abstracted for simplicity, focusing on implementing the core systems and functionalities.
+- Note: Some game features, such as gold generation logic and level progression, were abstracted for simplicity, focusing on implementing the core systems and functionalities.
 
 ![photo_2025-01-07_13-06-37](https://github.com/user-attachments/assets/0f5de83c-48e0-45d3-875c-ab234ffd73cd)
