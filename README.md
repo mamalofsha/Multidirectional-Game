@@ -4,6 +4,7 @@ There are two branches currently:
 
 ## main
 Contains a 8-directional top-down game; sofar it has movement and collision detection.
+https://www.youtube.com/watch?v=7mZ2RtSr9e8&list=PLwdJR1FaJbXXzOIdcbY-tOFUzTIiQoB6x&index=1
 ## UBI
 This project is a technical implementation of The Castle Builder, developed to demonstrate game development skills in C++ with a focus on custom rendering, grid-based gameplay mechanics, and modular system design. The project uses OpenGL for rendering and XML for data persistence and configuration.
 
