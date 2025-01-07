@@ -5,7 +5,6 @@ There are two branches currently:
 ## main
 Contains a 8-directional top-down game; sofar it has movement and collision detection.
 ## UBI
-The Castle Builder: Technical Implementation Report
 This project is a technical implementation of The Castle Builder, developed to demonstrate game development skills in C++ with a focus on custom rendering, grid-based gameplay mechanics, and modular system design. The project uses OpenGL for rendering and XML for data persistence and configuration.
 
 Features and Highlights:
@@ -24,4 +23,4 @@ Designed modular XML parsers for flexible data management.
 Implemented scalable rendering logic, including vertex buffer and texture management, to support interactive and dynamic game elements.
 Ensured compatibility with different window sizes and scaling factors for a polished UI/UX.
 Note: Some game features, such as gold generation logic and level progression, were abstracted for simplicity, focusing on implementing the core systems and functionalities.
-![Uploading Capture.PNG…]()
+![photo_2025-01-07_13-06-37](https://github.com/user-attachments/assets/0f5de83c-48e0-45d3-875c-ab234ffd73cd)
