@@ -9,7 +9,7 @@ https://www.youtube.com/watch?v=7mZ2RtSr9e8&list=PLwdJR1FaJbXXzOIdcbY-tOFUzTIiQo
 This project is a technical implementation of The Castle Builder, developed to demonstrate game development skills in C++ with a focus on custom rendering, grid-based gameplay mechanics, and modular system design. The project uses OpenGL for rendering and XML for data persistence and configuration.
 
 Features and Highlights:
-Custom Rendering Pipeline: Implements grid, textures, and UI rendering using OpenGL. Includes dynamic text rendering powered by FreeType and a shader-based approach for visual effects.
+-*Custom Rendering Pipeline: Implements grid, textures, and UI rendering using OpenGL. Includes dynamic text rendering powered by FreeType and a shader-based approach for visual effects.
 Grid-Based Gameplay: Supports isometric grid systems for building placement, with interactive workshops and decorations. Grid configuration and state are dynamically loaded from XML files.
 UI Framework: Includes buttons, popups, and detailed info windows with hover, selection, and text display mechanics, designed for modularity and extensibility.
 Data Persistence: Utilizes XML to save and load map states, including building placements and configurations, ensuring persistent game states.
@@ -24,4 +24,5 @@ Designed modular XML parsers for flexible data management.
 Implemented scalable rendering logic, including vertex buffer and texture management, to support interactive and dynamic game elements.
 Ensured compatibility with different window sizes and scaling factors for a polished UI/UX.
 Note: Some game features, such as gold generation logic and level progression, were abstracted for simplicity, focusing on implementing the core systems and functionalities.
+
 ![photo_2025-01-07_13-06-37](https://github.com/user-attachments/assets/0f5de83c-48e0-45d3-875c-ab234ffd73cd)
