@@ -4,6 +4,7 @@ There are two branches currently:
 
 ## main
 Contains a 8-directional top-down game; sofar it has movement and collision detection.
+
 https://www.youtube.com/watch?v=7mZ2RtSr9e8&list=PLwdJR1FaJbXXzOIdcbY-tOFUzTIiQoB6x&index=1
 ## UBI
 This project is a technical implementation of The Castle Builder, developed to demonstrate game development skills in C++ with a focus on custom rendering, grid-based gameplay mechanics, and modular system design. The project uses OpenGL for rendering and XML for data persistence and configuration.
@@ -14,7 +15,7 @@ This project is a technical implementation of The Castle Builder, developed to d
 - * Grid-Based Gameplay: Supports isometric grid systems for building placement, with interactive workshops and decorations. Grid configuration and state are dynamically loaded from XML files.
 - * UI Framework: Includes buttons, popups, and detailed info windows with hover, selection, and text display mechanics, designed for modularity and extensibility.
 - * Data Persistence: Utilizes XML to save and load map states, including building placements and configurations, ensuring persistent game states.
-- * Zoom and Pan Controls: Implements zooming and panning for better navigation, with constraints to ensure seamless user interaction.- *
+- * Zoom and Pan Controls: Implements zooming and panning for better navigation, with constraints to ensure seamless user interaction.
     
 **Game Systems:
 **
