@@ -10,19 +10,19 @@ This project is a technical implementation of The Castle Builder, developed to d
 
 Features and Highlights:
 - * Custom Rendering Pipeline: Implements grid, textures, and UI rendering using OpenGL. Includes dynamic text rendering powered by FreeType and a shader-based approach for visual effects.
-Grid-Based Gameplay: Supports isometric grid systems for building placement, with interactive workshops and decorations. Grid configuration and state are dynamically loaded from XML files.
-UI Framework: Includes buttons, popups, and detailed info windows with hover, selection, and text display mechanics, designed for modularity and extensibility.
-Data Persistence: Utilizes XML to save and load map states, including building placements and configurations, ensuring persistent game states.
-Zoom and Pan Controls: Implements zooming and panning for better navigation, with constraints to ensure seamless user interaction.
+- * Grid-Based Gameplay: Supports isometric grid systems for building placement, with interactive workshops and decorations. Grid configuration and state are dynamically loaded from XML files.
+- * UI Framework: Includes buttons, popups, and detailed info windows with hover, selection, and text display mechanics, designed for modularity and extensibility.
+- * Data Persistence: Utilizes XML to save and load map states, including building placements and configurations, ensuring persistent game states.
+- * Zoom and Pan Controls: Implements zooming and panning for better navigation, with constraints to ensure seamless user interaction.
 Game Systems:
-Workshop System: Generates in-game currency (gold) with defined properties.
-Decoration System: Enhances kingdom happiness with associated attributes.
-Shop System: Paginated UI for buying workshops and decorations, populated dynamically from XML files.
-Technical Challenges Addressed:
-Developed a custom API for mouse interaction with game elements.
-Designed modular XML parsers for flexible data management.
-Implemented scalable rendering logic, including vertex buffer and texture management, to support interactive and dynamic game elements.
-Ensured compatibility with different window sizes and scaling factors for a polished UI/UX.
+- * Workshop System: Generates in-game currency (gold) with defined properties.
+- * Decoration System: Enhances kingdom happiness with associated attributes.
+- * Shop System: Paginated UI for buying workshops and decorations, populated dynamically from XML files.
+- * Technical Challenges Addressed:
+- * Developed a custom API for mouse interaction with game elements.
+- * Designed modular XML parsers for flexible data management.
+- * Implemented scalable rendering logic, including vertex buffer and texture management, to support interactive and dynamic game elements.
+- * Ensured compatibility with different window sizes and scaling factors for a polished UI/UX.
 Note: Some game features, such as gold generation logic and level progression, were abstracted for simplicity, focusing on implementing the core systems and functionalities.
 
 ![photo_2025-01-07_13-06-37](https://github.com/user-attachments/assets/0f5de83c-48e0-45d3-875c-ab234ffd73cd)
