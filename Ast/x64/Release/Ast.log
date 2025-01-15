@@ -1,45 +1,38 @@
-﻿  HUD.cpp
-J:\Ast\Source\UIButton.h(19,94): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  (compiling source file 'Source/HUD.cpp')
-  
-J:\Ast\Source\UIButton.h(19,84): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  (compiling source file 'Source/HUD.cpp')
-  
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\memory(3465,56): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\memory(3465,56): warning C4244:         with
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\memory(3465,56): warning C4244:         [
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\memory(3465,56): warning C4244:             _Ty=double
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\memory(3465,56): warning C4244:         ]
-  (compiling source file 'Source/HUD.cpp')
-      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\memory(3465,56):
+﻿  Graphics.cpp
+J:\Ast\Source\Graphics.cpp(56,25): warning C4267: 'argument': conversion from 'size_t' to 'GLuint', possible loss of data
+J:\Ast\Source\Graphics.cpp(57,29): warning C4267: 'argument': conversion from 'size_t' to 'GLuint', possible loss of data
+J:\Ast\Source\Graphics.cpp(93,23): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+J:\Ast\Source\Graphics.cpp(106,65): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+J:\Ast\Source\Graphics.cpp(106,50): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+J:\Ast\Source\Graphics.cpp(108,35): warning C4838: conversion from 'int' to 'GLuint' requires a narrowing conversion
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\utility(250,16): warning C4244: 'initializing': conversion from 'float' to '_Ty1', possible loss of data
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\utility(250,16): warning C4244:         with
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\utility(250,16): warning C4244:         [
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\utility(250,16): warning C4244:             _Ty1=int
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\utility(250,16): warning C4244:         ]
+  (compiling source file 'Source/Graphics.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\utility(250,16):
       the template instantiation context (the oldest one first) is
-          J:\Ast\Source\HUD.cpp(30,52):
-          see reference to function template instantiation 'std::unique_ptr<UIButton,std::default_delete<UIButton>> std::make_unique<UIButton,std::shared_ptr<Shader>&,float,float,float,double,HUD::{ctor}::<lambda_1>,const char(&)[27],HUD*,0>(std::shared_ptr<Shader> &,float &&,float &&,float &&,double &&,HUD::{ctor}::<lambda_1> &&,const char (&)[27],HUD *&&)' being compiled
+          J:\Ast\Source\Graphics.cpp(195,2):
+          see reference to function template instantiation 'std::pair<int,int>::pair<float&,float&,0>(_Other1,_Other2) noexcept' being compiled
+          with
+          [
+              _Other1=float &,
+              _Other2=float &
+          ]
+              J:\Ast\Source\Graphics.cpp(195,2):
+              see the first reference to 'std::pair<int,int>::pair' in 'Graphics::GridToWorldPosition'
   
-J:\Ast\Source\UIPaginatedWindow.h(66,10): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-  (compiling source file 'Source/HUD.cpp')
-      J:\Ast\Source\UIPaginatedWindow.h(66,10):
-      the template instantiation context (the oldest one first) is
-          J:\Ast\Source\HUD.cpp(101,12):
-          see reference to function template instantiation 'void UIPaginatedWindow::AddTab<WorkshopData>(const std::string &,const std::string &)' being compiled
-  
-J:\Ast\Source\UIPaginatedWindow.h(87,10): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-  (compiling source file 'Source/HUD.cpp')
-      J:\Ast\Source\UIPaginatedWindow.h(87,10):
-      the template instantiation context (the oldest one first) is
-          J:\Ast\Source\HUD.cpp(102,12):
-          see reference to function template instantiation 'void UIPaginatedWindow::AddTab<DecorationData>(const std::string &,const std::string &)' being compiled
-  
-  UIDetailsWindow.cpp
-J:\Ast\Source\UIButton.h(19,94): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  (compiling source file 'Source/UIDetailsWindow.cpp')
-  
-J:\Ast\Source\UIButton.h(19,84): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  (compiling source file 'Source/UIDetailsWindow.cpp')
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\utility(250,54): warning C4244: 'initializing': conversion from 'float' to '_Ty2', possible loss of data
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\utility(250,54): warning C4244:         with
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\utility(250,54): warning C4244:         [
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\utility(250,54): warning C4244:             _Ty2=int
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\utility(250,54): warning C4244:         ]
+  (compiling source file 'Source/Graphics.cpp')
   
   Generating code
-  0 of 2872 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+  1 of 2872 functions (<0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    11 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Ast.vcxproj -> J:\Ast\x64\Release\Ast.exe

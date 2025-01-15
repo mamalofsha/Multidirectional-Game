@@ -80,12 +80,11 @@ std::pair<int, int> MouseInteractionAPI::ScreenToGrid(double InScreenX, double I
     float BgAspectRatio = InLevelWidth / InLevelHeight;
     float ScaleX = InLevelWidth / static_cast<float>(InWindowWidth);
     float ScaleY = InLevelHeight / static_cast<float>(InWindowHeight);
-    float NdcX = ((((InScreenX) / InWindowWidth) * 2.0f - 1.0f) / (InZoom * ScaleX));
-    float NdcY = ((1.0f - ((InScreenY) / InWindowHeight) * 2.0f) / (InZoom * ScaleY));
-    NdcX -= InPanX;
-    NdcY -= InPanY;
-    float ApproxGridX = (NdcY / InTileHeight) + (NdcX / InTileWidth) - (InOffsetX);
-    float ApproxGridY = (NdcY / InTileHeight) - (NdcX / InTileWidth) - (InOffsetY);
+    float NdcX = (((((InScreenX) / InWindowWidth) * 2.0f - 1.0f) / (InZoom * ScaleX)) - InPanX) / InTileWidth;
+    float NdcY = (((1.0f - ((InScreenY) / InWindowHeight) * 2.0f) / (InZoom * ScaleY))- InPanY) / InTileWidth * 2.0f;
+    // Convert NDC to approximate grid coordinates for isometric projection
+    float ApproxGridX = ((NdcX + NdcY) - (2.0f * InOffsetX)) / 2;
+    float ApproxGridY = ((NdcY - NdcX) - (2.0f * InOffsetY)) / 2;
     int GridX = static_cast<int>(std::floor(ApproxGridX));
     int GridY = static_cast<int>(std::floor(ApproxGridY));
     return { GridX, GridY };

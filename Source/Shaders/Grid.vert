@@ -3,8 +3,8 @@ layout(location = 0) in vec2 aGridPos;
 uniform vec2 TileSize;
 uniform mat4 Transform;
 void main() {
-    /// 45 rotated grid for isometric look
-    float screenX = ((aGridPos.x - aGridPos.y) * TileSize.x * 0.5 );
+/// 45 rotated grid for isometric feel
+    float screenX = ((aGridPos.x - aGridPos.y) * TileSize.x );
     float screenY = ((aGridPos.x + aGridPos.y) * TileSize.y * 0.5 );
    /// straight grid
     //float screenX = aGridPos.x * TileSize.x;

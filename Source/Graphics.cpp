@@ -181,22 +181,17 @@ Shader Graphics::InitTextRender(std::map<GLchar, Character>& InMap, float InWind
 
 std::pair<int, int> Graphics::GridToWorldPosition(int InGridX, int InGridY, float InTileWidth, float InTileHeight, float InOffsetX, float InOffsetY, float InPanX, float InPanY, float InItemScale, float InZoom, float InWindowWidth, float InWindowHeight, float InLevelWidth, float InLevelHeight)
 {
-	float IsoScreenX = (InGridX - InGridY + InOffsetX - InOffsetY) * (InTileWidth / 2.0f);
+	float IsoScreenX = (InGridX - InGridY + InOffsetX - InOffsetY) * (InTileWidth );
 	float IsoScreenY = (InGridX + InGridY + InOffsetY + InOffsetX) * (InTileHeight / 2.0f);
-
 	float IsoScreenYY = (InGridX + InGridY + 1 + InOffsetY + InOffsetX) * (InTileHeight / 2.0f);
 	float AdjustedScreenYY = (IsoScreenYY + InPanY) * (InZoom * (InLevelHeight / InWindowHeight));
 	float ScreenYY = (1.0f - AdjustedScreenYY) / 2.0f * InWindowHeight;
-
 	float AdjustedScreenX = (IsoScreenX + InPanX) * (InZoom * (InLevelWidth / InWindowWidth));
 	float AdjustedScreenY = (IsoScreenY + InPanY) * (InZoom * (InLevelHeight / InWindowHeight));
-
 	float ScreenX = (AdjustedScreenX + 1.0f) / 2.0f * InWindowWidth;
 	float ScreenY = (1.0f - AdjustedScreenY) / 2.0f * InWindowHeight;
-
 	float OffsetY = (ScreenY - ScreenYY) * 3 / 2;
 	ScreenY -= OffsetY;
-
 	return { ScreenX, ScreenY };
 }
 

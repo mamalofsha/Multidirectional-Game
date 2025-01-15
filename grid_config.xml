@@ -4,7 +4,7 @@
         <height>5</height>
     </dimensions>
     <tile>
-        <width>0.22</width>
+        <width>0.11</width>
         <height>0.11</height>
     </tile>
     <offset>
@@ -13,9 +13,9 @@
     </offset>
     <tiles>
         <row>0 0 0 0 0</row>
-        <row>workshop5 decoration6 0 0 0</row>
-        <row>decoration2 decoration1 workshop2 decoration1 0</row>
-        <row>0 0 0 workshop3 0</row>
-        <row>0 0 0 0 workshop2</row>
+        <row>0 workshop1 0 0 0</row>
+        <row>0 workshop2 workshop2 0 0</row>
+        <row>0 0 decoration1 0 workshop5</row>
+        <row>0 0 0 0 0</row>
     </tiles>
 </grid>
