@@ -18,5 +18,4 @@ public:
     void Override(std::vector<UIText> InText , const char* InFilePath,int InGridX,int InGridY);
     void ItemDelete();
     void UpdateChildrenButtons(float InX, float InY)override;
-
  };

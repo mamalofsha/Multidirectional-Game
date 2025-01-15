@@ -4,7 +4,7 @@
 
 GridConfig XMLParser::ParseGridDataFromXML(const std::string& InFileName)
 {
-    GridConfig OutConfig;
+    GridConfig OutConfig{};
     XMLDocument Doc;
     if (Doc.LoadFile(InFileName.c_str()) != XML_SUCCESS) {
         std::cerr << "Error loading XML file: " << InFileName << std::endl;
@@ -29,19 +29,6 @@ GridConfig XMLParser::ParseGridDataFromXML(const std::string& InFileName)
     if (Offset) {
         Offset->FirstChildElement("x")->QueryFloatText(&OutConfig.StartOffsetX);
         Offset->FirstChildElement("y")->QueryFloatText(&OutConfig.StartOffsetY);
-    }
-    auto* TilesElement = Root->FirstChildElement("tiles");
-    if (TilesElement) {
-        for (auto* Row = TilesElement->FirstChildElement("row"); Row; Row = Row->NextSiblingElement("row")) {
-            std::vector<int> TileRow;
-            const char* RowText = Row->GetText();
-            std::stringstream SS(RowText);
-            int TileType;
-            while (SS >> TileType) {
-                TileRow.push_back(TileType);
-            }
-            OutConfig.Tiles.push_back(TileRow);
-        }
     }
     return OutConfig;
 }

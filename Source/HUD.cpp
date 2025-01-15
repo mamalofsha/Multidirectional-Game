@@ -26,7 +26,6 @@ HUD::HUD(float InWindowWidth, float InWindowHeight, World* InWorldPtr)
 	for (size_t i = 0; i < 14; i++)
 	{
 		FriendWindow->AddStaticTab("Default");
-
 	}
 	std::unique_ptr<UIButton> FriendPrevButton = std::make_unique<UIButton>(UIShader, -0.95f, -0.85f, 0.075f, 0.075, [&]() {
 		FriendWindow->PreviousPage();
@@ -144,7 +143,6 @@ HUD::HUD(float InWindowWidth, float InWindowHeight, World* InWorldPtr)
 		ItemInfoPopUP->ItemDelete();
 		ItemInfoPopUP->SetHidden(true);
 		ExtraLayerActive = false;
-
 		}, "Assets/Images/pickaxe.png", this, OutTextData);
 	DeletePage->HoverOnlyText = true;
 	ItemInfoPopUP->PageControls.push_back(DetailsClose);
@@ -176,7 +174,6 @@ HUD::HUD(float InWindowWidth, float InWindowHeight, World* InWorldPtr)
 		}, "Assets/Images/grid.png", this);
 	UIElements.push_back(GridToggle);
 	//
-
 }
 
 void HUD::Update()

@@ -7,7 +7,7 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-GLFWwindow* Graphics::InitWindow(const unsigned int InWidth, const unsigned int InHeight)
+GLFWwindow* Graphics::InitWindow(const GLuint InWidth, const GLuint InHeight)
 {
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -35,9 +35,9 @@ GLFWwindow* Graphics::InitWindow(const unsigned int InWidth, const unsigned int 
 	return Window;
 }
 
-RenderData Graphics::DrawTexture(std::vector<float> InVertices, std::vector<unsigned int> InIndices, VertexAttribute InAttribute, const char* InFileName)
+RenderData Graphics::DrawTexture(std::vector<float> InVertices, std::vector<GLuint> InIndices, VertexAttribute InAttribute, const char* InFileName)
 {
-	unsigned int VAO, VBO, EBO;
+	GLuint VAO, VBO, EBO;
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
 	glGenBuffers(1, &EBO);
@@ -48,7 +48,7 @@ RenderData Graphics::DrawTexture(std::vector<float> InVertices, std::vector<unsi
 	glBufferData(GL_ARRAY_BUFFER, InVertices.size() * sizeof(float), InVertices.data(), GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, InIndices.size() * sizeof(unsigned int), InIndices.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, InIndices.size() * sizeof(GLuint), InIndices.data(), GL_STATIC_DRAW);
 
 	size_t Sum = 0;
 	for (size_t i = 0; i < InAttribute.Length.size(); i++)
@@ -60,7 +60,7 @@ RenderData Graphics::DrawTexture(std::vector<float> InVertices, std::vector<unsi
 
 	glBindVertexArray(0);
 
-	unsigned int Texture;
+	GLuint Texture;
 	glGenTextures(1, &Texture);
 	glBindTexture(GL_TEXTURE_2D, Texture);
 
@@ -88,7 +88,7 @@ RenderData Graphics::DrawTexture(std::vector<float> InVertices, std::vector<unsi
 
 RenderData Graphics::DrawGrid(std::weak_ptr<Shader> InShaderProgram,const GridConfig InGridConfig, int InWindowWidth, int InWindowHeight)
 {
-	std::vector<float> GridVertices = CreateGridVertices(InGridConfig.Width, InGridConfig.Height, 
+	std::vector<float> GridVertices = CreateGridVertices(static_cast<float>(InGridConfig.Width), static_cast<float>(InGridConfig.Height),
 	InGridConfig.StartOffsetX, InGridConfig.StartOffsetY);
 	int GridVerticesSize = GridVertices.size();
 	GLuint VBO, VAO;
@@ -109,7 +109,7 @@ RenderData Graphics::DrawGrid(std::weak_ptr<Shader> InShaderProgram,const GridCo
 	return OutData;
 }
 
-Shader Graphics::InitTextRender(std::map<GLchar, Character>& InMap, float InWindowWidth, float InWindowHeight, unsigned int& InVAO, unsigned int& InVBO)
+Shader Graphics::InitTextRender(std::map<GLchar, Character>& InMap, float InWindowWidth, float InWindowHeight, GLuint& InVAO, GLuint& InVBO)
 {
 	Shader TextShader("Source/Shaders/Text.vert", "Source/Shaders/Text.frag");
 	glm::mat4 Projection = glm::ortho(0.0f, InWindowWidth, 0.0f, InWindowHeight);
@@ -143,7 +143,7 @@ Shader Graphics::InitTextRender(std::map<GLchar, Character>& InMap, float InWind
 				continue;
 			}
 
-			unsigned int Texture;
+			GLuint Texture;
 			glGenTextures(1, &Texture);
 			glBindTexture(GL_TEXTURE_2D, Texture);
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, Face->glyph->bitmap.width, Face->glyph->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, Face->glyph->bitmap.buffer);
@@ -157,7 +157,7 @@ Shader Graphics::InitTextRender(std::map<GLchar, Character>& InMap, float InWind
 				Texture,
 				glm::ivec2(Face->glyph->bitmap.width, Face->glyph->bitmap.rows),
 				glm::ivec2(Face->glyph->bitmap_left, Face->glyph->bitmap_top),
-				static_cast<unsigned int>(Face->glyph->advance.x)
+				static_cast<GLuint>(Face->glyph->advance.x)
 			};
 			InMap.insert(std::pair<char, Character>(c, NewCharacter));
 		}
@@ -210,12 +210,12 @@ RenderData Graphics::DrawUIElement(std::vector<float> InPosition, std::vector<fl
 		InPosition[0] - (InSize[0] / 2.0f), InPosition[1] - (InSize[1] / 2.0f), 0.0f, 0.0f  // Bottom-left
 	};
 
-	unsigned int Indices[] = {
+	GLuint Indices[] = {
 		0, 1, 2, // First triangle
 		2, 3, 0  // Second triangle
 	};
 
-	unsigned int VAO, VBO, EBO, Texture;
+	GLuint VAO, VBO, EBO, Texture;
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -270,22 +270,22 @@ std::vector<float> Graphics::CreateGridVertices(float InGridWidth, float InGridH
 
 	for (int Y = 0; Y <= InGridHeight; ++Y) {
 		Vertices.push_back(0.0f + InOffsetX);
-		Vertices.push_back(static_cast<float>(Y) + InOffsetY);
-		Vertices.push_back(static_cast<float>(InGridWidth) + InOffsetX);
-		Vertices.push_back(static_cast<float>(Y) + InOffsetY);
+		Vertices.push_back(Y + InOffsetY);
+		Vertices.push_back(InGridWidth + InOffsetX);
+		Vertices.push_back(Y + InOffsetY);
 	}
-
+	
 	for (int X = 0; X <= InGridWidth; ++X) {
-		Vertices.push_back(static_cast<float>(X) + InOffsetX);
+		Vertices.push_back(X + InOffsetX);
 		Vertices.push_back(0.0f + InOffsetY);
-		Vertices.push_back(static_cast<float>(X) + InOffsetX);
-		Vertices.push_back(static_cast<float>(InGridHeight) + InOffsetY);
+		Vertices.push_back(X + InOffsetX);
+		Vertices.push_back(InGridHeight + InOffsetY);
 	}
-
+	
 	return Vertices;
 }
 
-void Graphics::RenderText(Shader& InShader, const unsigned int InVAO, const unsigned int InVBO, std::string InText, float InX, float InY, float InScale, glm::vec3 InColor, std::map<GLchar, Character>& InMap)
+void Graphics::RenderText(Shader& InShader, const GLuint InVAO, const GLuint InVBO, std::string InText, float InX, float InY, float InScale, glm::vec3 InColor, std::map<GLchar, Character>& InMap)
 {
 	InShader.use();
 	glUniform3f(glGetUniformLocation(InShader.ID, "textColor"), InColor.x, InColor.y, InColor.z);

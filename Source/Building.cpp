@@ -19,6 +19,7 @@ void Building::Draw()
 	float ScreenY = 0.0f;
 	auto [WinX, WinY] = WorldPtr->GetWindowSize();
 	MouseInteractionAPI* api = static_cast<MouseInteractionAPI*>(glfwGetWindowUserPointer(WorldPtr->GetWindow()));
+	// std::tie for creating a tuple reference
 	std::tie(ScreenX, ScreenY) = Graphics::GridToWorldPosition(GridX, GridY,
 		WorldPtr->GetGridConfig().TileWidth, WorldPtr->GetGridConfig().TileHeight,
 		WorldPtr->GetGridConfig().StartOffsetX, WorldPtr->GetGridConfig().StartOffsetY, WorldPtr->GetPan().first, WorldPtr->GetPan().second, Size, WorldPtr->GetZoom(), WinX, WinY, WorldPtr->GetLevelSize().first, WorldPtr->GetLevelSize().second);
