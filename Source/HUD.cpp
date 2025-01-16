@@ -255,7 +255,6 @@ void HUD::OnClickFunction(int InGridX, int InGridY, float InScreenX, float InScr
 		if (auto Button = std::dynamic_pointer_cast<UIButton>(Element)) {
 			if (Button->IsHovered) {
 				Button->Clicked();
-				Button->OnClick();
 			}
 		}
 		if (auto Window = std::dynamic_pointer_cast<UIPaginatedWindow>(Element)) {
@@ -263,14 +262,12 @@ void HUD::OnClickFunction(int InGridX, int InGridY, float InScreenX, float InScr
 			{
 				if (Control->IsHovered) {
 					Control->Clicked();
-					Control->OnClick();
 				}
 			}
 			for (auto& Button : Window->GetCatButtons())
 			{
 					if (Button->IsHovered) {
 						Button->Clicked();
-						Button->OnClick();
 					}
 			}
 		}
@@ -279,7 +276,6 @@ void HUD::OnClickFunction(int InGridX, int InGridY, float InScreenX, float InScr
 			{
 				if (Control->IsHovered) {
 					Control->Clicked();
-					Control->OnClick();
 				}
 			}
 		}

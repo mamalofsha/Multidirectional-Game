@@ -43,9 +43,6 @@ public:
     MouseEventCallback OnHover = nullptr;
     MouseEventCallback OnClick = nullptr;
 
-    std::pair<int, int> ScreenToGrid(double InScreenX, double InScreenY, float InTileWidth, float InTileHeight,
-        float InOffsetX, float InOffsetY, float InZoom, float InPanX, float InPanY,
-        int InWindowWidth, int InWindowHeight, float InLevelWidth, float InLevelHeight);
     std::pair<float, float> ScreenToNDC(float InScreenX, float InScreenY, int InWindowWidth, int InWindowHeight) {
         float NdcX = (InScreenX / InWindowWidth) * 2.0f - 1.0f;
         float NdcY = 1.0f - (InScreenY / InWindowHeight) * 2.0f; 

@@ -61,13 +61,7 @@ StartUpData XMLParser::LoadLevel(const std::string& InFileName)
     }
     auto* WindowScale = Root->FirstChildElement("WindowScale");
     if (WindowScale) {
-        float ScaleValue = 0.0f;
-        if (WindowScale->QueryFloatText(&ScaleValue) == XML_SUCCESS) {
-            Data.WindowScale = ScaleValue;
-        }
-        else {
-            std::cerr << "Error: Failed to parse WindowScale as a float.\n";
-        }
+        WindowScale->QueryFloatText(&Data.WindowScale);
     }
     return Data;
 }
@@ -109,7 +103,6 @@ std::vector<WorkshopData> XMLParser::LoadWorkshops(const std::string& InFileName
         if (GoldGenElement) {
             GoldGenElement->QueryFloatText(&Data.GoldGenRate);
         }
-
         OutData.push_back(Data);
     }
     return OutData;
@@ -430,12 +423,11 @@ void XMLParser::CheckInitEmptySave(const std::string& InFileName, int InGridX, i
             auto* NewRow = Doc.NewElement("row");
             std::ostringstream RowContent;
             for (int j = 0; j < InGridX; ++j) {
-                RowContent << "0 ";
+                RowContent << "0";
+                if (j < InGridX - 1)
+                    RowContent << " ";
             }
             std::string RowString = RowContent.str();
-            if (!RowString.empty() && RowString.back() == ' ') {
-                RowString.pop_back();
-            }
             NewRow->SetText(RowString.c_str());
             Tiles->InsertEndChild(NewRow);
         }

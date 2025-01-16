@@ -183,16 +183,36 @@ std::pair<int, int> Graphics::GridToWorldPosition(int InGridX, int InGridY, floa
 {
 	float IsoScreenX = (InGridX - InGridY + InOffsetX - InOffsetY) * (InTileWidth );
 	float IsoScreenY = (InGridX + InGridY + InOffsetY + InOffsetX) * (InTileHeight / 2.0f);
+	// for that extra push up\offset
 	float IsoScreenYY = (InGridX + InGridY + 1 + InOffsetY + InOffsetX) * (InTileHeight / 2.0f);
 	float AdjustedScreenYY = (IsoScreenYY + InPanY) * (InZoom * (InLevelHeight / InWindowHeight));
 	float ScreenYY = (1.0f - AdjustedScreenYY) / 2.0f * InWindowHeight;
+	//
 	float AdjustedScreenX = (IsoScreenX + InPanX) * (InZoom * (InLevelWidth / InWindowWidth));
 	float AdjustedScreenY = (IsoScreenY + InPanY) * (InZoom * (InLevelHeight / InWindowHeight));
+	// reverse ndc 
 	float ScreenX = (AdjustedScreenX + 1.0f) / 2.0f * InWindowWidth;
 	float ScreenY = (1.0f - AdjustedScreenY) / 2.0f * InWindowHeight;
+	// that extra push
 	float OffsetY = (ScreenY - ScreenYY) * 3 / 2;
 	ScreenY -= OffsetY;
 	return { ScreenX, ScreenY };
+}
+
+std::pair<int, int> Graphics::ScreenToGrid(double InScreenX, double InScreenY, float InTileWidth, float InTileHeight, float InOffsetX, float InOffsetY, float InZoom, float InPanX, float InPanY, int InWindowWidth, int InWindowHeight, float InLevelWidth, float InLevelHeight)
+{
+	float WindowAspectRatio = static_cast<float>(InWindowWidth) / static_cast<float>(InWindowHeight);
+	float BgAspectRatio = InLevelWidth / InLevelHeight;
+	float ScaleX = InLevelWidth / static_cast<float>(InWindowWidth);
+	float ScaleY = InLevelHeight / static_cast<float>(InWindowHeight);
+	float NdcX = (((((InScreenX) / InWindowWidth) * 2.0f - 1.0f) / (InZoom * ScaleX)) - InPanX) / InTileWidth;
+	float NdcY = (((1.0f - ((InScreenY) / InWindowHeight) * 2.0f) / (InZoom * ScaleY)) - InPanY) / InTileWidth * 2.0f;
+	// Convert NDC to approximate grid coordinates for isometric projection
+	float ApproxGridX = ((NdcX + NdcY) - (2.0f * InOffsetX)) / 2;
+	float ApproxGridY = ((NdcY - NdcX) - (2.0f * InOffsetY)) / 2;
+	int GridX = static_cast<int>(std::floor(ApproxGridX));
+	int GridY = static_cast<int>(std::floor(ApproxGridY));
+	return { GridX, GridY };
 }
 
 RenderData Graphics::DrawUIElement(std::vector<float> InPosition, std::vector<float> InSize, const char* InTextureFilePath)

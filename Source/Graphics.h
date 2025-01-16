@@ -37,6 +37,7 @@ public:
     static RenderData DrawUIElement(std::vector<float> InPosition, std::vector<float> InSize, const char* InTextureFilePath);
     static Shader InitTextRender(std::map<GLchar, Character>& InMap, float InWindowWidth, float InWindowHeight, GLuint& InVAO, GLuint& InVBO);
     static std::pair<int, int> GridToWorldPosition(int InGridX, int InGridY, float InTileWidth, float InTileHeight, float InOffsetX, float InOffsetY, float InPanX, float InPanY, float InItemScale, float InZoom, float InWindowWidth, float InWindowHeight, float InLevelWidth, float InLevelHeight);
+    static std::pair<int, int> ScreenToGrid(double InScreenX, double InScreenY, float InTileWidth, float InTileHeight, float InOffsetX, float InOffsetY, float InZoom, float InPanX, float InPanY, int InWindowWidth, int InWindowHeight, float InLevelWidth, float InLevelHeight);
     static std::vector<float> CreateGridVertices(float InGridWidth, float InGridHeight, float InOffsetX, float InOffsetY);
     static void RenderText(Shader& InShader, const GLuint InVAO, const GLuint InVBO, std::string InText, float InX, float InY, float InScale, glm::vec3 InColor, std::map<GLchar, Character>& InMap);
     static void FramebufferSizeCallback(GLFWwindow* InWindow, int InWidth, int InHeight);

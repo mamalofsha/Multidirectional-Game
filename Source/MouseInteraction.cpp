@@ -51,7 +51,7 @@ void MouseInteractionAPI::ClickCallback(GLFWwindow* InWindow, int InButton, int 
 }
 
 void MouseInteractionAPI::HandleMouseMove(double InXPos, double InYPos, int InWindowWidth, int InWindowHeight) {
-    auto [GridX, GridY] = ScreenToGrid(InXPos, InYPos, TileWidth, TileHeight, GridOffsetX, GridOffsetY, Zoom, PanX, PanY, InWindowWidth, InWindowHeight, LevelWidth, LevelHeight);
+    auto [GridX, GridY] = Graphics::ScreenToGrid(InXPos, InYPos, TileWidth, TileHeight, GridOffsetX, GridOffsetY, Zoom, PanX, PanY, InWindowWidth, InWindowHeight, LevelWidth, LevelHeight);
     auto [X, Y] = ScreenToNDC(InXPos, InYPos, InWindowWidth, InWindowHeight);
     CurrentMouseState.X = InXPos;
     CurrentMouseState.Y = InYPos;
@@ -63,7 +63,7 @@ void MouseInteractionAPI::HandleMouseMove(double InXPos, double InYPos, int InWi
 }
 
 void MouseInteractionAPI::HandleMouseClick(double InXPos, double InYPos, int InWindowWidth, int InWindowHeight) {
-    auto [GridX, GridY] = ScreenToGrid(InXPos, InYPos, TileWidth, TileHeight, GridOffsetX, GridOffsetY, PanX, PanY, Zoom, InWindowWidth, InWindowHeight, LevelWidth, LevelHeight);
+    auto [GridX, GridY] = Graphics::ScreenToGrid(InXPos, InYPos, TileWidth, TileHeight, GridOffsetX, GridOffsetY, PanX, PanY, Zoom, InWindowWidth, InWindowHeight, LevelWidth, LevelHeight);
     if (OnClick) {
         OnClick(GridX, GridY, InXPos, InYPos);
     }
@@ -73,20 +73,5 @@ void MouseInteractionAPI::SetPanZoom(float InPanX, float InPanY, float InZoom) {
     Zoom = InZoom;
     PanX = InPanX;
     PanY = InPanY;
-}
-
-std::pair<int, int> MouseInteractionAPI::ScreenToGrid(double InScreenX, double InScreenY, float InTileWidth, float InTileHeight, float InOffsetX, float InOffsetY, float InZoom, float InPanX, float InPanY, int InWindowWidth, int InWindowHeight, float InLevelWidth, float InLevelHeight) {
-    float WindowAspectRatio = static_cast<float>(InWindowWidth) / static_cast<float>(InWindowHeight);
-    float BgAspectRatio = InLevelWidth / InLevelHeight;
-    float ScaleX = InLevelWidth / static_cast<float>(InWindowWidth);
-    float ScaleY = InLevelHeight / static_cast<float>(InWindowHeight);
-    float NdcX = (((((InScreenX) / InWindowWidth) * 2.0f - 1.0f) / (InZoom * ScaleX)) - InPanX) / InTileWidth;
-    float NdcY = (((1.0f - ((InScreenY) / InWindowHeight) * 2.0f) / (InZoom * ScaleY))- InPanY) / InTileWidth * 2.0f;
-    // Convert NDC to approximate grid coordinates for isometric projection
-    float ApproxGridX = ((NdcX + NdcY) - (2.0f * InOffsetX)) / 2;
-    float ApproxGridY = ((NdcY - NdcX) - (2.0f * InOffsetY)) / 2;
-    int GridX = static_cast<int>(std::floor(ApproxGridX));
-    int GridY = static_cast<int>(std::floor(ApproxGridY));
-    return { GridX, GridY };
 }
 

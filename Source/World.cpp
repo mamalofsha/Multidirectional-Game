@@ -59,16 +59,16 @@ void World::InitBackground()
 	Shaders.push_back(ShaderProgram);
 	std::vector<float> Vertices = {
 		// positions          // colors           // texture coords
-		 1.0f,  1.0f,    1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-		 1.0f, -1.0f,    0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-		-1.0f, -1.0f,    0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-		-1.0f,  1.0f,    1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
+		 1.0f,  1.0f,    1.0f, 1.0f, 1.0f,1.0f,   1.0f, 1.0f, // top right
+		 1.0f, -1.0f,    1.0f, 1.0f, 1.0f,1.0f,   1.0f, 0.0f, // bottom right
+		-1.0f, -1.0f,    1.0f, 1.0f, 1.0f,1.0f,   0.0f, 0.0f, // bottom left
+		-1.0f,  1.0f,    1.0f, 1.0f, 1.0f,1.0f,   0.0f, 1.0f  // top left 
 	};
 	std::vector<unsigned int> Indices = {
 		0, 1, 3, // first triangle
 		1, 2, 3  // second triangle
 	};
-	VertexAttribute OutVertexData = { 7,{2,3,2} };
+	VertexAttribute OutVertexData = { 8,{2,4,2} };
 	std::weak_ptr WeakShaderPtr = ShaderProgram;
 	std::unique_ptr<TexturedObject> TexturedObj = std::make_unique<TexturedObject>(WeakShaderPtr, Vertices, Indices, StartUp.LevelFileName.c_str(), OutVertexData, this);
 	ObjectRenderMap[ShaderProgram->ID].push_back(std::move(TexturedObj));

@@ -18,7 +18,7 @@ public:
     }
     void UpdateHoverState(double InMouseX, double InMouseY) { IsHovered = IsInside(InMouseX, InMouseY); }
     void Clicked() {
-
+        OnClick();
     }
     void Draw();
 };
